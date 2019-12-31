@@ -1,52 +1,54 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014-2017 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Rest;
+namespace LaminasTest\ApiTools\Rest;
 
 use Interop\Container\ContainerInterface;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\ApiProblem\ApiProblemResponse;
+use Laminas\ApiTools\ApiProblem\Exception\DomainException;
+use Laminas\ApiTools\ContentNegotiation\ControllerPlugin\BodyParams;
+use Laminas\ApiTools\ContentNegotiation\ParameterDataContainer;
+use Laminas\ApiTools\ContentNegotiation\ViewModel;
+use Laminas\ApiTools\Hal\Collection;
+use Laminas\ApiTools\Hal\Collection as HalCollection;
+use Laminas\ApiTools\Hal\Entity;
+use Laminas\ApiTools\Hal\Entity as HalEntity;
+use Laminas\ApiTools\Hal\Extractor\LinkCollectionExtractor;
+use Laminas\ApiTools\Hal\Extractor\LinkExtractor;
+use Laminas\ApiTools\Hal\Link\Link;
+use Laminas\ApiTools\Hal\Link\LinkUrlBuilder;
+use Laminas\ApiTools\Hal\Plugin\Hal as HalHelper;
+use Laminas\ApiTools\MvcAuth\Identity\IdentityInterface;
+use Laminas\ApiTools\Rest\Exception;
+use Laminas\ApiTools\Rest\Resource;
+use Laminas\ApiTools\Rest\ResourceEvent;
+use Laminas\ApiTools\Rest\RestController;
+use Laminas\EventManager\EventManager;
+use Laminas\EventManager\SharedEventManager;
+use Laminas\Http\Headers;
+use Laminas\Http\Response;
+use Laminas\InputFilter\InputFilter;
+use Laminas\Mvc\Controller\PluginManager;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\Router\SimpleRouteStack as V2SimpleRouteStack;
+use Laminas\Paginator\Adapter\ArrayAdapter as ArrayPaginator;
+use Laminas\Paginator\Paginator;
+use Laminas\Router\SimpleRouteStack;
+use Laminas\Stdlib\Parameters;
+use Laminas\Stdlib\ResponseInterface;
+use Laminas\View\Helper\ServerUrl as ServerUrlHelper;
+use Laminas\View\Helper\Url as UrlHelper;
+use Laminas\View\Model\ModelInterface;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 use ReflectionObject;
 use stdClass;
-use Zend\EventManager\EventManager;
-use Zend\EventManager\SharedEventManager;
-use Zend\Http\Headers;
-use Zend\Http\Response;
-use Zend\InputFilter\InputFilter;
-use Zend\Mvc\Controller\PluginManager;
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\SimpleRouteStack as V2SimpleRouteStack;
-use Zend\Paginator\Adapter\ArrayAdapter as ArrayPaginator;
-use Zend\Paginator\Paginator;
-use Zend\Router\SimpleRouteStack;
-use Zend\Stdlib\Parameters;
-use Zend\Stdlib\ResponseInterface;
-use Zend\View\Helper\ServerUrl as ServerUrlHelper;
-use Zend\View\Helper\Url as UrlHelper;
-use Zend\View\Model\ModelInterface;
-use ZF\ApiProblem\ApiProblem;
-use ZF\ApiProblem\ApiProblemResponse;
-use ZF\ApiProblem\Exception\DomainException;
-use ZF\ContentNegotiation\ControllerPlugin\BodyParams;
-use ZF\ContentNegotiation\ParameterDataContainer;
-use ZF\ContentNegotiation\ViewModel;
-use ZF\Hal\Collection as HalCollection;
-use ZF\Hal\Collection;
-use ZF\Hal\Entity as HalEntity;
-use ZF\Hal\Entity;
-use ZF\Hal\Extractor\LinkCollectionExtractor;
-use ZF\Hal\Extractor\LinkExtractor;
-use ZF\Hal\Link\Link;
-use ZF\Hal\Link\LinkUrlBuilder;
-use ZF\Hal\Plugin\Hal as HalHelper;
-use ZF\MvcAuth\Identity\IdentityInterface;
-use ZF\Rest\Exception;
-use ZF\Rest\Resource;
-use ZF\Rest\ResourceEvent;
-use ZF\Rest\RestController;
 
 /**
  * @subpackage UnitTest
@@ -1537,14 +1539,14 @@ class RestControllerTest extends TestCase
 
         $container = new ParameterDataContainer();
         $container->setBodyParams((null === $data) ? [] : $data);
-        $this->event->setParam('ZFContentNegotiationParameterData', $container);
+        $this->event->setParam('LaminasContentNegotiationParameterData', $container);
 
         if ($id) {
             $this->event->getRouteMatch()->setParam('id', $id);
         }
 
         $inputFilter = new InputFilter();
-        $this->event->setParam('ZF\ContentValidation\InputFilter', $inputFilter);
+        $this->event->setParam('Laminas\ApiTools\ContentValidation\InputFilter', $inputFilter);
 
         $result = $this->controller->onDispatch($this->event);
 
@@ -1554,12 +1556,12 @@ class RestControllerTest extends TestCase
 
 
     /**
-     * @group zf-mvc-auth-20
+     * @group api-tools-mvc-auth-20
      */
     public function testInjectsIdentityFromMvcEventIntoResourceEvent()
     {
         $identity = $this->getMockBuilder(IdentityInterface::class)->getMock();
-        $this->event->setParam('ZF\MvcAuth\Identity', $identity);
+        $this->event->setParam('Laminas\ApiTools\MvcAuth\Identity', $identity);
         $resource = $this->controller->getResource();
         $this->assertSame($identity, $resource->getIdentity());
     }

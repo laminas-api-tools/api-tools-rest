@@ -1,23 +1,25 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014-2017 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Rest;
+namespace LaminasTest\ApiTools\Rest;
 
 use ArrayIterator;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Rest\Exception\InvalidArgumentException;
+use Laminas\ApiTools\Rest\Resource;
+use Laminas\ApiTools\Rest\ResourceEvent;
+use Laminas\ApiTools\Rest\ResourceInterface;
+use Laminas\EventManager\EventManager;
+use Laminas\Http\Response;
+use Laminas\Stdlib\ArrayObject;
+use Laminas\Stdlib\Parameters;
 use PHPUnit\Framework\TestCase;
 use stdClass;
-use Zend\EventManager\EventManager;
-use Zend\Http\Response;
-use Zend\Stdlib\ArrayObject;
-use Zend\Stdlib\Parameters;
-use ZF\ApiProblem\ApiProblem;
-use ZF\Rest\Exception\InvalidArgumentException;
-use ZF\Rest\Resource;
-use ZF\Rest\ResourceEvent;
-use ZF\Rest\ResourceInterface;
 
 /**
  * @subpackage UnitTest
