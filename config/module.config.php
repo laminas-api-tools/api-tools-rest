@@ -1,11 +1,13 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
 return [
-    'zf-rest' => [
+    'api-tools-rest' => [
         // @codingStandardsIgnoreStart
         // 'Name of virtual controller' => [
         //     'collection_http_methods'    => [
@@ -19,7 +21,7 @@ return [
         //          * "filter", etc.
         //          */
         //     ],
-        //     'controller_class'           => 'Name of ZF\Rest\RestController derivative, if not using that class',
+        //     'controller_class'           => 'Name of Laminas\ApiTools\Rest\RestController derivative, if not using that class',
         //     'route_identifier_name'      => 'Name of parameter in route that acts as an entity identifier',
         //     'listener'                   => 'Name of service/class that acts as a listener on the composed Resource',
         //     'page_size'                  => 'Integer specifying the number of results to return per page, if collections are paginated',
@@ -36,16 +38,16 @@ return [
 
     'service_manager' => [
         'invokables' => [
-            'ZF\Rest\RestParametersListener' => 'ZF\Rest\Listener\RestParametersListener',
+            'Laminas\ApiTools\Rest\RestParametersListener' => 'Laminas\ApiTools\Rest\Listener\RestParametersListener',
         ],
         'factories' => [
-            'ZF\Rest\OptionsListener' => 'ZF\Rest\Factory\OptionsListenerFactory',
+            'Laminas\ApiTools\Rest\OptionsListener' => 'Laminas\ApiTools\Rest\Factory\OptionsListenerFactory',
         ],
     ],
 
     'controllers' => [
         'abstract_factories' => [
-            'ZF\Rest\Factory\RestControllerFactory',
+            'Laminas\ApiTools\Rest\Factory\RestControllerFactory',
         ],
     ],
 
