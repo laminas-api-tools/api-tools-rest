@@ -1,15 +1,17 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Rest\Factory;
+namespace Laminas\ApiTools\Rest\Factory;
 
 use Interop\Container\ContainerInterface;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use ZF\Rest\Listener\OptionsListener;
+use Laminas\ApiTools\Rest\Listener\OptionsListener;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class OptionsListenerFactory implements FactoryInterface
 {
@@ -40,7 +42,7 @@ class OptionsListenerFactory implements FactoryInterface
     }
 
     /**
-     * Retrieve zf-rest config from the container, if available.
+     * Retrieve api-tools-rest config from the container, if available.
      *
      * @param ContainerInterface $container
      * @return array
@@ -53,12 +55,12 @@ class OptionsListenerFactory implements FactoryInterface
 
         $config = $container->get('config');
 
-        if (! array_key_exists('zf-rest', $config)
-            || ! is_array($config['zf-rest'])
+        if (! array_key_exists('api-tools-rest', $config)
+            || ! is_array($config['api-tools-rest'])
         ) {
             return [];
         }
 
-        return $config['zf-rest'];
+        return $config['api-tools-rest'];
     }
 }

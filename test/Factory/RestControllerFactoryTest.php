@@ -1,15 +1,17 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Rest\Factory;
+namespace LaminasTest\ApiTools\Rest\Factory;
 
-use ZF\Rest\Factory\RestControllerFactory;
+use Laminas\ApiTools\Rest\Factory\RestControllerFactory;
+use Laminas\Mvc\Controller\ControllerManager;
+use Laminas\ServiceManager\ServiceManager;
 use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Mvc\Controller\ControllerManager;
-use Zend\ServiceManager\ServiceManager;
 
 class RestControllerFactoryTest extends TestCase
 {
@@ -21,21 +23,21 @@ class RestControllerFactoryTest extends TestCase
 
         $controllers->addAbstractFactory($factory);
 
-        $services->setService('Zend\ServiceManager\ServiceLocatorInterface', $services);
+        $services->setService('Laminas\ServiceManager\ServiceLocatorInterface', $services);
         $services->setService('config', $this->getConfig());
         $services->setService('ControllerManager', $controllers);
-        $services->setFactory('ControllerPluginManager', 'Zend\Mvc\Service\ControllerPluginManagerFactory');
-        $services->setInvokableClass('EventManager', 'Zend\EventManager\EventManager');
-        $services->setInvokableClass('SharedEventManager', 'Zend\EventManager\SharedEventManager');
+        $services->setFactory('ControllerPluginManager', 'Laminas\Mvc\Service\ControllerPluginManagerFactory');
+        $services->setInvokableClass('EventManager', 'Laminas\EventManager\EventManager');
+        $services->setInvokableClass('SharedEventManager', 'Laminas\EventManager\SharedEventManager');
         $services->setShared('EventManager', false);
     }
 
     public function getConfig()
     {
         return [
-            'zf-rest' => [
+            'api-tools-rest' => [
                 'ApiController' => [
-                    'listener'   => 'ZFTest\Rest\Factory\TestAsset\Listener',
+                    'listener'   => 'LaminasTest\ApiTools\Rest\Factory\TestAsset\Listener',
                     'route_name' => 'api',
                 ],
             ],
@@ -46,17 +48,17 @@ class RestControllerFactoryTest extends TestCase
     {
         $this->assertTrue($this->controllers->has('ApiController'));
         $controller = $this->controllers->get('ApiController');
-        $this->assertInstanceOf('ZF\Rest\RestController', $controller);
+        $this->assertInstanceOf('Laminas\ApiTools\Rest\RestController', $controller);
     }
 
     public function testWillInstantiateAlternateRestControllerWhenSpecified()
     {
         $config = $this->services->get('config');
-        $config['zf-rest']['ApiController']['controller_class'] = 'ZFTest\Rest\Factory\TestAsset\CustomController';
+        $config['api-tools-rest']['ApiController']['controller_class'] = 'LaminasTest\ApiTools\Rest\Factory\TestAsset\CustomController';
         $this->services->setAllowOverride(true);
         $this->services->setService('config', $config);
         $controller = $this->controllers->get('ApiController');
-        $this->assertInstanceOf('ZFTest\Rest\Factory\TestAsset\CustomController', $controller);
+        $this->assertInstanceOf('LaminasTest\ApiTools\Rest\Factory\TestAsset\CustomController', $controller);
     }
 
     public function testDefaultControllerEventManagerIdentifiersAreAsExpected()
@@ -66,14 +68,14 @@ class RestControllerFactoryTest extends TestCase
 
         $identifiers = $events->getIdentifiers();
 
-        $this->assertContains('ZF\Rest\RestController', $identifiers);
+        $this->assertContains('Laminas\ApiTools\Rest\RestController', $identifiers);
         $this->assertContains('ApiController', $identifiers);
     }
 
     public function testControllerEventManagerIdentifiersAreAsSpecified()
     {
         $config = $this->services->get('config');
-        $config['zf-rest']['ApiController']['identifier'] = 'ZFTest\Rest\Factory\TestAsset\ExtraControllerListener';
+        $config['api-tools-rest']['ApiController']['identifier'] = 'LaminasTest\ApiTools\Rest\Factory\TestAsset\ExtraControllerListener';
         $this->services->setAllowOverride(true);
         $this->services->setService('config', $config);
 
@@ -82,8 +84,8 @@ class RestControllerFactoryTest extends TestCase
 
         $identifiers = $events->getIdentifiers();
 
-        $this->assertContains('ZF\Rest\RestController', $identifiers);
-        $this->assertContains('ZFTest\Rest\Factory\TestAsset\ExtraControllerListener', $identifiers);
+        $this->assertContains('Laminas\ApiTools\Rest\RestController', $identifiers);
+        $this->assertContains('LaminasTest\ApiTools\Rest\Factory\TestAsset\ExtraControllerListener', $identifiers);
     }
 
     public function testDefaultResourceEventManagerIdentifiersAreAsExpected()
@@ -93,9 +95,9 @@ class RestControllerFactoryTest extends TestCase
         $events = $resource->getEventManager();
 
         $expected = [
-            'ZFTest\Rest\Factory\TestAsset\Listener',
-            'ZF\Rest\Resource',
-            'ZF\Rest\ResourceInterface',
+            'LaminasTest\ApiTools\Rest\Factory\TestAsset\Listener',
+            'Laminas\ApiTools\Rest\Resource',
+            'Laminas\ApiTools\Rest\ResourceInterface',
         ];
         $identifiers = $events->getIdentifiers();
 
@@ -105,8 +107,8 @@ class RestControllerFactoryTest extends TestCase
     public function testResourceEventManagerIdentifiersAreAsSpecifiedString()
     {
         $config = $this->services->get('config');
-        $config['zf-rest']['ApiController']['resource_identifiers'] =
-            'ZFTest\Rest\Factory\TestAsset\ExtraResourceListener';
+        $config['api-tools-rest']['ApiController']['resource_identifiers'] =
+            'LaminasTest\ApiTools\Rest\Factory\TestAsset\ExtraResourceListener';
         $this->services->setAllowOverride(true);
         $this->services->setService('config', $config);
 
@@ -115,10 +117,10 @@ class RestControllerFactoryTest extends TestCase
         $events = $resource->getEventManager();
 
         $expected = [
-            'ZFTest\Rest\Factory\TestAsset\Listener',
-            'ZFTest\Rest\Factory\TestAsset\ExtraResourceListener',
-            'ZF\Rest\Resource',
-            'ZF\Rest\ResourceInterface',
+            'LaminasTest\ApiTools\Rest\Factory\TestAsset\Listener',
+            'LaminasTest\ApiTools\Rest\Factory\TestAsset\ExtraResourceListener',
+            'Laminas\ApiTools\Rest\Resource',
+            'Laminas\ApiTools\Rest\ResourceInterface',
         ];
         $identifiers = $events->getIdentifiers();
 
@@ -128,9 +130,9 @@ class RestControllerFactoryTest extends TestCase
     public function testResourceEventManagerIdentifiersAreAsSpecifiedArray()
     {
         $config = $this->services->get('config');
-        $config['zf-rest']['ApiController']['resource_identifiers'] = [
-            'ZFTest\Rest\Factory\TestAsset\ExtraResourceListener1',
-            'ZFTest\Rest\Factory\TestAsset\ExtraResourceListener2',
+        $config['api-tools-rest']['ApiController']['resource_identifiers'] = [
+            'LaminasTest\ApiTools\Rest\Factory\TestAsset\ExtraResourceListener1',
+            'LaminasTest\ApiTools\Rest\Factory\TestAsset\ExtraResourceListener2',
         ];
         $this->services->setAllowOverride(true);
         $this->services->setService('config', $config);
@@ -140,11 +142,11 @@ class RestControllerFactoryTest extends TestCase
         $events = $resource->getEventManager();
 
         $expected = [
-            'ZFTest\Rest\Factory\TestAsset\Listener',
-            'ZFTest\Rest\Factory\TestAsset\ExtraResourceListener1',
-            'ZFTest\Rest\Factory\TestAsset\ExtraResourceListener2',
-            'ZF\Rest\Resource',
-            'ZF\Rest\ResourceInterface',
+            'LaminasTest\ApiTools\Rest\Factory\TestAsset\Listener',
+            'LaminasTest\ApiTools\Rest\Factory\TestAsset\ExtraResourceListener1',
+            'LaminasTest\ApiTools\Rest\Factory\TestAsset\ExtraResourceListener2',
+            'Laminas\ApiTools\Rest\Resource',
+            'Laminas\ApiTools\Rest\ResourceInterface',
         ];
         $identifiers = $events->getIdentifiers();
 

@@ -1,16 +1,18 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014-2016 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Rest;
+namespace Laminas\ApiTools\Rest;
 
-use Zend\Loader\StandardAutoloader;
-use Zend\Mvc\MvcEvent;
+use Laminas\Loader\StandardAutoloader;
+use Laminas\Mvc\MvcEvent;
 
 /**
- * ZF2 module
+ * Laminas module
  */
 class Module
 {
@@ -37,9 +39,9 @@ class Module
         $services = $app->getServiceManager();
         $events   = $app->getEventManager();
 
-        $services->get('ZF\Rest\OptionsListener')->attach($events);
+        $services->get('Laminas\ApiTools\Rest\OptionsListener')->attach($events);
 
         $sharedEvents = $events->getSharedManager();
-        $services->get('ZF\Rest\RestParametersListener')->attachShared($sharedEvents);
+        $services->get('Laminas\ApiTools\Rest\RestParametersListener')->attachShared($sharedEvents);
     }
 }

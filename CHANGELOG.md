@@ -18,8 +18,8 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#103](https://github.com/zfcampus/zf-rest/pull/103) and
-  [#105](https://github.com/zfcampus/zf-rest/pull/105) fix an issue with
+- [zfcampus/zf-rest#103](https://github.com/zfcampus/zf-rest/pull/103) and
+  [zfcampus/zf-rest#105](https://github.com/zfcampus/zf-rest/pull/105) fix an issue with
   providing a `Throwable` in order to create an `ApiProblem` from within a
   `RestController`.
 
@@ -27,9 +27,9 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#100](https://github.com/zfcampus/zf-rest/pull/100) adds configuration to the
-  `composer.json` to allow zend-component-installer to auto-inject the
-  `ZF\Rest` module into application configuration during installation.
+- [zfcampus/zf-rest#100](https://github.com/zfcampus/zf-rest/pull/100) adds configuration to the
+  `composer.json` to allow laminas-component-installer to auto-inject the
+  `Laminas\ApiTools\Rest` module into application configuration during installation.
 
 ### Deprecated
 
@@ -47,10 +47,10 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Added
 
-- [#99](https://github.com/zfcampus/zf-rest/pull/99) adds support for v3
-  releases of Zend Framework components, while retaining compatibility for v2
+- [zfcampus/zf-rest#99](https://github.com/zfcampus/zf-rest/pull/99) adds support for v3
+  releases of Laminas components, while retaining compatibility for v2
   releases.
-- [#96](https://github.com/zfcampus/zf-rest/pull/96) adds a `Content-Location`
+- [zfcampus/zf-rest#96](https://github.com/zfcampus/zf-rest/pull/96) adds a `Content-Location`
   header to responses returned from `RestController::create()`, per
   [RFC 7231](https://tools.ietf.org/html/rfc7231#section-3.1.4.2).
 
@@ -60,14 +60,14 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Removed
 
-- [#99](https://github.com/zfcampus/zf-rest/pull/99) removes support for PHP 5.5.
+- [zfcampus/zf-rest#99](https://github.com/zfcampus/zf-rest/pull/99) removes support for PHP 5.5.
 
 ### Fixed
 
-- [#70](https://github.com/zfcampus/zf-rest/pull/70) updates how the
-  `RestController` retrieves the identifier from `ZF\Hal\Entity` instances to
-  use the new `getId()` method introduced in zf-hal 1.4.
-- [#94](https://github.com/zfcampus/zf-rest/pull/94) updates the
+- [zfcampus/zf-rest#70](https://github.com/zfcampus/zf-rest/pull/70) updates how the
+  `RestController` retrieves the identifier from `Laminas\ApiTools\Hal\Entity` instances to
+  use the new `getId()` method introduced in api-tools-hal 1.4.
+- [zfcampus/zf-rest#94](https://github.com/zfcampus/zf-rest/pull/94) updates the
   `RestController` to return Problem Details with a status of 400 if the
   page size requested by the client is below zero.
 
@@ -87,7 +87,7 @@ All notable changes to this project will be documented in this file, in reverse 
 
 ### Fixed
 
-- [#97](https://github.com/zfcampus/zf-rest/pull/97) fixes `Location` header
+- [zfcampus/zf-rest#97](https://github.com/zfcampus/zf-rest/pull/97) fixes `Location` header
   generation in the `RestController::create()` method to only use the `href`
   property of the relational link; previously, if you'd defined additional
   properties, these were also incorrectly serialized in the generated link.

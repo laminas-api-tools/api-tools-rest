@@ -1,31 +1,33 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Rest;
+namespace LaminasTest\ApiTools\Rest;
 
 use Interop\Container\ContainerInterface;
+use Laminas\ApiTools\ApiProblem\View\ApiProblemRenderer;
+use Laminas\ApiTools\Hal\Collection as HalCollection;
+use Laminas\ApiTools\Hal\Entity as HalEntity;
+use Laminas\ApiTools\Hal\Extractor\LinkCollectionExtractor;
+use Laminas\ApiTools\Hal\Extractor\LinkExtractor;
+use Laminas\ApiTools\Hal\Link\Link;
+use Laminas\ApiTools\Hal\Link\LinkUrlBuilder;
+use Laminas\ApiTools\Hal\Plugin\Hal as HalHelper;
+use Laminas\ApiTools\Hal\View\HalJsonModel;
+use Laminas\ApiTools\Hal\View\HalJsonRenderer;
+use Laminas\ApiTools\Rest\Resource;
+use Laminas\ApiTools\Rest\RestController;
+use Laminas\Http\Request;
+use Laminas\Mvc\Controller\PluginManager as ControllerPluginManager;
+use Laminas\View\Helper\ServerUrl as ServerUrlHelper;
+use Laminas\View\Helper\Url as UrlHelper;
+use Laminas\View\HelperPluginManager;
 use PHPUnit_Framework_TestCase as TestCase;
 use ReflectionObject;
-use Zend\Http\Request;
-use Zend\Mvc\Controller\PluginManager as ControllerPluginManager;
-use Zend\View\HelperPluginManager;
-use Zend\View\Helper\ServerUrl as ServerUrlHelper;
-use Zend\View\Helper\Url as UrlHelper;
-use ZF\ApiProblem\View\ApiProblemRenderer;
-use ZF\Hal\Collection as HalCollection;
-use ZF\Hal\Entity as HalEntity;
-use ZF\Hal\Extractor\LinkCollectionExtractor;
-use ZF\Hal\Extractor\LinkExtractor;
-use ZF\Hal\Link\Link;
-use ZF\Hal\Link\LinkUrlBuilder;
-use ZF\Hal\Plugin\Hal as HalHelper;
-use ZF\Hal\View\HalJsonModel;
-use ZF\Hal\View\HalJsonRenderer;
-use ZF\Rest\Resource;
-use ZF\Rest\RestController;
 
 /**
  * @subpackage UnitTest
@@ -241,7 +243,7 @@ class ChildResourcesIntegrationTest extends TestCase
         $this->assertEquals('luke', $id);
 
         $result = $controller->get('luke');
-        $this->assertInstanceOf('ZF\Hal\Entity', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Entity', $result);
         $self = $result->getLinks()->get('self');
         $params = $self->getRouteParams();
         $this->assertArrayHasKey('child_id', $params);
@@ -288,7 +290,7 @@ class ChildResourcesIntegrationTest extends TestCase
         $this->helpers->get('url')->setRouteMatch($matches);
 
         $result = $controller->getList();
-        $this->assertInstanceOf('ZF\Hal\Collection', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Collection', $result);
 
         // Now, what happens if we render this?
         $model = new HalJsonModel();
