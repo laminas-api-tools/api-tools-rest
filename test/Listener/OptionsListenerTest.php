@@ -1,20 +1,22 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014-2017 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Rest\Listener;
+namespace LaminasTest\ApiTools\Rest\Listener;
 
+use Laminas\ApiTools\Rest\Listener\OptionsListener;
+use Laminas\EventManager\EventManager;
+use Laminas\EventManager\Test\EventListenerIntrospectionTrait;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Stdlib\Request as StdlibRequest;
+use LaminasTest\ApiTools\Rest\RouteMatchFactoryTrait;
 use PHPUnit\Framework\TestCase;
-use Zend\EventManager\EventManager;
-use Zend\EventManager\Test\EventListenerIntrospectionTrait;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\Mvc\MvcEvent;
-use Zend\Stdlib\Request as StdlibRequest;
-use ZF\Rest\Listener\OptionsListener;
-use ZFTest\Rest\RouteMatchFactoryTrait;
 
 class OptionsListenerTest extends TestCase
 {
