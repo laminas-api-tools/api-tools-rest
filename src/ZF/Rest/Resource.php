@@ -1,20 +1,22 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Rest;
+namespace Laminas\ApiTools\Rest;
 
 use ArrayObject;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\ApiProblem\ApiProblemResponse;
+use Laminas\ApiTools\Hal\Collection as HalCollection;
+use Laminas\EventManager\EventManager;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\Mvc\Router\RouteMatch;
+use Laminas\Stdlib\Parameters;
 use Traversable;
-use Zend\EventManager\EventManager;
-use Zend\EventManager\EventManagerInterface;
-use Zend\Mvc\Router\RouteMatch;
-use Zend\Stdlib\Parameters;
-use ZF\ApiProblem\ApiProblem;
-use ZF\ApiProblem\ApiProblemResponse;
-use ZF\Hal\Collection as HalCollection;
 
 /**
  * Base resource class
@@ -140,7 +142,7 @@ class Resource implements ResourceInterface
         $events->setIdentifiers(array(
             get_class($this),
             __CLASS__,
-            'ZF\Rest\ResourceInterface',
+            'Laminas\ApiTools\Rest\ResourceInterface',
         ));
         $this->events = $events;
         return $this;
@@ -170,7 +172,7 @@ class Resource implements ResourceInterface
      * The value returned by the last listener to the "create" event will be
      * returned as long as it is an array or object; otherwise, the original
      * $data is returned. If you wish to indicate failure to create, raise a
-     * ZF\Rest\Exception\CreationException from a listener.
+     * Laminas\ApiTools\Rest\Exception\CreationException from a listener.
      *
      * @param  array|object $data
      * @return array|object
@@ -212,7 +214,7 @@ class Resource implements ResourceInterface
      * Like create(), the return value of the last executed listener will be
      * returned, as long as it is an array or object; otherwise, $data is
      * returned. If you wish to indicate failure to update, raise a
-     * ZF\Rest\Exception\UpdateException.
+     * Laminas\ApiTools\Rest\Exception\UpdateException.
      *
      * @param  string|int $id
      * @param  array|object $data
@@ -255,7 +257,7 @@ class Resource implements ResourceInterface
      * Like update(), the return value of the last executed listener will be
      * returned, as long as it is an array or object; otherwise, $data is
      * returned. If you wish to indicate failure to update, raise a
-     * ZF\Rest\Exception\UpdateException.
+     * Laminas\ApiTools\Rest\Exception\UpdateException.
      *
      * @param  array $data
      * @return array|object
@@ -307,7 +309,7 @@ class Resource implements ResourceInterface
      * Like create(), the return value of the last executed listener will be
      * returned, as long as it is an array or object; otherwise, $data is
      * returned. If you wish to indicate failure to update, raise a
-     * ZF\Rest\Exception\PatchException.
+     * Laminas\ApiTools\Rest\Exception\PatchException.
      *
      * @param  string|int $id
      * @param  array|object $data
@@ -488,7 +490,7 @@ class Resource implements ResourceInterface
      * listener will be returned, as long as it is an array or Traversable;
      * otherwise, an empty array will be returned.
      *
-     * The recommendation is to return a \Zend\Paginator\Paginator instance,
+     * The recommendation is to return a \Laminas\Paginator\Paginator instance,
      * which will allow performing paginated sets, and thus allow the view
      * layer to select the current page based on the query string or route.
      *

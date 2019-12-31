@@ -1,11 +1,13 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
 return array(
-    'zf-rest' => array(
+    'api-tools-rest' => array(
         // 'Name of virtual controller' => array(
         //     'collection_http_methods'    => array(
         //         /* array of HTTP methods that are allowed on collections */
@@ -21,11 +23,11 @@ return array(
         //     'content_types'              => array(
         //         /* "content type"/array of media type pairs. These can be used
         //          * to determine how to parse incoming data by a listener.
-        //          * See zf-content-negotiation to get an idea how this may be
+        //          * See api-tools-content-negotiation to get an idea how this may be
         //          * used.
         //          */
         //     ),
-        //     'controller_class'           => 'Name of ZF\Rest\RestController derivative, if not using that class',
+        //     'controller_class'           => 'Name of Laminas\ApiTools\Rest\RestController derivative, if not using that class',
         //     'identifier_name'            => 'Name of parameter in route that acts as a resource identifier',
         //     'listener'                   => 'Name of service/class that acts as a listener on the composed Resource',
         //     'page_size'                  => 'Integer specifying the number of results to return per page, if collections are paginated',
@@ -41,13 +43,13 @@ return array(
 
     'service_manager' => array(
         'invokables' => array(
-            'ZF\Rest\RestParametersListener' => 'ZF\Rest\Listener\RestParametersListener',
+            'Laminas\ApiTools\Rest\RestParametersListener' => 'Laminas\ApiTools\Rest\Listener\RestParametersListener',
         ),
     ),
 
     'controllers' => array(
         'abstract_factories' => array(
-            'ZF\Rest\Factory\RestControllerFactory'
+            'Laminas\ApiTools\Rest\Factory\RestControllerFactory'
         )
     ),
 
