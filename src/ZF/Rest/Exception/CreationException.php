@@ -1,12 +1,14 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Rest\Exception;
+namespace Laminas\ApiTools\Rest\Exception;
 
-use ZF\ApiProblem\Exception\DomainException;
+use Laminas\ApiTools\ApiProblem\Exception\DomainException;
 
 /**
  * Throw this exception from a "create" resource listener in order to indicate
