@@ -1,24 +1,26 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Rest;
+namespace Laminas\ApiTools\Rest;
 
 use ArrayAccess;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\ApiProblem\ApiProblemResponse;
+use Laminas\ApiTools\ApiProblem\Exception\DomainException;
+use Laminas\ApiTools\ContentNegotiation\ViewModel as ContentNegotiationViewModel;
+use Laminas\ApiTools\Hal\Collection as HalCollection;
+use Laminas\ApiTools\Hal\Entity as HalEntity;
+use Laminas\Http\Header\Allow;
+use Laminas\Http\Response;
+use Laminas\Mvc\Controller\AbstractRestfulController;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Stdlib\RequestInterface;
 use Traversable;
-use Zend\Http\Header\Allow;
-use Zend\Http\Response;
-use Zend\Mvc\Controller\AbstractRestfulController;
-use Zend\Mvc\MvcEvent;
-use Zend\Stdlib\RequestInterface;
-use ZF\ApiProblem\ApiProblem;
-use ZF\ApiProblem\ApiProblemResponse;
-use ZF\ApiProblem\Exception\DomainException;
-use ZF\ContentNegotiation\ViewModel as ContentNegotiationViewModel;
-use ZF\Hal\Collection as HalCollection;
-use ZF\Hal\Entity as HalEntity;
 
 /**
  * Controller for handling resources.
@@ -287,7 +289,7 @@ class RestController extends AbstractRestfulController
         }
 
         // Set the fallback content negotiation to use HalJson.
-        $e->setParam('ZFContentNegotiationFallback', 'HalJson');
+        $e->setParam('LaminasContentNegotiationFallback', 'HalJson');
 
         // Use content negotiation for creating the view model
         $viewModel = new ContentNegotiationViewModel(array('payload' => $return));
@@ -696,8 +698,8 @@ class RestController extends AbstractRestfulController
      * Attempts to see if an identifier was passed in the URI,
      * returning it if found. Otherwise, returns a boolean false.
      *
-     * @param  \Zend\Mvc\Router\RouteMatch $routeMatch
-     * @param  \Zend\Http\Request $request
+     * @param  \Laminas\Mvc\Router\RouteMatch $routeMatch
+     * @param  \Laminas\Http\Request $request
      * @return false|mixed
      */
     protected function getIdentifier($routeMatch, $request)
@@ -761,7 +763,7 @@ class RestController extends AbstractRestfulController
             return;
         }
 
-        $identity = $event->getParam('ZF\MvcAuth\Identity');
+        $identity = $event->getParam('Laminas\ApiTools\MvcAuth\Identity');
         if (! $identity) {
             return;
         }
@@ -783,7 +785,7 @@ class RestController extends AbstractRestfulController
             return;
         }
 
-        $inputFilter = $event->getParam('ZF\ContentValidation\InputFilter');
+        $inputFilter = $event->getParam('Laminas\ApiTools\ContentValidation\InputFilter');
         if (! $inputFilter) {
             return;
         }
