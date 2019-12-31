@@ -1,8 +1,8 @@
-REST: ZF2 Module for JSON REST Services
+REST: Laminas Module for JSON REST Services
 =======================================
 
-[![Build Status](https://travis-ci.org/zfcampus/zf-rest.png)](https://travis-ci.org/zfcampus/zf-rest)
-[![Coverage Status](https://coveralls.io/repos/zfcampus/zf-rest/badge.png?branch=master)](https://coveralls.io/r/zfcampus/zf-rest)
+[![Build Status](https://travis-ci.org/laminas-api-tools/api-tools-rest.png)](https://travis-ci.org/laminas-api-tools/api-tools-rest)
+[![Coverage Status](https://coveralls.io/repos/laminas-api-tools/api-tools-rest/badge.png?branch=master)](https://coveralls.io/r/laminas-api-tools/api-tools-rest)
 
 This module provides structure and code for quickly implementing RESTful APIs
 that use JSON as a transport.
