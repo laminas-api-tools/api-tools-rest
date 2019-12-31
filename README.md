@@ -1,7 +1,7 @@
-ZF REST
+Laminas REST
 =======
 
-[![Build Status](https://travis-ci.org/zfcampus/zf-rest.png)](https://travis-ci.org/zfcampus/zf-rest)
+[![Build Status](https://travis-ci.org/laminas-api-tools/api-tools-rest.png)](https://travis-ci.org/laminas-api-tools/api-tools-rest)
 
 Introduction
 ------------
@@ -22,14 +22,14 @@ Installation
 Run the following `composer` command:
 
 ```console
-$ composer require "zfcampus/zf-rest:~1.0-dev"
+$ composer require "laminas-api-tools/api-tools-rest:~1.0-dev"
 ```
 
 Alternately, manually add the following to your `composer.json`, in the `require` section:
 
 ```javascript
 "require": {
-    "zfcampus/zf-rest": "~1.0-dev"
+    "laminas-api-tools/api-tools-rest": "~1.0-dev"
 }
 ```
 
@@ -43,7 +43,7 @@ return array(
     /* ... */
     'modules' => array(
         /* ... */
-        'ZF\Rest',
+        'Laminas\ApiTools\Rest',
     ),
     /* ... */
 );
@@ -54,11 +54,11 @@ Configuration
 
 ### User Configuration
 
-The top-level key used to configure this module is `zf-rest`.
+The top-level key used to configure this module is `api-tools-rest`.
 
 #### Key: Controller Service Name
 
-Each key under `zf-rest` is a controller service name, and the value is an array with one or more of
+Each key under `api-tools-rest` is a controller service name, and the value is an array with one or more of
 the following keys.
 
 ##### Sub-key: `collection_http_methods`
@@ -84,13 +84,13 @@ Examples of query string arguments you may want to whitelist include "sort", "fi
 ##### Sub-key: `controller_class` (optional)
 
 An alternate controller class to use when creating the controller service; it **must** extend
-`ZF\Rest\RestController`. Only use this if you are altering the workflow present in the
+`Laminas\ApiTools\Rest\RestController`. Only use this if you are altering the workflow present in the
 `RestController`.
 
 ##### Sub-key: `entity_class`
 
 The class to be used for representing an entity.  Primarily useful for introspection (for example in
-the Apigility Admin UI).
+the Laminas API Tools Admin UI).
 
 ##### Sub-key: `route_name`
 
@@ -108,7 +108,7 @@ The resource class that will be dispatched to handle any collection or entity re
 ##### Sub-key: `page_size`
 
 The number of entities to return per "page" of a collection. This is only used if the collection
-returned is a `Zend\Paginator\Paginator` instance or derivative.
+returned is a `Laminas\Paginator\Paginator` instance or derivative.
 
 ##### Sub-key: `page_size_param` (optional)
 
@@ -145,22 +145,22 @@ of service attacks on your API.
 
 ### System Configuration
 
-The `zf-rest` module provides the following configuration to ensure it operates properly in a Zend
+The `api-tools-rest` module provides the following configuration to ensure it operates properly in a Laminas
 Framework 2 application.
 
 ```php
 'service_manager' => array(
     'invokables' => array(
-        'ZF\Rest\RestParametersListener' => 'ZF\Rest\Listener\RestParametersListener',
+        'Laminas\ApiTools\Rest\RestParametersListener' => 'Laminas\ApiTools\Rest\Listener\RestParametersListener',
     ),
     'factories' => array(
-        'ZF\Rest\OptionsListener' => 'ZF\Rest\Factory\OptionsListenerFactory',
+        'Laminas\ApiTools\Rest\OptionsListener' => 'Laminas\ApiTools\Rest\Factory\OptionsListenerFactory',
     ),
 ),
 
 'controllers' => array(
     'abstract_factories' => array(
-        'ZF\Rest\Factory\RestControllerFactory'
+        'Laminas\ApiTools\Rest\Factory\RestControllerFactory'
     )
 ),
 
@@ -171,12 +171,12 @@ Framework 2 application.
 ),
 ```
 
-ZF2 Events
+Laminas Events
 ==========
 
 ### Listeners
 
-#### `ZF\Rest\Listener\OptionsListener
+#### `Laminas\ApiTools\Rest\Listener\OptionsListener
 
 This listener is registered to the `MvcEvent::EVENT_ROUTE` event with a priority of `-100`. 
 It serves two purposes:
@@ -187,22 +187,22 @@ It serves two purposes:
 - For `OPTIONS` requests, it will respond with a `200 OK` response and a populated `Allow` header
   indicating which request methods may be used.
 
-#### `ZF\Rest\Listener\RestParametersListener`
+#### `Laminas\ApiTools\Rest\Listener\RestParametersListener`
 
 This listener is attached to the shared `dispatch` event at priority `100`.  The listener maps query
 string arguments from the request to the `Resource` object composed in the `RestController`, as well
 as injects the `RouteMatch`.
 
-ZF2 Services
+Laminas Services
 ============
 
 ### Models
 
-#### `ZF\Rest\AbstractResourceListener`
+#### `Laminas\ApiTools\Rest\AbstractResourceListener`
 
-This abstract class is the base implementation of a [Resource](zfrestresource) listener.  Since
-dispatching of `zf-rest` based REST services is event driven, a listener must be constructed to
-listen for events triggered from `ZF\Rest\Resource` (which is called from the `RestController`).
+This abstract class is the base implementation of a [Resource](laminasrestresource) listener.  Since
+dispatching of `api-tools-rest` based REST services is event driven, a listener must be constructed to
+listen for events triggered from `Laminas\ApiTools\Rest\Resource` (which is called from the `RestController`).
 The following methods are called during `dispatch()`, depending on the HTTP method:
 
 - `create($data)` - Triggered by a `POST` request to a resource *collection*.
@@ -215,7 +215,7 @@ The following methods are called during `dispatch()`, depending on the HTTP meth
 - `update($id, $data)` - Triggered by a `PUT` request to a resource *entity*.
 - `replaceList($data)` - Triggered by a `PUT` request to a resource *collection*.
 
-#### `ZF\Rest\Resource`
+#### `Laminas\ApiTools\Rest\Resource`
 
 The `Resource` object handles dispatching business logic for REST requests. It composes an
 `EventManager` instance in order to delegate operations to attached listeners. Additionally, it
@@ -224,13 +224,13 @@ to seed the `ResourceEvent` it creates and passes to listeners when triggering e
 
 ### Controller
 
-#### `ZF\Rest\RestController`
+#### `Laminas\ApiTools\Rest\RestController`
 
 This is the base controller implementation used when a controller service name matches a configured
-REST service. All REST services managed by `zf-rest` will use this controller (though separate
+REST service. All REST services managed by `api-tools-rest` will use this controller (though separate
 instances of it), unless they specify a [controller_class](#subkeycontrollerclassoptional) option.
-Instances are created via the `ZF\Rest\Factory\RestControllerFactory` abstract factory.
+Instances are created via the `Laminas\ApiTools\Rest\Factory\RestControllerFactory` abstract factory.
 
-The `RestController` calls the appropriate method in `ZF\Rest\Resource` based on the requested HTTP
-method. It returns [HAL](https://github.com/zfcampus/zf-hal) payloads on success, and [API
-Problem](https://github.com/zfcampus/zf-api-problem) responses on error.
+The `RestController` calls the appropriate method in `Laminas\ApiTools\Rest\Resource` based on the requested HTTP
+method. It returns [HAL](https://github.com/laminas-api-tools/api-tools-hal) payloads on success, and [API
+Problem](https://github.com/laminas-api-tools/api-tools-api-problem) responses on error.
