@@ -1,24 +1,25 @@
 {
-    "name": "zfcampus/zf-rest",
-    "description": "ZF2 Module providing structure for RESTful resources",
-    "type": "library",
+    "name": "laminas-api-tools/api-tools-rest",
+    "description": "Laminas Module providing structure for RESTful resources",
     "license": "BSD-3-Clause",
     "keywords": [
-        "zf2",
-        "zend",
+        "laminas",
+        "api-tools",
         "module",
         "rest"
     ],
-    "homepage": "http://apigility.org/",
+    "homepage": "https://api-tools.getlaminas.org",
     "support": {
-        "email": "apigility-users@zend.com",
-        "irc": "irc://irc.freenode.net/apigility",
-        "source": "https://github.com/zfcampus/zf-rest",
-        "issues": "https://github.com/zfcampus/zf-rest/issues"
+        "docs": "https://api-tools.getlaminas.org/documentation",
+        "issues": "https://github.com/laminas-api-tools/api-tools-rest/issues",
+        "source": "https://github.com/laminas-api-tools/api-tools-rest",
+        "rss": "https://github.com/laminas-api-tools/api-tools-rest/releases.atom",
+        "chat": "https://laminas.dev/chat",
+        "forum": "https://discourse.laminas.dev"
     },
-    "repositories": [
-        { "type": "composer", "url": "https://packages.zendframework.com" }
-    ],
+    "config": {
+        "sort-packages": true
+    },
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
@@ -26,33 +27,37 @@
     },
     "require": {
         "php": ">=5.3.23",
-        "zfcampus/zf-api-problem": "~1.0-dev",
-        "zfcampus/zf-content-negotiation": "~1.0-dev",
-        "zfcampus/zf-hal": "~1.0-dev",
-        "zendframework/zend-eventmanager": "~2.3-dev",
-        "zendframework/zend-json": "~2.3-dev",
-        "zendframework/zend-loader": "~2.3-dev",
-        "zendframework/zend-mvc": "~2.3-dev",
-        "zendframework/zend-paginator": "~2.3-dev",
-        "zendframework/zend-stdlib": "~2.3-dev"
+        "laminas-api-tools/api-tools-api-problem": "~1.0-dev",
+        "laminas-api-tools/api-tools-content-negotiation": "~1.0-dev",
+        "laminas-api-tools/api-tools-hal": "~1.0-dev",
+        "laminas/laminas-eventmanager": "~2.3-dev",
+        "laminas/laminas-json": "~2.3-dev",
+        "laminas/laminas-loader": "~2.3-dev",
+        "laminas/laminas-mvc": "~2.3-dev",
+        "laminas/laminas-paginator": "~2.3-dev",
+        "laminas/laminas-stdlib": "~2.3-dev",
+        "laminas/laminas-zendframework-bridge": "^1.0"
     },
     "require-dev": {
-        "phpunit/PHPUnit": "3.7.*",
-        "zendframework/zend-console": "~2.3-dev",
-        "zendframework/zend-escaper": "~2.3-dev",
-        "zendframework/zend-http": "~2.3-dev",
-        "zendframework/zend-servicemanager": "~2.3-dev",
-        "zendframework/zend-uri": "~2.3-dev",
-        "zendframework/zend-validator": "~2.3-dev",
-        "zendframework/zend-view": "~2.3-dev"
+        "laminas/laminas-console": "~2.3-dev",
+        "laminas/laminas-escaper": "~2.3-dev",
+        "laminas/laminas-http": "~2.3-dev",
+        "laminas/laminas-servicemanager": "~2.3-dev",
+        "laminas/laminas-uri": "~2.3-dev",
+        "laminas/laminas-validator": "~2.3-dev",
+        "laminas/laminas-view": "~2.3-dev",
+        "phpunit/phpunit": "3.7.*"
     },
     "autoload": {
         "psr-0": {
-            "ZF\\Rest\\": "src/",
-            "ZFTest\\Rest\\": "test/"
+            "Laminas\\ApiTools\\Rest\\": "src/",
+            "LaminasTest\\ApiTools\\Rest\\": "test/"
         },
         "classmap": [
             "Module.php"
         ]
+    },
+    "replace": {
+        "zfcampus/zf-rest": "self.version"
     }
 }

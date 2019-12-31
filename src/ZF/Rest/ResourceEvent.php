@@ -1,15 +1,17 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Rest;
+namespace Laminas\ApiTools\Rest;
 
-use Zend\EventManager\Event;
-use Zend\InputFilter\InputFilterInterface;
-use Zend\Mvc\Router\RouteMatch;
-use Zend\Stdlib\Parameters;
+use Laminas\EventManager\Event;
+use Laminas\InputFilter\InputFilterInterface;
+use Laminas\Mvc\Router\RouteMatch;
+use Laminas\Stdlib\Parameters;
 
 class ResourceEvent extends Event
 {
