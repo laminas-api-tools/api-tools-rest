@@ -1,22 +1,24 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014-2017 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Rest\Factory;
+namespace LaminasTest\ApiTools\Rest\Factory;
 
-use Zend\EventManager\EventManager;
-use Zend\EventManager\SharedEventManager;
-use Zend\Mvc\Service\ControllerPluginManagerFactory;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use ZF\Rest\Factory\RestControllerFactory;
+use Laminas\ApiTools\Rest\Factory\RestControllerFactory;
+use Laminas\ApiTools\Rest\Resource;
+use Laminas\ApiTools\Rest\ResourceInterface;
+use Laminas\ApiTools\Rest\RestController;
+use Laminas\EventManager\EventManager;
+use Laminas\EventManager\SharedEventManager;
+use Laminas\Mvc\Controller\ControllerManager;
+use Laminas\Mvc\Service\ControllerPluginManagerFactory;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
-use Zend\Mvc\Controller\ControllerManager;
-use Zend\ServiceManager\ServiceManager;
-use ZF\Rest\Resource;
-use ZF\Rest\ResourceInterface;
-use ZF\Rest\RestController;
 
 class RestControllerFactoryTest extends TestCase
 {
@@ -49,7 +51,7 @@ class RestControllerFactoryTest extends TestCase
     public function getConfig()
     {
         return [
-            'zf-rest' => [
+            'api-tools-rest' => [
                 'ApiController' => [
                     'listener'   => TestAsset\Listener::class,
                     'route_name' => 'api',
@@ -68,7 +70,7 @@ class RestControllerFactoryTest extends TestCase
     public function testWillInstantiateAlternateRestControllerWhenSpecified()
     {
         $config = $this->services->get('config');
-        $config['zf-rest']['ApiController']['controller_class'] = TestAsset\CustomController::class;
+        $config['api-tools-rest']['ApiController']['controller_class'] = TestAsset\CustomController::class;
         $this->services->setAllowOverride(true);
         $this->services->setService('config', $config);
         $controller = $this->controllers->get('ApiController');
@@ -89,7 +91,7 @@ class RestControllerFactoryTest extends TestCase
     public function testControllerEventManagerIdentifiersAreAsSpecified()
     {
         $config = $this->services->get('config');
-        $config['zf-rest']['ApiController']['identifier'] = TestAsset\ExtraControllerListener::class;
+        $config['api-tools-rest']['ApiController']['identifier'] = TestAsset\ExtraControllerListener::class;
         $this->services->setAllowOverride(true);
         $this->services->setService('config', $config);
 
@@ -121,7 +123,7 @@ class RestControllerFactoryTest extends TestCase
     public function testResourceEventManagerIdentifiersAreAsSpecifiedString()
     {
         $config = $this->services->get('config');
-        $config['zf-rest']['ApiController']['resource_identifiers'] = TestAsset\ExtraResourceListener::class;
+        $config['api-tools-rest']['ApiController']['resource_identifiers'] = TestAsset\ExtraResourceListener::class;
         $this->services->setAllowOverride(true);
         $this->services->setService('config', $config);
 
@@ -143,7 +145,7 @@ class RestControllerFactoryTest extends TestCase
     public function testResourceEventManagerIdentifiersAreAsSpecifiedArray()
     {
         $config = $this->services->get('config');
-        $config['zf-rest']['ApiController']['resource_identifiers'] = [
+        $config['api-tools-rest']['ApiController']['resource_identifiers'] = [
             TestAsset\ExtraResourceListener1::class,
             TestAsset\ExtraResourceListener2::class,
         ];

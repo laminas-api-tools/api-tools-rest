@@ -1,23 +1,25 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014-2017 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Rest\Listener;
+namespace LaminasTest\ApiTools\Rest\Listener;
 
+use Laminas\ApiTools\Rest\Listener\RestParametersListener;
+use Laminas\ApiTools\Rest\Resource;
+use Laminas\ApiTools\Rest\RestController;
+use Laminas\EventManager\SharedEventManager;
+use Laminas\Http\PhpEnvironment\Request;
+use Laminas\Mvc\Controller\AbstractRestfulController;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\Router\RouteMatch as V2RouteMatch;
+use Laminas\Router\RouteMatch;
+use Laminas\Stdlib\Parameters;
+use LaminasTest\ApiTools\Rest\RouteMatchFactoryTrait;
 use PHPUnit\Framework\TestCase;
-use Zend\EventManager\SharedEventManager;
-use Zend\Http\PhpEnvironment\Request;
-use Zend\Mvc\Controller\AbstractRestfulController;
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\RouteMatch as V2RouteMatch;
-use Zend\Router\RouteMatch;
-use Zend\Stdlib\Parameters;
-use ZF\Rest\Listener\RestParametersListener;
-use ZF\Rest\Resource;
-use ZF\Rest\RestController;
-use ZFTest\Rest\RouteMatchFactoryTrait;
 
 /**
  * @subpackage UnitTest
@@ -92,7 +94,7 @@ class RestParametersListenerTest extends TestCase
         $sharedEventManager = new SharedEventManager();
         $this->listener->attachShared($sharedEventManager);
 
-        // Vary identifiers based on zend-eventmanager version
+        // Vary identifiers based on laminas-eventmanager version
         $identifiers = method_exists($sharedEventManager, 'getEvents')
             ? RestController::class
             : [RestController::class];
@@ -108,7 +110,7 @@ class RestParametersListenerTest extends TestCase
 
         $this->listener->detachShared($sharedEventManager);
 
-        // Vary identifiers based on zend-eventmanager version
+        // Vary identifiers based on laminas-eventmanager version
         $identifiers = method_exists($sharedEventManager, 'getEvents')
             ? RestController::class
             : [RestController::class];
