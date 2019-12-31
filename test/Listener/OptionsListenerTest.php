@@ -1,19 +1,21 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Rest\Listener;
+namespace LaminasTest\ApiTools\Rest\Listener;
 
+use Laminas\ApiTools\Rest\Listener\OptionsListener;
+use Laminas\EventManager\EventManager;
+use Laminas\Http\Request;
+use Laminas\Http\Response;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\Router\RouteMatch;
+use Laminas\Stdlib\Request as StdlibRequest;
 use PHPUnit_Framework_TestCase as TestCase;
-use Zend\EventManager\EventManager;
-use Zend\Http\Request;
-use Zend\Http\Response;
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\RouteMatch;
-use Zend\Stdlib\Request as StdlibRequest;
-use ZF\Rest\Listener\OptionsListener;
 
 class OptionsListenerTest extends TestCase
 {
@@ -27,7 +29,7 @@ class OptionsListenerTest extends TestCase
         foreach ($listeners as $test) {
             break;
         }
-        $this->assertInstanceOf('Zend\Stdlib\CallbackHandler', $test);
+        $this->assertInstanceOf('Laminas\Stdlib\CallbackHandler', $test);
         $this->assertEquals([$listener, 'onRoute'], $test->getCallback());
         $this->assertEquals(-100, $test->getMetadatum('priority'));
     }
@@ -265,7 +267,7 @@ class OptionsListenerTest extends TestCase
         $mvcEvent->setResponse(new Response());
 
         $result = $listener->onRoute($mvcEvent);
-        $this->assertInstanceOf('Zend\Http\Response', $result);
+        $this->assertInstanceOf('Laminas\Http\Response', $result);
         $this->assertEquals(405, $result->getStatusCode());
         $headers = $result->getHeaders();
         $this->assertTrue($headers->has('Allow'));

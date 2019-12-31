@@ -1,34 +1,36 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Rest;
+namespace LaminasTest\ApiTools\Rest;
 
+use Laminas\ApiTools\ApiProblem\View\ApiProblemRenderer;
+use Laminas\ApiTools\ContentNegotiation\AcceptListener;
+use Laminas\ApiTools\Hal\Plugin\Hal as HalHelper;
+use Laminas\ApiTools\Hal\View\HalJsonModel;
+use Laminas\ApiTools\Hal\View\HalJsonRenderer;
+use Laminas\ApiTools\Rest\Resource;
+use Laminas\ApiTools\Rest\RestController;
+use Laminas\Http\PhpEnvironment\Request;
+use Laminas\Http\PhpEnvironment\Response;
+use Laminas\Mvc\Controller\ControllerManager;
+use Laminas\Mvc\Controller\PluginManager as ControllerPluginManager;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\Router\Http\TreeRouteStack;
+use Laminas\Mvc\Router\RouteMatch;
+use Laminas\Paginator\Adapter\ArrayAdapter as ArrayPaginator;
+use Laminas\Paginator\Paginator;
+use Laminas\ServiceManager\ServiceManager;
+use Laminas\Stdlib\Parameters;
+use Laminas\Uri;
+use Laminas\View\Helper\ServerUrl as ServerUrlHelper;
+use Laminas\View\Helper\Url as UrlHelper;
+use Laminas\View\HelperPluginManager;
 use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Http\PhpEnvironment\Request;
-use Zend\Http\PhpEnvironment\Response;
-use Zend\Mvc\Controller\ControllerManager;
-use Zend\Mvc\Controller\PluginManager as ControllerPluginManager;
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\Http\TreeRouteStack;
-use Zend\Mvc\Router\RouteMatch;
-use Zend\Paginator\Adapter\ArrayAdapter as ArrayPaginator;
-use Zend\Paginator\Paginator;
-use Zend\ServiceManager\ServiceManager;
-use Zend\Stdlib\Parameters;
-use Zend\Uri;
-use Zend\View\HelperPluginManager;
-use Zend\View\Helper\ServerUrl as ServerUrlHelper;
-use Zend\View\Helper\Url as UrlHelper;
-use ZF\ApiProblem\View\ApiProblemRenderer;
-use ZF\ContentNegotiation\AcceptListener;
-use ZF\Hal\Plugin\Hal as HalHelper;
-use ZF\Hal\View\HalJsonModel;
-use ZF\Hal\View\HalJsonRenderer;
-use ZF\Rest\Resource;
-use ZF\Rest\RestController;
 
 /**
  * @subpackage UnitTest
@@ -156,7 +158,7 @@ class CollectionIntegrationTest extends TestCase
             'controllers' => [],
             'selectors'  => [
                 'HalJson' => [
-                    'ZF\Hal\View\HalJsonModel' => [
+                    'Laminas\ApiTools\Hal\View\HalJsonModel' => [
                         'application/json',
                     ],
                 ],
@@ -221,7 +223,7 @@ class CollectionIntegrationTest extends TestCase
             ]);
         });
         $result = $this->controller->dispatch($this->request, $this->response);
-        $this->assertInstanceOf('ZF\Hal\View\HalJsonModel', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\View\HalJsonModel', $result);
 
         $json = $this->renderer->render($result);
         $payload = json_decode($json, true);
@@ -247,13 +249,13 @@ class CollectionIntegrationTest extends TestCase
     public function getServiceManager()
     {
         $controllers = new ControllerManager();
-        $controllers->addAbstractFactory('ZF\Rest\Factory\RestControllerFactory');
+        $controllers->addAbstractFactory('Laminas\ApiTools\Rest\Factory\RestControllerFactory');
 
         $services    = new ServiceManager();
-        $services->setService('Zend\ServiceManager\ServiceLocatorInterface', $services);
+        $services->setService('Laminas\ServiceManager\ServiceLocatorInterface', $services);
         $services->setService('ControllerLoader', $controllers);
         $services->setService('Config', [
-            'zf-rest' => [
+            'api-tools-rest' => [
                 'Api\RestController' => [
                     'listener'                   => 'CollectionIntegrationListener',
                     'page_size'                  => 3,
@@ -266,19 +268,19 @@ class CollectionIntegrationTest extends TestCase
         ]);
         $services->setInvokableClass(
             'SharedEventManager',
-            'Zend\EventManager\SharedEventManager'
+            'Laminas\EventManager\SharedEventManager'
         );
         $services->setInvokableClass(
             'CollectionIntegrationListener',
-            'ZFTest\Rest\TestAsset\CollectionIntegrationListener'
+            'LaminasTest\ApiTools\Rest\TestAsset\CollectionIntegrationListener'
         );
         $services->setFactory(
             'EventManager',
-            'Zend\Mvc\Service\EventManagerFactory'
+            'Laminas\Mvc\Service\EventManagerFactory'
         );
         $services->setFactory(
             'ControllerPluginManager',
-            'Zend\Mvc\Service\ControllerPluginManagerFactory'
+            'Laminas\Mvc\Service\ControllerPluginManagerFactory'
         );
         $services->setShared('EventManager', false);
 
@@ -306,7 +308,7 @@ class CollectionIntegrationTest extends TestCase
         $this->setUpContentNegotiation($controller);
 
         $result = $controller->dispatch($this->request, $this->response);
-        $this->assertInstanceOf('ZF\Hal\View\HalJsonModel', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\View\HalJsonModel', $result);
 
         $json = $this->renderer->render($result);
         $payload = json_decode($json, true);
@@ -343,10 +345,10 @@ class CollectionIntegrationTest extends TestCase
 
         $controller->dispatch($this->request, $this->response);
         $resource = $controller->getResource();
-        $this->assertInstanceOf('ZF\Rest\Resource', $resource);
+        $this->assertInstanceOf('Laminas\ApiTools\Rest\Resource', $resource);
         $params = $resource->getQueryParams();
 
-        $this->assertInstanceOf('Zend\Stdlib\Parameters', $params);
+        $this->assertInstanceOf('Laminas\Stdlib\Parameters', $params);
         $this->assertSame('foo', $params->get('query'));
         $this->assertFalse($params->offsetExists('bar'));
     }

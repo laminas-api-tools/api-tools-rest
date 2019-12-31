@@ -1,15 +1,17 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Rest\Factory;
+namespace LaminasTest\ApiTools\Rest\Factory;
 
+use Laminas\ApiTools\Rest\Factory\OptionsListenerFactory;
+use Laminas\ServiceManager\ServiceManager;
 use PHPUnit_Framework_TestCase as TestCase;
 use ReflectionObject;
-use Zend\ServiceManager\ServiceManager;
-use ZF\Rest\Factory\OptionsListenerFactory;
 
 class OptionsListenerFactoryTest extends TestCase
 {
@@ -21,7 +23,7 @@ class OptionsListenerFactoryTest extends TestCase
 
     public function seedConfigService()
     {
-        return ['zf-rest' => [
+        return ['api-tools-rest' => [
             'some-controller' => [
                 'listener'                => 'SomeListener',
                 'route_name'              => 'api.rest.some',
@@ -41,12 +43,12 @@ class OptionsListenerFactoryTest extends TestCase
 
         $listener = $this->factory->createService($this->services);
 
-        $this->assertInstanceOf('ZF\Rest\Listener\OptionsListener', $listener);
+        $this->assertInstanceOf('Laminas\ApiTools\Rest\Listener\OptionsListener', $listener);
 
         $r = new ReflectionObject($listener);
         $p = $r->getProperty('config');
         $p->setAccessible(true);
         $instanceConfig = $p->getValue($listener);
-        $this->assertEquals($config['zf-rest'], $instanceConfig);
+        $this->assertEquals($config['api-tools-rest'], $instanceConfig);
     }
 }
