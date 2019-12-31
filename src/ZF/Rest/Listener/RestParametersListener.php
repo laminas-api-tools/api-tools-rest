@@ -1,29 +1,31 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Rest\Listener;
+namespace Laminas\ApiTools\Rest\Listener;
 
-use ZF\Rest\RestController;
-use Zend\EventManager\EventManagerInterface;
-use Zend\EventManager\ListenerAggregateInterface;
-use Zend\EventManager\SharedEventManagerInterface;
-use Zend\EventManager\SharedListenerAggregateInterface;
-use Zend\Mvc\MvcEvent;
+use Laminas\ApiTools\Rest\RestController;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\ListenerAggregateInterface;
+use Laminas\EventManager\SharedEventManagerInterface;
+use Laminas\EventManager\SharedListenerAggregateInterface;
+use Laminas\Mvc\MvcEvent;
 
 class RestParametersListener implements
     ListenerAggregateInterface,
     SharedListenerAggregateInterface
 {
     /**
-     * @var \Zend\Stdlib\CallbackHandler[]
+     * @var \Laminas\Stdlib\CallbackHandler[]
      */
     protected $listeners = array();
 
     /**
-     * @var \Zend\Stdlib\CallbackHandler[]
+     * @var \Laminas\Stdlib\CallbackHandler[]
      */
     protected $sharedListeners = array();
 
@@ -52,7 +54,7 @@ class RestParametersListener implements
      */
     public function attachShared(SharedEventManagerInterface $events)
     {
-        $this->sharedListeners[] = $events->attach('ZF\Rest\RestController', 'dispatch', array($this, 'onDispatch'), 100);
+        $this->sharedListeners[] = $events->attach('Laminas\ApiTools\Rest\RestController', 'dispatch', array($this, 'onDispatch'), 100);
     }
 
     /**

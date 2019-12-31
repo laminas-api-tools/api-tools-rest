@@ -1,13 +1,15 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Rest;
+namespace Laminas\ApiTools\Rest;
 
 /**
- * ZF2 module
+ * Laminas module
  */
 class Module
 {
@@ -18,8 +20,8 @@ class Module
      */
     public function getAutoloaderConfig()
     {
-        return array('Zend\Loader\StandardAutoloader' => array('namespaces' => array(
-            __NAMESPACE__ => __DIR__ . '/src/ZF/Rest/',
+        return array('Laminas\Loader\StandardAutoloader' => array('namespaces' => array(
+            __NAMESPACE__ => __DIR__ . '/src/Laminas/Rest/',
         )));
     }
 
@@ -38,7 +40,7 @@ class Module
      *
      * Attaches a listener to the RestController dispatch event.
      *
-     * @param  \Zend\Mvc\MvcEvent $e
+     * @param  \Laminas\Mvc\MvcEvent $e
      */
     public function onBootstrap($e)
     {
@@ -46,6 +48,6 @@ class Module
         $services     = $app->getServiceManager();
         $events       = $app->getEventManager();
         $sharedEvents = $events->getSharedManager();
-        $sharedEvents->attachAggregate($services->get('ZF\Rest\RestParametersListener'));
+        $sharedEvents->attachAggregate($services->get('Laminas\ApiTools\Rest\RestParametersListener'));
     }
 }
