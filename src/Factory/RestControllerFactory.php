@@ -1,21 +1,23 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Rest\Factory;
+namespace Laminas\ApiTools\Rest\Factory;
 
-use Zend\EventManager\Event;
-use Zend\Stdlib\Parameters;
-use ZF\Hal\Collection;
-use ZF\Rest\Resource;
-use ZF\Rest\RestController;
-use Zend\EventManager\ListenerAggregateInterface;
-use Zend\ServiceManager\AbstractFactoryInterface;
-use Zend\ServiceManager\Exception\ServiceNotCreatedException;
-use Zend\ServiceManager\Exception\ServiceNotFoundException;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Laminas\ApiTools\Hal\Collection;
+use Laminas\ApiTools\Rest\Resource;
+use Laminas\ApiTools\Rest\RestController;
+use Laminas\EventManager\Event;
+use Laminas\EventManager\ListenerAggregateInterface;
+use Laminas\ServiceManager\AbstractFactoryInterface;
+use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
+use Laminas\ServiceManager\Exception\ServiceNotFoundException;
+use Laminas\ServiceManager\ServiceLocatorInterface;
+use Laminas\Stdlib\Parameters;
 
 /**
  * Class RestControllerFactory
@@ -50,13 +52,13 @@ class RestControllerFactory implements AbstractFactoryInterface
         }
 
         $config = $services->get('Config');
-        if (!isset($config['zf-rest'])
-            || !is_array($config['zf-rest'])
+        if (!isset($config['api-tools-rest'])
+            || !is_array($config['api-tools-rest'])
         ) {
             $this->lookupCache[$requestedName] = false;
             return false;
         }
-        $config = $config['zf-rest'];
+        $config = $config['api-tools-rest'];
 
         if (!isset($config[$requestedName])
             || !isset($config[$requestedName]['listener'])
@@ -97,7 +99,7 @@ class RestControllerFactory implements AbstractFactoryInterface
     {
         $services = $controllers->getServiceLocator();
         $config   = $services->get('Config');
-        $config   = $config['zf-rest'][$requestedName];
+        $config   = $config['api-tools-rest'][$requestedName];
 
         if ($services->has($config['listener'])) {
             $listener = $services->get($config['listener']);
@@ -108,7 +110,7 @@ class RestControllerFactory implements AbstractFactoryInterface
         if (!$listener instanceof ListenerAggregateInterface) {
             throw new ServiceNotCreatedException(sprintf(
                 '%s expects that the "listener" reference a service that implements '
-                . 'Zend\EventManager\ListenerAggregateInterface; received %s',
+                . 'Laminas\EventManager\ListenerAggregateInterface; received %s',
                 __METHOD__,
                 (is_object($listener) ? get_class($listener) : gettype($listener))
             ));
@@ -134,12 +136,12 @@ class RestControllerFactory implements AbstractFactoryInterface
             $identifier = $config['identifier'];
         }
 
-        $controllerClass = isset($config['controller_class']) ? $config['controller_class'] : 'ZF\Rest\RestController';
+        $controllerClass = isset($config['controller_class']) ? $config['controller_class'] : 'Laminas\ApiTools\Rest\RestController';
         $controller      = new $controllerClass($identifier);
 
         if (!$controller instanceof RestController) {
             throw new ServiceNotCreatedException(sprintf(
-                '"%s" must be an implementation of ZF\Rest\RestController',
+                '"%s" must be an implementation of Laminas\ApiTools\Rest\RestController',
                 $controllerClass
             ));
         }
@@ -263,7 +265,7 @@ class RestControllerFactory implements AbstractFactoryInterface
 
                 /**
                  * The identifierName is a property of the ancestor
-                 * and is described by Apigility as route_identifier_name
+                 * and is described by Laminas API Tools as route_identifier_name
                  */
                 case 'route_identifier_name':
                     $controller->setIdentifierName($value);

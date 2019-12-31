@@ -1,21 +1,23 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Rest;
+namespace LaminasTest\ApiTools\Rest;
 
 use ArrayIterator;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\Rest\Resource;
+use Laminas\EventManager\EventManager;
+use Laminas\Http\Response;
+use Laminas\Mvc\Router\RouteMatch;
+use Laminas\Stdlib\ArrayObject;
+use Laminas\Stdlib\Parameters;
 use PHPUnit_Framework_TestCase as TestCase;
 use stdClass;
-use Zend\EventManager\EventManager;
-use Zend\Http\Response;
-use Zend\Mvc\Router\RouteMatch;
-use Zend\Stdlib\ArrayObject;
-use Zend\Stdlib\Parameters;
-use ZF\ApiProblem\ApiProblem;
-use ZF\Rest\Resource;
 
 /**
  * @subpackage UnitTest
@@ -32,8 +34,8 @@ class ResourceTest extends TestCase
     public function testEventManagerIdentifiersAreAsExpected()
     {
         $expected = array(
-            'ZF\Rest\Resource',
-            'ZF\Rest\ResourceInterface',
+            'Laminas\ApiTools\Rest\Resource',
+            'Laminas\ApiTools\Rest\ResourceInterface',
         );
         $identifiers = $this->events->getIdentifiers();
         $this->assertEquals(array_values($expected), array_values($identifiers));
@@ -55,7 +57,7 @@ class ResourceTest extends TestCase
      */
     public function testCreateRaisesExceptionWithInvalidData($data)
     {
-        $this->setExpectedException('ZF\Rest\Exception\InvalidArgumentException');
+        $this->setExpectedException('Laminas\ApiTools\Rest\Exception\InvalidArgumentException');
         $this->resource->create($data);
     }
 
@@ -118,7 +120,7 @@ class ResourceTest extends TestCase
      */
     public function testUpdateRaisesExceptionWithInvalidData($data)
     {
-        $this->setExpectedException('ZF\Rest\Exception\InvalidArgumentException');
+        $this->setExpectedException('Laminas\ApiTools\Rest\Exception\InvalidArgumentException');
         $this->resource->update('foo', $data);
     }
 
@@ -156,7 +158,7 @@ class ResourceTest extends TestCase
      */
     public function testReplaceListRaisesExceptionWithInvalidData($data)
     {
-        $this->setExpectedException('ZF\Rest\Exception\InvalidArgumentException', 'Data', 400);
+        $this->setExpectedException('Laminas\ApiTools\Rest\Exception\InvalidArgumentException', 'Data', 400);
         $this->resource->replaceList($data);
     }
 
@@ -194,7 +196,7 @@ class ResourceTest extends TestCase
      */
     public function testPatchRaisesExceptionWithInvalidData($data)
     {
-        $this->setExpectedException('ZF\Rest\Exception\InvalidArgumentException');
+        $this->setExpectedException('Laminas\ApiTools\Rest\Exception\InvalidArgumentException');
         $this->resource->patch('foo', $data);
     }
 
@@ -269,7 +271,7 @@ class ResourceTest extends TestCase
      */
     public function testDeleteListRaisesInvalidArgumentExceptionForInvalidData($data)
     {
-        $this->setExpectedException('ZF\Rest\Exception\InvalidArgumentException', '::deleteList');
+        $this->setExpectedException('Laminas\ApiTools\Rest\Exception\InvalidArgumentException', '::deleteList');
         $this->resource->deleteList($data);
     }
 
@@ -453,7 +455,7 @@ class ResourceTest extends TestCase
         $this->assertObjectHasAttribute('event', $test);
         $e = $test->event;
 
-        $this->assertInstanceOf('ZF\Rest\ResourceEvent', $e);
+        $this->assertInstanceOf('Laminas\ApiTools\Rest\ResourceEvent', $e);
         $this->assertSame($matches, $e->getRouteMatch());
         $this->assertSame($queryParams, $e->getQueryParams());
     }
@@ -474,7 +476,7 @@ class ResourceTest extends TestCase
      */
     public function testPatchListListRaisesExceptionWithInvalidData($data)
     {
-        $this->setExpectedException('ZF\Rest\Exception\InvalidArgumentException', 'Data', 400);
+        $this->setExpectedException('Laminas\ApiTools\Rest\Exception\InvalidArgumentException', 'Data', 400);
         $this->resource->patchList($data);
     }
 
