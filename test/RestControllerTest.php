@@ -1,41 +1,43 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Rest;
+namespace LaminasTest\ApiTools\Rest;
 
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\ContentNegotiation\ControllerPlugin\BodyParams;
+use Laminas\ApiTools\ContentNegotiation\ParameterDataContainer;
+use Laminas\ApiTools\Hal\Collection as HalCollection;
+use Laminas\ApiTools\Hal\Entity as HalEntity;
+use Laminas\ApiTools\Hal\Extractor\LinkCollectionExtractor;
+use Laminas\ApiTools\Hal\Extractor\LinkExtractor;
+use Laminas\ApiTools\Hal\Link\Link;
+use Laminas\ApiTools\Hal\Plugin\Hal as HalHelper;
+use Laminas\ApiTools\Rest\Exception;
+use Laminas\ApiTools\Rest\Resource;
+use Laminas\ApiTools\Rest\RestController;
+use Laminas\EventManager\EventManager;
+use Laminas\EventManager\SharedEventManager;
+use Laminas\Http\Response;
+use Laminas\InputFilter\InputFilter;
+use Laminas\Mvc\Controller\PluginManager;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\Router\Http\Segment;
+use Laminas\Mvc\Router\RouteMatch;
+use Laminas\Mvc\Router\SimpleRouteStack;
+use Laminas\Paginator\Adapter\ArrayAdapter as ArrayPaginator;
+use Laminas\Paginator\Paginator;
+use Laminas\Stdlib\Parameters;
+use Laminas\View\Helper\ServerUrl as ServerUrlHelper;
+use Laminas\View\Helper\Url as UrlHelper;
 use PHPUnit_Framework_TestCase as TestCase;
 use ReflectionMethod;
 use ReflectionObject;
 use stdClass;
-use Zend\EventManager\EventManager;
-use Zend\EventManager\SharedEventManager;
-use Zend\Http\Response;
-use Zend\InputFilter\InputFilter;
-use Zend\Mvc\Controller\PluginManager;
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\Http\Segment;
-use Zend\Mvc\Router\RouteMatch;
-use Zend\Mvc\Router\SimpleRouteStack;
-use Zend\Paginator\Adapter\ArrayAdapter as ArrayPaginator;
-use Zend\Paginator\Paginator;
-use Zend\Stdlib\Parameters;
-use Zend\View\Helper\ServerUrl as ServerUrlHelper;
-use Zend\View\Helper\Url as UrlHelper;
-use ZF\ApiProblem\ApiProblem;
-use ZF\ContentNegotiation\ControllerPlugin\BodyParams;
-use ZF\ContentNegotiation\ParameterDataContainer;
-use ZF\Hal\Collection as HalCollection;
-use ZF\Hal\Entity as HalEntity;
-use ZF\Hal\Extractor\LinkCollectionExtractor;
-use ZF\Hal\Extractor\LinkExtractor;
-use ZF\Hal\Link\Link;
-use ZF\Hal\Plugin\Hal as HalHelper;
-use ZF\Rest\Exception;
-use ZF\Rest\Resource;
-use ZF\Rest\RestController;
 
 /**
  * @subpackage UnitTest
@@ -147,7 +149,7 @@ class RestControllerTest extends TestCase
 
     public function assertProblemApiResult($expectedStatus, $expectedDetail, $result)
     {
-        $this->assertInstanceOf('ZF\ApiProblem\ApiProblem', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\ApiProblem\ApiProblem', $result);
         $problem = $result->toArray();
         $this->assertEquals($expectedStatus, $problem['status']);
         $this->assertContains($expectedDetail, $problem['detail']);
@@ -175,7 +177,7 @@ class RestControllerTest extends TestCase
         });
 
         $result = $this->controller->create([]);
-        $this->assertInstanceOf('ZF\Hal\Entity', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Entity', $result);
         $response = $this->controller->getResponse();
         $headers  = $response->getHeaders();
         $this->assertFalse($headers->has('Location'));
@@ -189,7 +191,7 @@ class RestControllerTest extends TestCase
         });
 
         $result = $this->controller->create([]);
-        $this->assertInstanceOf('ZF\Hal\Entity', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Entity', $result);
         $this->assertEquals($entity, $result->entity);
         return $this->controller->getResponse();
     }
@@ -220,7 +222,7 @@ class RestControllerTest extends TestCase
         });
 
         $result = $this->controller->delete('foo');
-        $this->assertInstanceOf('Zend\Http\Response', $result);
+        $this->assertInstanceOf('Laminas\Http\Response', $result);
         $this->assertEquals(204, $result->getStatusCode());
     }
 
@@ -241,7 +243,7 @@ class RestControllerTest extends TestCase
         });
 
         $result = $this->controller->deleteList([1, 2, 3]);
-        $this->assertInstanceOf('Zend\Http\Response', $result);
+        $this->assertInstanceOf('Laminas\Http\Response', $result);
         $this->assertEquals(204, $result->getStatusCode());
     }
 
@@ -252,7 +254,7 @@ class RestControllerTest extends TestCase
         });
 
         $result = $this->controller->deleteList(null);
-        $this->assertInstanceOf('Zend\Http\Response', $result);
+        $this->assertInstanceOf('Laminas\Http\Response', $result);
         $this->assertEquals(204, $result->getStatusCode());
     }
 
@@ -274,7 +276,7 @@ class RestControllerTest extends TestCase
         });
 
         $result = $this->controller->get('foo');
-        $this->assertInstanceOf('ZF\Hal\Entity', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Entity', $result);
         $this->assertEquals($entity, $result->entity);
     }
 
@@ -288,7 +290,7 @@ class RestControllerTest extends TestCase
         });
 
         $result = $this->controller->getList();
-        $this->assertInstanceOf('ZF\Hal\Collection', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Collection', $result);
         $this->assertEquals($items, $result->getCollection());
         return $result;
     }
@@ -311,7 +313,7 @@ class RestControllerTest extends TestCase
         $request->setQuery(new Parameters(['page' => 2]));
 
         $result = $this->controller->getList();
-        $this->assertInstanceOf('ZF\Hal\Collection', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Collection', $result);
         $this->assertSame($paginator, $result->getCollection());
         $this->assertEquals(2, $result->getPage());
         $this->assertEquals(1, $result->getPageSize());
@@ -338,7 +340,7 @@ class RestControllerTest extends TestCase
         ]));
 
         $result = $this->controller->getList();
-        $this->assertInstanceOf('ZF\Hal\Collection', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Collection', $result);
         $this->assertSame($paginator, $result->getCollection());
         $this->assertEquals(2, $result->getPage());
         $this->assertEquals(1, $result->getPageSize());
@@ -371,7 +373,7 @@ class RestControllerTest extends TestCase
         $request->setQuery(new Parameters(['page' => 2]));
 
         $result = $this->controller->head();
-        $this->assertInstanceOf('ZF\Hal\Collection', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Collection', $result);
         $this->assertSame($paginator, $result->getCollection());
     }
 
@@ -383,7 +385,7 @@ class RestControllerTest extends TestCase
         });
 
         $result = $this->controller->head('foo');
-        $this->assertInstanceOf('ZF\Hal\Entity', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Entity', $result);
         $this->assertEquals($entity, $result->entity);
     }
 
@@ -396,7 +398,7 @@ class RestControllerTest extends TestCase
         sort($httpMethods);
 
         $result = $this->controller->options();
-        $this->assertInstanceOf('Zend\Http\Response', $result);
+        $this->assertInstanceOf('Laminas\Http\Response', $result);
         $this->assertEquals(204, $result->getStatusCode());
         $headers = $result->getHeaders();
         $this->assertTrue($headers->has('allow'));
@@ -418,7 +420,7 @@ class RestControllerTest extends TestCase
         $this->event->getRouteMatch()->setParam('id', 'foo');
 
         $result = $this->controller->options();
-        $this->assertInstanceOf('Zend\Http\Response', $result);
+        $this->assertInstanceOf('Laminas\Http\Response', $result);
         $this->assertEquals(204, $result->getStatusCode());
         $headers = $result->getHeaders();
         $this->assertTrue($headers->has('allow'));
@@ -442,7 +444,7 @@ class RestControllerTest extends TestCase
         $this->event->getRouteMatch()->setParam('user_id', 'foo');
 
         $result = $this->controller->options();
-        $this->assertInstanceOf('Zend\Http\Response', $result);
+        $this->assertInstanceOf('Laminas\Http\Response', $result);
         $this->assertEquals(204, $result->getStatusCode());
         $headers = $result->getHeaders();
         $this->assertTrue($headers->has('allow'));
@@ -471,7 +473,7 @@ class RestControllerTest extends TestCase
         });
 
         $result = $this->controller->patch('foo', $entity);
-        $this->assertInstanceOf('ZF\Hal\Entity', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Entity', $result);
         $this->assertEquals($entity, $result->entity);
     }
 
@@ -493,7 +495,7 @@ class RestControllerTest extends TestCase
         });
 
         $result = $this->controller->update('foo', $entity);
-        $this->assertInstanceOf('ZF\Hal\Entity', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Entity', $result);
         $this->assertEquals($entity, $result->entity);
     }
 
@@ -517,7 +519,7 @@ class RestControllerTest extends TestCase
         });
 
         $result = $this->controller->replaceList($items);
-        $this->assertInstanceOf('ZF\Hal\Collection', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Collection', $result);
         return $result;
     }
 
@@ -533,7 +535,7 @@ class RestControllerTest extends TestCase
     public function testOnDispatchRaisesDomainExceptionOnMissingEntity()
     {
         $controller = new RestController();
-        $this->setExpectedException('ZF\ApiProblem\Exception\DomainException', 'No resource');
+        $this->setExpectedException('Laminas\ApiTools\ApiProblem\Exception\DomainException', 'No resource');
         $controller->onDispatch($this->event);
     }
 
@@ -541,7 +543,7 @@ class RestControllerTest extends TestCase
     {
         $controller = new RestController();
         $controller->setResource($this->resource);
-        $this->setExpectedException('ZF\ApiProblem\Exception\DomainException', 'route');
+        $this->setExpectedException('Laminas\ApiTools\ApiProblem\Exception\DomainException', 'route');
         $controller->onDispatch($this->event);
     }
 
@@ -560,7 +562,7 @@ class RestControllerTest extends TestCase
         $this->event->getRouteMatch()->setParam('id', 'foo');
 
         $result = $this->controller->onDispatch($this->event);
-        $this->assertInstanceof('Zend\View\Model\ModelInterface', $result);
+        $this->assertInstanceof('Laminas\View\Model\ModelInterface', $result);
     }
 
     public function testValidMethodReturningHalOrApiValueCastsReturnToContentNegotiationViewModel()
@@ -579,7 +581,7 @@ class RestControllerTest extends TestCase
         $this->event->getRouteMatch()->setParam('id', 'foo');
 
         $result = $this->controller->onDispatch($this->event);
-        $this->assertInstanceof('ZF\ContentNegotiation\ViewModel', $result);
+        $this->assertInstanceof('Laminas\ApiTools\ContentNegotiation\ViewModel', $result);
     }
 
     public function testPassingIdentifierToConstructorAllowsListeningOnThatIdentifier()
@@ -612,7 +614,7 @@ class RestControllerTest extends TestCase
         $this->controller->setCollectionName('resources');
 
         $result = $this->controller->getList();
-        $this->assertInstanceOf('ZF\Hal\Collection', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Collection', $result);
         $this->assertEquals('resources', $result->getCollectionName());
     }
 
@@ -1023,12 +1025,12 @@ class RestControllerTest extends TestCase
 
         $result = $this->controller->dispatch($request, $this->controller->getResponse());
 
-        $this->assertInstanceOf('ZF\ApiProblem\ApiProblemResponse', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\ApiProblem\ApiProblemResponse', $result);
         $this->assertSame($problem, $result->getApiProblem());
     }
 
     /**
-     * @expectedException \ZF\ApiProblem\Exception\DomainException
+     * @expectedException \Laminas\ApiTools\ApiProblem\Exception\DomainException
      */
     public function testGetResourceThrowsExceptionOnMissingResource()
     {
@@ -1268,7 +1270,7 @@ class RestControllerTest extends TestCase
         });
 
         $result = $this->controller->patchList($items);
-        $this->assertInstanceOf('ZF\Hal\Collection', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Collection', $result);
         return $result;
     }
 
@@ -1440,29 +1442,29 @@ class RestControllerTest extends TestCase
 
         $container = new ParameterDataContainer();
         $container->setBodyParams((null === $data) ? [] : $data);
-        $this->event->setParam('ZFContentNegotiationParameterData', $container);
+        $this->event->setParam('LaminasContentNegotiationParameterData', $container);
 
         if ($id) {
             $this->event->getRouteMatch()->setParam('id', $id);
         }
 
         $inputFilter = new InputFilter();
-        $this->event->setParam('ZF\ContentValidation\InputFilter', $inputFilter);
+        $this->event->setParam('Laminas\ApiTools\ContentValidation\InputFilter', $inputFilter);
 
         $result = $this->controller->onDispatch($this->event);
 
-        $this->assertInstanceOf('ZF\Rest\ResourceEvent', $resourceEvent);
+        $this->assertInstanceOf('Laminas\ApiTools\Rest\ResourceEvent', $resourceEvent);
         $this->assertSame($inputFilter, $resourceEvent->getInputFilter());
     }
 
 
     /**
-     * @group zf-mvc-auth-20
+     * @group api-tools-mvc-auth-20
      */
     public function testInjectsIdentityFromMvcEventIntoResourceEvent()
     {
-        $identity = $this->getMock('ZF\MvcAuth\Identity\IdentityInterface');
-        $this->event->setParam('ZF\MvcAuth\Identity', $identity);
+        $identity = $this->getMock('Laminas\ApiTools\MvcAuth\Identity\IdentityInterface');
+        $this->event->setParam('Laminas\ApiTools\MvcAuth\Identity', $identity);
         $resource = $this->controller->getResource();
         $this->assertSame($identity, $resource->getIdentity());
     }
@@ -1498,7 +1500,7 @@ class RestControllerTest extends TestCase
         });
 
         $result = $this->controller->getList();
-        $this->assertInstanceOf('ZF\Hal\Entity', $result);
+        $this->assertInstanceOf('Laminas\ApiTools\Hal\Entity', $result);
         $this->assertSame($entity, $result->entity);
     }
 
@@ -1541,7 +1543,7 @@ class RestControllerTest extends TestCase
     public function testNonArrayToReplaceListReturnsApiProblem()
     {
         $response = $this->controller->replaceList(new stdClass());
-        $this->assertInstanceOf('ZF\ApiProblem\ApiProblem', $response);
+        $this->assertInstanceOf('Laminas\ApiTools\ApiProblem\ApiProblem', $response);
         $details = $response->toArray();
         $this->assertEquals(400, $details['status']);
     }
@@ -1567,7 +1569,7 @@ class RestControllerTest extends TestCase
         ];
         $halCollection = new HalCollection($collection);
 
-        $resource = $this->getMockBuilder('ZF\Rest\Resource')->getMock();
+        $resource = $this->getMockBuilder('Laminas\ApiTools\Rest\Resource')->getMock();
         $resource
             ->expects($this->once())
             ->method('create')
@@ -1604,7 +1606,7 @@ class RestControllerTest extends TestCase
         ];
         $halEntity = new HalEntity($entity, 1);
 
-        $resource = $this->getMockBuilder('ZF\Rest\Resource')->getMock();
+        $resource = $this->getMockBuilder('Laminas\ApiTools\Rest\Resource')->getMock();
         $resource
             ->expects($this->once())
             ->method('create')
