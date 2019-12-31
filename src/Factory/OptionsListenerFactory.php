@@ -1,14 +1,16 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Rest\Factory;
+namespace Laminas\ApiTools\Rest\Factory;
 
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
-use ZF\Rest\Listener\OptionsListener;
+use Laminas\ApiTools\Rest\Listener\OptionsListener;
+use Laminas\ServiceManager\FactoryInterface;
+use Laminas\ServiceManager\ServiceLocatorInterface;
 
 class OptionsListenerFactory implements FactoryInterface
 {
@@ -21,10 +23,10 @@ class OptionsListenerFactory implements FactoryInterface
         $config = array();
         if ($services->has('Config')) {
             $allConfig = $services->get('Config');
-            if (array_key_exists('zf-rest', $allConfig)
-                && is_array($allConfig['zf-rest'])
+            if (array_key_exists('api-tools-rest', $allConfig)
+                && is_array($allConfig['api-tools-rest'])
             ) {
-                $config = $allConfig['zf-rest'];
+                $config = $allConfig['api-tools-rest'];
             }
         }
         return new OptionsListener($config);
