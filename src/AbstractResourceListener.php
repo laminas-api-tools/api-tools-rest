@@ -1,15 +1,17 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZF\Rest;
+namespace Laminas\ApiTools\Rest;
 
-use Zend\EventManager\ListenerAggregateInterface;
-use Zend\EventManager\ListenerAggregateTrait;
-use Zend\EventManager\EventManagerInterface;
-use ZF\ApiProblem\ApiProblem;
+use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\ListenerAggregateInterface;
+use Laminas\EventManager\ListenerAggregateTrait;
 
 abstract class AbstractResourceListener implements ListenerAggregateInterface
 {
@@ -21,26 +23,26 @@ abstract class AbstractResourceListener implements ListenerAggregateInterface
     protected $event;
 
     /**
-     * The entity_class config for the calling controller zf-rest config
+     * The entity_class config for the calling controller api-tools-rest config
      */
     protected $entityClass;
 
     /**
-     * The collection_class config for the calling controller zf-rest config
+     * The collection_class config for the calling controller api-tools-rest config
      */
     protected $collectionClass;
 
     /**
      * Current identity, if discovered in the resource event.
      *
-     * @var \ZF\MvcAuth\Identity\IdentityInterface
+     * @var \Laminas\ApiTools\MvcAuth\Identity\IdentityInterface
      */
     protected $identity;
 
     /**
      * Input filter, if discovered in the resource event.
      *
-     * @var \Zend\InputFilter\InputFilterInterface
+     * @var \Laminas\InputFilter\InputFilterInterface
      */
     protected $inputFilter;
 
@@ -85,7 +87,7 @@ abstract class AbstractResourceListener implements ListenerAggregateInterface
      * Proxies to the resource event to find the identity, if not already
      * composed, and composes it.
      *
-     * @return null|\ZF\MvcAuth\Identity\IdentityInterface
+     * @return null|\Laminas\ApiTools\MvcAuth\Identity\IdentityInterface
      */
     public function getIdentity()
     {
@@ -108,7 +110,7 @@ abstract class AbstractResourceListener implements ListenerAggregateInterface
      * Proxies to the resource event to find the input filter, if not already
      * composed, and composes it.
      *
-     * @return null|\Zend\InputFilter\InputFilterInterface
+     * @return null|\Laminas\InputFilter\InputFilterInterface
      */
     public function getInputFilter()
     {
