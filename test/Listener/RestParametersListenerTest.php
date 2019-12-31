@@ -1,20 +1,22 @@
 <?php
+
 /**
- * @license   http://opensource.org/licenses/BSD-3-Clause BSD-3-Clause
- * @copyright Copyright (c) 2014 Zend Technologies USA Inc. (http://www.zend.com)
+ * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
+ * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
+ * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
  */
 
-namespace ZFTest\Rest\Listener;
+namespace LaminasTest\ApiTools\Rest\Listener;
 
-use Zend\EventManager\SharedEventManager;
-use ZF\Rest\Listener\RestParametersListener;
-use ZF\Rest\Resource;
-use ZF\Rest\RestController;
+use Laminas\ApiTools\Rest\Listener\RestParametersListener;
+use Laminas\ApiTools\Rest\Resource;
+use Laminas\ApiTools\Rest\RestController;
+use Laminas\EventManager\SharedEventManager;
+use Laminas\Http\PhpEnvironment\Request;
+use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\Router\RouteMatch;
+use Laminas\Stdlib\Parameters;
 use PHPUnit_Framework_TestCase as TestCase;
-use Zend\Http\PhpEnvironment\Request;
-use Zend\Mvc\MvcEvent;
-use Zend\Mvc\Router\RouteMatch;
-use Zend\Stdlib\Parameters;
 
 /**
  * @subpackage UnitTest
@@ -42,7 +44,7 @@ class RestParametersListenerTest extends TestCase
 
     public function testIgnoresNonRestControllers()
     {
-        $controller = $this->getMock('Zend\Mvc\Controller\AbstractRestfulController');
+        $controller = $this->getMock('Laminas\Mvc\Controller\AbstractRestfulController');
         $this->event->setTarget($controller);
         $this->listener->onDispatch($this->event);
         $this->assertNull($this->resource->getRouteMatch());
@@ -66,7 +68,7 @@ class RestParametersListenerTest extends TestCase
         $sharedEventManager = new SharedEventManager();
         $sharedEventManager->attachAggregate($this->listener);
 
-        $listener = $sharedEventManager->getListeners('ZF\Rest\RestController', MvcEvent::EVENT_DISPATCH);
+        $listener = $sharedEventManager->getListeners('Laminas\ApiTools\Rest\RestController', MvcEvent::EVENT_DISPATCH);
 
         $this->assertEquals(1, $listener->count());
     }
@@ -78,7 +80,7 @@ class RestParametersListenerTest extends TestCase
 
         $sharedEventManager->detachAggregate($this->listener);
 
-        $listener = $sharedEventManager->getListeners('ZF\Rest\RestController', MvcEvent::EVENT_DISPATCH);
+        $listener = $sharedEventManager->getListeners('Laminas\ApiTools\Rest\RestController', MvcEvent::EVENT_DISPATCH);
 
         $this->assertEquals(0, $listener->count());
     }
