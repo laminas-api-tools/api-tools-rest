@@ -151,7 +151,7 @@ class RestControllerFactory implements AbstractFactoryInterface
             $identifier = $config['identifier'];
         }
 
-        $controllerClass = isset($config['controller_class']) ? $config['controller_class'] : 'Laminas\ApiTools\Rest\RestController';
+        $controllerClass = isset($config['controller_class']) ? $config['controller_class'] : RestController::class;
         $controller      = new $controllerClass($identifier);
 
         if (! $controller instanceof RestController) {
