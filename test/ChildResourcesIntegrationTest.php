@@ -27,6 +27,7 @@ use Laminas\View\Helper\ServerUrl as ServerUrlHelper;
 use Laminas\View\Helper\Url as UrlHelper;
 use Laminas\View\HelperPluginManager;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionObject;
 use stdClass;
 
@@ -36,6 +37,7 @@ use function method_exists;
 
 class ChildResourcesIntegrationTest extends TestCase
 {
+    use ProphecyTrait;
     use RouteMatchFactoryTrait;
     use TreeRouteStackFactoryTrait;
 
@@ -60,7 +62,7 @@ class ChildResourcesIntegrationTest extends TestCase
     /** @var ControllerPluginManager */
     private $plugins;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->setupRouter();
         $this->setupHelpers();
@@ -329,13 +331,13 @@ class ChildResourcesIntegrationTest extends TestCase
 
         $this->assertObjectHasAttribute('_embedded', $test);
         $this->assertObjectHasAttribute('children', $test->_embedded);
-        $this->assertInternalType('array', $test->_embedded->children);
+        $this->assertIsArray($test->_embedded->children);
 
         foreach ($test->_embedded->children as $child) {
             $this->assertObjectHasAttribute('_links', $child);
             $this->assertObjectHasAttribute('self', $child->_links);
             $this->assertObjectHasAttribute('href', $child->_links->self);
-            $this->assertRegExp(
+            $this->assertMatchesRegularExpression(
                 '#^http://localhost.localdomain/api/parent/anakin/child/[^/]+$#',
                 $child->_links->self->href
             );

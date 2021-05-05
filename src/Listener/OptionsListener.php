@@ -36,8 +36,11 @@ class OptionsListener implements ListenerAggregateInterface
         $this->config = $config;
     }
 
-    /** @param int $priority */
-    public function attach(EventManagerInterface $events, $priority = 1): void
+    /**
+     * @param int $priority
+     * @return void
+     */
+    public function attach(EventManagerInterface $events, $priority = 1)
     {
         $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRoute'], -100);
     }

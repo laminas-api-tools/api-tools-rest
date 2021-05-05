@@ -26,14 +26,12 @@ class RestControllerFactoryTest extends TestCase
     /** @var ControllerManager */
     private $controllers;
 
-    /** @var RestControllerFactory */
-    private $factory;
-
-    public function setUp()
+    public function setUp(): void
     {
         $this->services    = $services    = new ServiceManager();
         $this->controllers = $controllers = new ControllerManager($this->services);
-        $this->factory     = $factory     = new RestControllerFactory();
+
+        $factory = new RestControllerFactory();
 
         $controllers->addAbstractFactory($factory);
 
@@ -46,6 +44,7 @@ class RestControllerFactoryTest extends TestCase
         $services->setShared('EventManager', false);
     }
 
+    /** @psalm-return array<string, array<string, array<string, string>>> */
     public function getConfig(): array
     {
         return [

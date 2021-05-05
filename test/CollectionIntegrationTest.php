@@ -40,6 +40,7 @@ use Laminas\View\Helper\ServerUrl as ServerUrlHelper;
 use Laminas\View\Helper\Url as UrlHelper;
 use Laminas\View\HelperPluginManager;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 use function json_decode;
 use function method_exists;
@@ -47,6 +48,7 @@ use function sprintf;
 
 class CollectionIntegrationTest extends TestCase
 {
+    use ProphecyTrait;
     use TreeRouteStackFactoryTrait;
 
     /** @var HalHelper */
@@ -76,7 +78,7 @@ class CollectionIntegrationTest extends TestCase
     /** @var RestController */
     private $controller;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->setUpRenderer();
         $this->setUpController();
@@ -168,7 +170,7 @@ class CollectionIntegrationTest extends TestCase
         return $collection;
     }
 
-    public function setUpListeners()
+    public function setUpListeners(): void
     {
         if ($this->listeners) {
             return;
@@ -178,7 +180,7 @@ class CollectionIntegrationTest extends TestCase
         $this->listeners->setCollection($this->setUpCollection());
     }
 
-    public function setUpController()
+    public function setUpController(): void
     {
         $this->setUpRouter();
         $this->setUpListeners();
@@ -196,7 +198,7 @@ class CollectionIntegrationTest extends TestCase
         $this->setUpContentNegotiation($controller);
     }
 
-    public function setUpContentNegotiation(AbstractController $controller)
+    public function setUpContentNegotiation(AbstractController $controller): void
     {
         $plugins = new ControllerPluginManager($this->prophesize(ContainerInterface::class)->reveal());
         $plugins->setService('hal', $this->linksHelper);
@@ -219,7 +221,7 @@ class CollectionIntegrationTest extends TestCase
         $controller->getEventManager()->attach(MvcEvent::EVENT_DISPATCH, $acceptListener, -10);
     }
 
-    public function setUpRequest()
+    public function setUpRequest(): void
     {
         if ($this->request) {
             return;
@@ -239,7 +241,7 @@ class CollectionIntegrationTest extends TestCase
         $headers->addHeaderLine('Content-Type', 'application/json');
     }
 
-    public function setUpResponse()
+    public function setUpResponse(): void
     {
         if ($this->response) {
             return;
@@ -285,13 +287,13 @@ class CollectionIntegrationTest extends TestCase
         foreach ($links as $name => $link) {
             $this->assertArrayHasKey('href', $link);
             if ('first' !== $name) {
-                $this->assertContains(
+                $this->assertStringContainsString(
                     'page=',
                     $link['href'],
                     "Link $name ('{$link['href']}') is missing page query param"
                 );
             }
-            $this->assertContains(
+            $this->assertStringContainsString(
                 'query=foo',
                 $link['href'],
                 "Link $name ('{$link['href']}') is missing query query param"
@@ -385,18 +387,18 @@ class CollectionIntegrationTest extends TestCase
         foreach ($links as $name => $link) {
             $this->assertArrayHasKey('href', $link);
             if ('first' !== $name) {
-                $this->assertContains(
+                $this->assertStringContainsString(
                     'page=',
                     $link['href'],
                     "Link $name ('{$link['href']}') is missing page query param"
                 );
             }
-            $this->assertContains(
+            $this->assertStringContainsString(
                 'query=foo',
                 $link['href'],
                 "Link $name ('{$link['href']}') is missing query query param"
             );
-            $this->assertNotContains(
+            $this->assertStringNotContainsString(
                 'bar=baz',
                 $link['href'],
                 "Link $name ('{$link['href']}') includes query param that should have been omitted"

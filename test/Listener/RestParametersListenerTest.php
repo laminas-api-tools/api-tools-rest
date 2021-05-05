@@ -26,17 +26,11 @@ class RestParametersListenerTest extends TestCase
     /** @var Resource */
     private $resource;
 
-    /** @var RestController */
-    private $controller;
-
     /** @var RouteMatch|V2RouteMatch */
     private $matches;
 
     /** @var Parameters */
     private $query;
-
-    /** @var Request */
-    private $request;
 
     /** @var MvcEvent */
     private $event;
@@ -44,10 +38,11 @@ class RestParametersListenerTest extends TestCase
     /** @var RestParametersListener */
     private $listener;
 
-    public function setUp()
+    public function setUp(): void
     {
-        $this->resource   = $resource   = new Resource();
-        $this->controller = $controller = new RestController();
+        $this->resource = $resource = new Resource();
+
+        $controller = new RestController();
         $controller->setResource($resource);
 
         $this->matches = $matches    = $this->createRouteMatch([]);
