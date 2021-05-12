@@ -1,8 +1,7 @@
 Laminas REST
 =======
 
-[![Build Status](https://travis-ci.com/laminas-api-tools/api-tools-rest.svg?branch=master)](https://travis-ci.com/laminas-api-tools/api-tools-rest)
-[![Coverage Status](https://coveralls.io/repos/github/laminas-api-tools/api-tools-rest/badge.svg?branch=master)](https://coveralls.io/github/laminas-api-tools/api-tools-rest?branch=master)
+[![Build Status](https://github.com/laminas-api-tools/api-tools-rest/actions/workflows/continuous-integration.yml/badge.svg)](https://github.com/laminas-api-tools/api-tools-rest/actions/workflows/continuous-integration.yml)
 
 Introduction
 ------------
