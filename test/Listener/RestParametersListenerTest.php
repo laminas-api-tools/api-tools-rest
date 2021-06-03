@@ -65,7 +65,7 @@ class RestParametersListenerTest extends TestCase
 
     public function testIgnoresNonRestControllers()
     {
-        $controller = $this->getMockBuilder(AbstractRestfulController::class)->getMock();
+        $controller = $this->createMock(AbstractRestfulController::class);
         $this->event->setTarget($controller);
         $this->listener->onDispatch($this->event);
         $this->assertNull($this->resource->getRouteMatch());

@@ -1673,7 +1673,7 @@ class RestControllerTest extends TestCase
         ];
         $halCollection = new HalCollection($collection);
 
-        $resource = $this->getMockBuilder(Resource::class)->getMock();
+        $resource = $this->createMock(Resource::class);
         $resource
             ->expects($this->once())
             ->method('create')
@@ -1710,7 +1710,7 @@ class RestControllerTest extends TestCase
         ];
         $halEntity = new HalEntity($entity, 1);
 
-        $resource = $this->getMockBuilder(Resource::class)->getMock();
+        $resource = $this->createMock(Resource::class);
         $resource
             ->expects($this->once())
             ->method('create')
