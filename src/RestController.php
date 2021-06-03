@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Rest;
 
@@ -18,12 +14,20 @@ use Laminas\ApiTools\Hal\Collection as HalCollection;
 use Laminas\ApiTools\Hal\Entity as HalEntity;
 use Laminas\ApiTools\Hal\Exception\InvalidArgumentException as HalInvalidArgumentException;
 use Laminas\Http\Header\Allow;
+use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Mvc\Controller\AbstractRestfulController;
 use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\Router\RouteMatch;
 use Laminas\Stdlib\RequestInterface;
 use Throwable;
 use Traversable;
+
+use function array_keys;
+use function is_array;
+use function is_int;
+use function is_object;
+use function sprintf;
 
 /**
  * Controller for handling resources.
@@ -103,9 +107,7 @@ class RestController extends AbstractRestfulController
      */
     protected $pageSizeParam;
 
-    /**
-     * @var ResourceInterface
-     */
+    /** @var ResourceInterface */
     protected $resource;
 
     /**
@@ -167,7 +169,7 @@ class RestController extends AbstractRestfulController
     /**
      * Set the minimum page size for paginated responses
      *
-     * @param  int
+     * @param int $count
      */
     public function setMinPageSize($count)
     {
@@ -187,7 +189,7 @@ class RestController extends AbstractRestfulController
     /**
      * Set the default page size for paginated responses
      *
-     * @param  int
+     * @param int $count
      */
     public function setPageSize($count)
     {
@@ -207,7 +209,7 @@ class RestController extends AbstractRestfulController
     /**
      * Set the maximum page size for paginated responses
      *
-     * @param  int
+     * @param int $count
      */
     public function setMaxPageSize($count)
     {
@@ -227,7 +229,7 @@ class RestController extends AbstractRestfulController
     /**
      * Set the page size parameter for paginated responses.
      *
-     * @param string
+     * @param string $param
      */
     public function setPageSizeParam($param)
     {
@@ -248,8 +250,6 @@ class RestController extends AbstractRestfulController
 
     /**
      * Inject the resource with which this controller will communicate.
-     *
-     * @param  ResourceInterface $resource
      */
     public function setResource(ResourceInterface $resource)
     {
@@ -259,8 +259,7 @@ class RestController extends AbstractRestfulController
     /**
      * Returns the resource
      *
-     * @throws DomainException If no resource has been set
-     *
+     * @throws DomainException If no resource has been set.
      * @return ResourceInterface
      */
     public function getResource()
@@ -308,7 +307,6 @@ class RestController extends AbstractRestfulController
      * returned; if so, it will cast it to a view model using the
      * AcceptableViewModelSelector plugin, and the $acceptCriteria property.
      *
-     * @param  MvcEvent $e
      * @return mixed
      * @throws DomainException
      */
@@ -317,7 +315,7 @@ class RestController extends AbstractRestfulController
         if (! $this->getResource()) {
             throw new DomainException(sprintf(
                 '%s requires that a %s\ResourceInterface object is composed; none provided',
-                __CLASS__,
+                self::class,
                 __NAMESPACE__
             ));
         }
@@ -325,7 +323,7 @@ class RestController extends AbstractRestfulController
         if (! $this->route) {
             throw new DomainException(sprintf(
                 '%s requires that a route name for the resource is composed; none provided',
-                __CLASS__
+                self::class
             ));
         }
 
@@ -337,7 +335,8 @@ class RestController extends AbstractRestfulController
             $return = parent::onDispatch($e);
         }
 
-        if (! $return instanceof ApiProblem
+        if (
+            ! $return instanceof ApiProblem
             && ! $return instanceof HalEntity
             && ! $return instanceof HalCollection
         ) {
@@ -374,8 +373,6 @@ class RestController extends AbstractRestfulController
             $value = $this->getResource()->create($data);
         } catch (Throwable $e) {
             return $this->createApiProblemFromException($e);
-        } catch (Exception $e) {
-            return $this->createApiProblemFromException($e);
         }
 
         if ($this->isPreparedResponse($value)) {
@@ -399,9 +396,9 @@ class RestController extends AbstractRestfulController
 
         if ($halEntity->getLinks()->has('self')) {
             $plugin = $this->plugin('Hal');
-            $link = $halEntity->getLinks()->get('self');
-            $self = $plugin->fromLink($link);
-            $url = $self['href'];
+            $link   = $halEntity->getLinks()->get('self');
+            $self   = $plugin->fromLink($link);
+            $url    = $self['href'];
 
             $response = $this->getResponse();
             $response->setStatusCode(201);
@@ -432,8 +429,6 @@ class RestController extends AbstractRestfulController
         try {
             $result = $this->getResource()->delete($id);
         } catch (Throwable $e) {
-            return $this->createApiProblemFromException($e);
-        } catch (Exception $e) {
             return $this->createApiProblemFromException($e);
         }
 
@@ -466,8 +461,6 @@ class RestController extends AbstractRestfulController
             $result = $this->getResource()->deleteList($data);
         } catch (Throwable $e) {
             return $this->createApiProblemFromException($e);
-        } catch (Exception $e) {
-            return $this->createApiProblemFromException($e);
         }
 
         $result = $result ?: new ApiProblem(422, 'Unable to delete collection.');
@@ -499,8 +492,6 @@ class RestController extends AbstractRestfulController
         try {
             $entity = $this->getResource()->fetch($id);
         } catch (Throwable $e) {
-            return $this->createApiProblemFromException($e);
-        } catch (Exception $e) {
             return $this->createApiProblemFromException($e);
         }
 
@@ -535,15 +526,14 @@ class RestController extends AbstractRestfulController
             $collection = $this->getResource()->fetchAll();
         } catch (Throwable $e) {
             return $this->createApiProblemFromException($e);
-        } catch (Exception $e) {
-            return $this->createApiProblemFromException($e);
         }
 
         if ($this->isPreparedResponse($collection)) {
             return $collection;
         }
 
-        if (! is_array($collection)
+        if (
+            ! is_array($collection)
             && ! $collection instanceof Traversable
             && ! $collection instanceof HalCollection
             && is_object($collection)
@@ -623,7 +613,7 @@ class RestController extends AbstractRestfulController
 
         $response = $this->getResponse();
         $response->setStatusCode(204);
-        $headers  = $response->getHeaders();
+        $headers = $response->getHeaders();
         $headers->addHeader($this->createAllowHeaderWithAllowedMethods($options));
 
         $events->trigger('options.post', $this, ['options' => $options]);
@@ -647,8 +637,6 @@ class RestController extends AbstractRestfulController
         try {
             $entity = $this->getResource()->patch($id, $data);
         } catch (Throwable $e) {
-            return $this->createApiProblemFromException($e);
-        } catch (Exception $e) {
             return $this->createApiProblemFromException($e);
         }
 
@@ -685,8 +673,6 @@ class RestController extends AbstractRestfulController
             $entity = $this->getResource()->update($id, $data);
         } catch (Throwable $e) {
             return $this->createApiProblemFromException($e);
-        } catch (Exception $e) {
-            return $this->createApiProblemFromException($e);
         }
 
         if ($this->isPreparedResponse($entity)) {
@@ -721,8 +707,6 @@ class RestController extends AbstractRestfulController
             $collection = $this->getResource()->patchList($data);
         } catch (Throwable $e) {
             return $this->createApiProblemFromException($e);
-        } catch (Exception $e) {
-            return $this->createApiProblemFromException($e);
         }
 
         if ($this->isPreparedResponse($collection)) {
@@ -756,8 +740,6 @@ class RestController extends AbstractRestfulController
             return new ApiProblem(400, $e->getMessage());
         } catch (Throwable $e) {
             return $this->createApiProblemFromException($e);
-        } catch (Exception $e) {
-            return $this->createApiProblemFromException($e);
         }
 
         if ($this->isPreparedResponse($collection)) {
@@ -780,14 +762,14 @@ class RestController extends AbstractRestfulController
      * Attempts to see if an identifier was passed in the URI,
      * returning it if found. Otherwise, returns a boolean false.
      *
-     * @param  \Laminas\Mvc\Router\RouteMatch $routeMatch
-     * @param  \Laminas\Http\Request $request
+     * @param RouteMatch $routeMatch
+     * @param Request $request
      * @return false|mixed
      */
     protected function getIdentifier($routeMatch, $request)
     {
         $identifier = $this->getIdentifierName();
-        $id = $routeMatch->getParam($identifier, false);
+        $id         = $routeMatch->getParam($identifier, false);
         if ($id !== null) {
             return $id;
         }
@@ -831,7 +813,8 @@ class RestController extends AbstractRestfulController
     protected function getHttpStatusCodeFromException($e)
     {
         $code = $e->getCode();
-        if (! is_int($code)
+        if (
+            ! is_int($code)
             || $code < 100
             || $code >= 600
         ) {
@@ -905,8 +888,7 @@ class RestController extends AbstractRestfulController
     /**
      * Override parent - pull from content negotiation helpers
      *
-     * @param RequestInterface $request
-     * @return null|array|\Traversable
+     * @return null|array|Traversable
      */
     public function processPostData(RequestInterface $request)
     {
@@ -917,7 +899,7 @@ class RestController extends AbstractRestfulController
      * Override parent - pull from content negotiation helpers
      *
      * @param Request $request
-     * @return null|array|\Traversable
+     * @return null|array|Traversable
      */
     protected function processBodyContent($request)
     {
@@ -930,7 +912,8 @@ class RestController extends AbstractRestfulController
      */
     protected function isPreparedResponse($object)
     {
-        if ($object instanceof ApiProblem
+        if (
+            $object instanceof ApiProblem
             || $object instanceof ApiProblemResponse
             || $object instanceof Response
         ) {
@@ -957,7 +940,6 @@ class RestController extends AbstractRestfulController
     /**
      * Prepare a HAL collection with the metadata for the current instance.
      *
-     * @param HalCollection $collection
      * @return HalCollection|ApiProblem
      */
     protected function prepareHalCollection(HalCollection $collection)
@@ -988,7 +970,8 @@ class RestController extends AbstractRestfulController
      */
     protected function createHalEntity($entity)
     {
-        if ($entity instanceof HalEntity
+        if (
+            $entity instanceof HalEntity
             && ($entity->getLinks()->has('self') || ! $entity->getId())
         ) {
             return $entity;

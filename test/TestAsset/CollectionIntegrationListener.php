@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Rest\TestAsset;
 
@@ -16,19 +12,22 @@ class CollectionIntegrationListener implements ListenerAggregateInterface
 {
     use ListenerAggregateTrait;
 
+    /** @var iterable */
     public $collection;
 
-    public function attach(EventManagerInterface $events, $priority = 1)
+    /** @param int $priority */
+    public function attach(EventManagerInterface $events, $priority = 1): void
     {
         $this->listeners[] = $events->attach('fetchAll', [$this, 'onFetchAll']);
     }
 
-    public function setCollection($collection)
+    public function setCollection(iterable $collection): void
     {
         $this->collection = $collection;
     }
 
-    public function onFetchAll($e)
+    /** @param array|object $e */
+    public function onFetchAll($e): iterable
     {
         return $this->collection;
     }

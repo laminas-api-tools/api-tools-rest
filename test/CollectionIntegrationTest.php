@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Rest;
 
@@ -25,6 +21,7 @@ use Laminas\EventManager\SharedEventManager;
 use Laminas\Http\PhpEnvironment\Request;
 use Laminas\Http\PhpEnvironment\Response;
 use Laminas\InputFilter\InputFilter;
+use Laminas\Mvc\Controller\AbstractController;
 use Laminas\Mvc\Controller\ControllerManager;
 use Laminas\Mvc\Controller\PluginManager as ControllerPluginManager;
 use Laminas\Mvc\MvcEvent;
@@ -44,9 +41,10 @@ use Laminas\View\Helper\Url as UrlHelper;
 use Laminas\View\HelperPluginManager;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @subpackage UnitTest
- */
+use function json_decode;
+use function method_exists;
+use function sprintf;
+
 class CollectionIntegrationTest extends TestCase
 {
     use TreeRouteStackFactoryTrait;
@@ -103,7 +101,7 @@ class CollectionIntegrationTest extends TestCase
         $this->linksHelper = $linksHelper = new HalHelper();
         $linksHelper->setLinkUrlBuilder($linkUrlBuilder);
 
-        $linkExtractor = new LinkExtractor($linkUrlBuilder);
+        $linkExtractor           = new LinkExtractor($linkUrlBuilder);
         $linkCollectionExtractor = new LinkCollectionExtractor($linkExtractor);
         $linksHelper->setLinkCollectionExtractor($linkCollectionExtractor);
 
@@ -133,11 +131,11 @@ class CollectionIntegrationTest extends TestCase
 
         $this->setUpRequest();
 
-        $routes = [
+        $routes       = [
             'resource' => [
-                'type' => 'Segment',
+                'type'    => 'Segment',
                 'options' => [
-                    'route' => '/api/resource[/:id]',
+                    'route'    => '/api/resource[/:id]',
                     'defaults' => [
                         'controller' => 'Api\RestController',
                     ],
@@ -155,7 +153,7 @@ class CollectionIntegrationTest extends TestCase
         $this->matches = $matches;
     }
 
-    public function setUpCollection()
+    public function setUpCollection(): Paginator
     {
         $collection = [];
         for ($i = 1; $i <= 10; $i++) {
@@ -198,7 +196,7 @@ class CollectionIntegrationTest extends TestCase
         $this->setUpContentNegotiation($controller);
     }
 
-    public function setUpContentNegotiation($controller)
+    public function setUpContentNegotiation(AbstractController $controller)
     {
         $plugins = new ControllerPluginManager($this->prophesize(ContainerInterface::class)->reveal());
         $plugins->setService('hal', $this->linksHelper);
@@ -210,7 +208,7 @@ class CollectionIntegrationTest extends TestCase
         $viewModelSelector = $plugins->get('AcceptableViewModelSelector');
         $acceptListener    = new AcceptListener($viewModelSelector, [
             'controllers' => [],
-            'selectors'  => [
+            'selectors'   => [
                 'HalJson' => [
                     HalJsonModel::class => [
                         'application/json',
@@ -232,7 +230,7 @@ class CollectionIntegrationTest extends TestCase
         $request = $this->request = new Request();
         $request->setQuery(new Parameters([
             'query' => 'foo',
-            'bar' => 'baz',
+            'bar'   => 'baz',
             'page'  => 2,
         ]));
         $request->setUri($uri);
@@ -250,7 +248,7 @@ class CollectionIntegrationTest extends TestCase
         $this->response = new Response();
     }
 
-    public function getEvent()
+    public function getEvent(): MvcEvent
     {
         $this->setUpResponse();
         $event = new MvcEvent();
@@ -264,8 +262,8 @@ class CollectionIntegrationTest extends TestCase
     public function testCollectionLinksIncludeFullQueryString()
     {
         $this->controller->getEventManager()->attach('getList.post', function ($e) {
-            $request    = $e->getTarget()->getRequest();
-            $query = $request->getQuery('query', false);
+            $request = $e->getTarget()->getRequest();
+            $query   = $request->getQuery('query', false);
             if (! $query) {
                 return;
             }
@@ -280,7 +278,7 @@ class CollectionIntegrationTest extends TestCase
         $result = $this->controller->dispatch($this->request, $this->response);
         $this->assertInstanceOf(HalJsonModel::class, $result);
 
-        $json = $this->renderer->render($result);
+        $json    = $this->renderer->render($result);
         $payload = json_decode($json, true);
         $this->assertArrayHasKey('_links', $payload);
         $links = $payload['_links'];
@@ -301,9 +299,9 @@ class CollectionIntegrationTest extends TestCase
         }
     }
 
-    public function getServiceManager()
+    public function getServiceManager(): ServiceManager
     {
-        $services    = new ServiceManager();
+        $services = new ServiceManager();
         $services->setService('config', [
             'api-tools-rest' => [
                 'Api\RestController' => [
@@ -372,7 +370,7 @@ class CollectionIntegrationTest extends TestCase
 
     public function testFactoryEnabledListenerCreatesQueryStringWhitelist()
     {
-        $services = $this->getServiceManager();
+        $services   = $this->getServiceManager();
         $controller = $services->get('ControllerManager')->get('Api\RestController');
         $controller->setEvent($this->getEvent());
         $this->setUpContentNegotiation($controller);
@@ -380,7 +378,7 @@ class CollectionIntegrationTest extends TestCase
         $result = $controller->dispatch($this->request, $this->response);
         $this->assertInstanceOf(HalJsonModel::class, $result);
 
-        $json = $this->renderer->render($result);
+        $json    = $this->renderer->render($result);
         $payload = json_decode($json, true);
         $this->assertArrayHasKey('_links', $payload);
         $links = $payload['_links'];
@@ -408,7 +406,7 @@ class CollectionIntegrationTest extends TestCase
 
     public function testFactoryEnabledListenerInjectsWhitelistedQueryParams()
     {
-        $services = $this->getServiceManager();
+        $services   = $this->getServiceManager();
         $controller = $services->get('ControllerManager')->get('Api\RestController');
         $controller->setEvent($this->getEvent());
         $this->setUpContentNegotiation($controller);
@@ -425,14 +423,14 @@ class CollectionIntegrationTest extends TestCase
 
     public function testFactoryEnabledListenerMergeWhitelistedQueryParamsWithInputFilterKeys()
     {
-        $services = $this->getServiceManager();
+        $services   = $this->getServiceManager();
         $controller = $services->get('ControllerManager')->get('Api\RestController');
         $controller->setEvent($this->getEvent());
         $inputFilter = new InputFilter();
         $inputFilter->add([
-            'name' => 'bar',
-            'required' => false,
-            'allowEmpty' => true
+            'name'       => 'bar',
+            'required'   => false,
+            'allowEmpty' => true,
         ]);
         $controller->getResource()->setInputFilter($inputFilter);
         $this->setUpContentNegotiation($controller);

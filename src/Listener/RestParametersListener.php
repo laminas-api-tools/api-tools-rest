@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Rest\Listener;
 
@@ -14,27 +10,23 @@ use Laminas\EventManager\ListenerAggregateInterface;
 use Laminas\EventManager\ListenerAggregateTrait;
 use Laminas\EventManager\SharedEventManagerInterface;
 use Laminas\Mvc\MvcEvent;
+use Laminas\Stdlib\CallbackHandler;
+
+use function method_exists;
 
 class RestParametersListener implements ListenerAggregateInterface
 {
     use ListenerAggregateTrait;
 
-    /**
-     * @var \Laminas\Stdlib\CallbackHandler[]
-     */
+    /** @var CallbackHandler[] */
     protected $sharedListeners = [];
 
-    /**
-     * @param EventManagerInterface $events
-     */
+    /** @param int $priority */
     public function attach(EventManagerInterface $events, $priority = 1)
     {
         $this->listeners[] = $events->attach(MvcEvent::EVENT_DISPATCH, [$this, 'onDispatch'], 100);
     }
 
-    /**
-     * @param SharedEventManagerInterface $events
-     */
     public function attachShared(SharedEventManagerInterface $events)
     {
         $listener = $events->attach(
@@ -51,9 +43,6 @@ class RestParametersListener implements ListenerAggregateInterface
         $this->sharedListeners[] = $listener;
     }
 
-    /**
-     * @param SharedEventManagerInterface $events
-     */
     public function detachShared(SharedEventManagerInterface $events)
     {
         $eventManagerVersion = method_exists($events, 'getEvents') ? 2 : 3;
@@ -75,8 +64,6 @@ class RestParametersListener implements ListenerAggregateInterface
 
     /**
      * Listen to the dispatch event
-     *
-     * @param MvcEvent $e
      */
     public function onDispatch(MvcEvent $e)
     {

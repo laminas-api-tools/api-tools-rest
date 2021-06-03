@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Rest\Listener;
 
@@ -14,14 +10,22 @@ use Laminas\EventManager\ListenerAggregateTrait;
 use Laminas\Http\Request;
 use Laminas\Http\Response;
 use Laminas\Mvc\MvcEvent;
+use Laminas\Mvc\Router\RouteMatch as V2RouteMatch;
+use Laminas\Router\RouteMatch;
+
+use function array_key_exists;
+use function array_walk;
+use function implode;
+use function in_array;
+use function is_array;
+use function is_string;
+use function strtoupper;
 
 class OptionsListener implements ListenerAggregateInterface
 {
     use ListenerAggregateTrait;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $config;
 
     /**
@@ -32,17 +36,14 @@ class OptionsListener implements ListenerAggregateInterface
         $this->config = $config;
     }
 
-    /**
-     * @param  EventManagerInterface $events
-     */
-    public function attach(EventManagerInterface $events, $priority = 1)
+    /** @param int $priority */
+    public function attach(EventManagerInterface $events, $priority = 1): void
     {
         $this->listeners[] = $events->attach(MvcEvent::EVENT_ROUTE, [$this, 'onRoute'], -100);
     }
 
     /**
-     * @param  MvcEvent $event
-     * @return void|\Laminas\Http\Response
+     * @return void|Response
      */
     public function onRoute(MvcEvent $event)
     {
@@ -113,7 +114,6 @@ class OptionsListener implements ListenerAggregateInterface
      * Create the Allow header
      *
      * @param  array $options
-     * @param  Response $response
      */
     protected function createAllowHeader(array $options, Response $response)
     {
@@ -126,7 +126,6 @@ class OptionsListener implements ListenerAggregateInterface
      *
      * Creates an empty response with an Allow header.
      *
-     * @param  MvcEvent $event
      * @param  array $options
      * @return Response
      */
@@ -140,7 +139,6 @@ class OptionsListener implements ListenerAggregateInterface
     /**
      * Prepare a 405 response
      *
-     * @param  MvcEvent $event
      * @param  array $options
      * @return Response
      */
@@ -158,15 +156,15 @@ class OptionsListener implements ListenerAggregateInterface
      * appropriate HTTP method configuration.
      *
      * If an entity request was detected, but no entity configuration exists, returns
+     * empty array.
      *
-     * @param mixed $config
-     * @param mixed $matches
-     * @return void
+     * @param RouteMatch|V2RouteMatch $matches
      */
-    protected function getConfigForControllerAndMatches($config, $matches)
+    protected function getConfigForControllerAndMatches(array $config, $matches): array
     {
         $collectionConfig = [];
-        if (array_key_exists('collection_http_methods', $config)
+        if (
+            array_key_exists('collection_http_methods', $config)
             && is_array($config['collection_http_methods'])
         ) {
             $collectionConfig = $config['collection_http_methods'];
@@ -185,7 +183,8 @@ class OptionsListener implements ListenerAggregateInterface
             return $collectionConfig;
         }
 
-        if (array_key_exists('entity_http_methods', $config)
+        if (
+            array_key_exists('entity_http_methods', $config)
             && is_array($config['entity_http_methods'])
         ) {
             $entityConfig = $config['entity_http_methods'];

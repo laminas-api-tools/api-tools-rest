@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Rest\Listener;
 
@@ -17,6 +13,11 @@ use Laminas\Mvc\MvcEvent;
 use Laminas\Stdlib\Request as StdlibRequest;
 use LaminasTest\ApiTools\Rest\RouteMatchFactoryTrait;
 use PHPUnit\Framework\TestCase;
+
+use function array_walk;
+use function explode;
+use function sort;
+use function trim;
 
 class OptionsListenerTest extends TestCase
 {
@@ -37,27 +38,27 @@ class OptionsListenerTest extends TestCase
         );
     }
 
-    public function seedListenerConfig()
+    public function seedListenerConfig(): array
     {
         return [
-            'controller-without-config' => [],
-            'controller-with-entity-config' => [
+            'controller-without-config'                   => [],
+            'controller-with-entity-config'               => [
                 'route_identifier_name' => 'entity_id',
-                'entity_http_methods' => [
+                'entity_http_methods'   => [
                     'GET',
                     'PATCH',
                     'DELETE',
                 ],
             ],
-            'controller-with-collection-config' => [
+            'controller-with-collection-config'           => [
                 'collection_http_methods' => [
                     'GET',
                     'POST',
                 ],
             ],
-            'controller-with-all-config' => [
-                'route_identifier_name' => 'entity_id',
-                'entity_http_methods' => [
+            'controller-with-all-config'                  => [
+                'route_identifier_name'   => 'entity_id',
+                'entity_http_methods'     => [
                     'GET',
                     'PATCH',
                     'DELETE',
@@ -68,7 +69,7 @@ class OptionsListenerTest extends TestCase
                 ],
             ],
             'controller-with-all-config-except-entity-id' => [
-                'entity_http_methods' => [
+                'entity_http_methods'     => [
                     'GET',
                     'PATCH',
                     'DELETE',
@@ -81,106 +82,193 @@ class OptionsListenerTest extends TestCase
         ];
     }
 
-    public function validMethodsProvider()
+    public function validMethodsProvider(): array
     {
         return [
-            'collection-get' => ['GET', [
-                'controller' => 'controller-with-collection-config',
-            ]],
-            'collection-post' => ['POST', [
-                'controller' => 'controller-with-collection-config',
-            ]],
-            'entity-get' => ['GET', [
-                'controller' => 'controller-with-entity-config',
-                'entity_id'  => 'foo',
-            ]],
-            'entity-patch' => ['PATCH', [
-                'controller' => 'controller-with-entity-config',
-                'entity_id'  => 'foo',
-            ]],
-            'entity-delete' => ['DELETE', [
-                'controller' => 'controller-with-entity-config',
-                'entity_id'  => 'foo',
-            ]],
-            'all-collection-get' => ['GET', [
-                'controller' => 'controller-with-all-config',
-            ]],
-            'all-collection-post' => ['POST', [
-                'controller' => 'controller-with-all-config',
-            ]],
-            'all-entity-get' => ['GET', [
-                'controller' => 'controller-with-all-config',
-                'entity_id'  => 'foo',
-            ]],
-            'all-entity-patch' => ['PATCH', [
-                'controller' => 'controller-with-all-config',
-                'entity_id'  => 'foo',
-            ]],
-            'all-entity-delete' => ['DELETE', [
-                'controller' => 'controller-with-all-config',
-                'entity_id'  => 'foo',
-            ]],
-            'all-except-collection-get' => ['GET', [
-                'controller' => 'controller-with-all-config-except-entity-id',
-            ]],
-            'all-except-collection-post' => ['POST', [
-                'controller' => 'controller-with-all-config-except-entity-id',
-            ]],
+            'collection-get'             => [
+                'GET',
+                [
+                    'controller' => 'controller-with-collection-config',
+                ],
+            ],
+            'collection-post'            => [
+                'POST',
+                [
+                    'controller' => 'controller-with-collection-config',
+                ],
+            ],
+            'entity-get'                 => [
+                'GET',
+                [
+                    'controller' => 'controller-with-entity-config',
+                    'entity_id'  => 'foo',
+                ],
+            ],
+            'entity-patch'               => [
+                'PATCH',
+                [
+                    'controller' => 'controller-with-entity-config',
+                    'entity_id'  => 'foo',
+                ],
+            ],
+            'entity-delete'              => [
+                'DELETE',
+                [
+                    'controller' => 'controller-with-entity-config',
+                    'entity_id'  => 'foo',
+                ],
+            ],
+            'all-collection-get'         => [
+                'GET',
+                [
+                    'controller' => 'controller-with-all-config',
+                ],
+            ],
+            'all-collection-post'        => [
+                'POST',
+                [
+                    'controller' => 'controller-with-all-config',
+                ],
+            ],
+            'all-entity-get'             => [
+                'GET',
+                [
+                    'controller' => 'controller-with-all-config',
+                    'entity_id'  => 'foo',
+                ],
+            ],
+            'all-entity-patch'           => [
+                'PATCH',
+                [
+                    'controller' => 'controller-with-all-config',
+                    'entity_id'  => 'foo',
+                ],
+            ],
+            'all-entity-delete'          => [
+                'DELETE',
+                [
+                    'controller' => 'controller-with-all-config',
+                    'entity_id'  => 'foo',
+                ],
+            ],
+            'all-except-collection-get'  => [
+                'GET',
+                [
+                    'controller' => 'controller-with-all-config-except-entity-id',
+                ],
+            ],
+            'all-except-collection-post' => [
+                'POST',
+                [
+                    'controller' => 'controller-with-all-config-except-entity-id',
+                ],
+            ],
         ];
     }
 
-    public function invalidMethodsProvider()
+    public function invalidMethodsProvider(): array
     {
         return [
-            'collection-patch' => ['PATCH', [
-                'controller' => 'controller-with-collection-config',
-            ], ['GET', 'POST']],
-            'collection-put' => ['PUT', [
-                'controller' => 'controller-with-collection-config',
-            ], ['GET', 'POST']],
-            'collection-delete' => ['DELETE', [
-                'controller' => 'controller-with-collection-config',
-            ], ['GET', 'POST']],
-            'entity-post' => ['POST', [
-                'controller' => 'controller-with-entity-config',
-                'entity_id'  => 'foo',
-            ], ['GET', 'PATCH', 'DELETE']],
-            'entity-put' => ['PUT', [
-                'controller' => 'controller-with-entity-config',
-                'entity_id'  => 'foo',
-            ], ['GET', 'PATCH', 'DELETE']],
-            'all-collection-patch' => ['PATCH', [
-                'controller' => 'controller-with-all-config',
-            ], ['GET', 'POST']],
-            'all-collection-put' => ['PUT', [
-                'controller' => 'controller-with-all-config',
-            ], ['GET', 'POST']],
-            'all-collection-delete' => ['DELETE', [
-                'controller' => 'controller-with-all-config',
-            ], ['GET', 'POST']],
-            'all-entity-post' => ['POST', [
-                'controller' => 'controller-with-all-config',
-                'entity_id'  => 'foo',
-            ], ['GET', 'PATCH', 'DELETE']],
-            'all-entity-put' => ['PUT', [
-                'controller' => 'controller-with-all-config',
-                'entity_id'  => 'foo',
-            ], ['GET', 'PATCH', 'DELETE']],
-            'except-collection-patch' => ['PATCH', [
-                'controller' => 'controller-with-all-config-except-entity-id',
-            ], ['GET', 'POST']],
-            'except-collection-put' => ['PUT', [
-                'controller' => 'controller-with-all-config-except-entity-id',
-            ], ['GET', 'POST']],
-            'except-collection-delete' => ['DELETE', [
-                'controller' => 'controller-with-all-config-except-entity-id',
-            ], ['GET', 'POST']],
+            'collection-patch'         => [
+                'PATCH',
+                [
+                    'controller' => 'controller-with-collection-config',
+                ],
+                ['GET', 'POST'],
+            ],
+            'collection-put'           => [
+                'PUT',
+                [
+                    'controller' => 'controller-with-collection-config',
+                ],
+                ['GET', 'POST'],
+            ],
+            'collection-delete'        => [
+                'DELETE',
+                [
+                    'controller' => 'controller-with-collection-config',
+                ],
+                ['GET', 'POST'],
+            ],
+            'entity-post'              => [
+                'POST',
+                [
+                    'controller' => 'controller-with-entity-config',
+                    'entity_id'  => 'foo',
+                ],
+                ['GET', 'PATCH', 'DELETE'],
+            ],
+            'entity-put'               => [
+                'PUT',
+                [
+                    'controller' => 'controller-with-entity-config',
+                    'entity_id'  => 'foo',
+                ],
+                ['GET', 'PATCH', 'DELETE'],
+            ],
+            'all-collection-patch'     => [
+                'PATCH',
+                [
+                    'controller' => 'controller-with-all-config',
+                ],
+                ['GET', 'POST'],
+            ],
+            'all-collection-put'       => [
+                'PUT',
+                [
+                    'controller' => 'controller-with-all-config',
+                ],
+                ['GET', 'POST'],
+            ],
+            'all-collection-delete'    => [
+                'DELETE',
+                [
+                    'controller' => 'controller-with-all-config',
+                ],
+                ['GET', 'POST'],
+            ],
+            'all-entity-post'          => [
+                'POST',
+                [
+                    'controller' => 'controller-with-all-config',
+                    'entity_id'  => 'foo',
+                ],
+                ['GET', 'PATCH', 'DELETE'],
+            ],
+            'all-entity-put'           => [
+                'PUT',
+                [
+                    'controller' => 'controller-with-all-config',
+                    'entity_id'  => 'foo',
+                ],
+                ['GET', 'PATCH', 'DELETE'],
+            ],
+            'except-collection-patch'  => [
+                'PATCH',
+                [
+                    'controller' => 'controller-with-all-config-except-entity-id',
+                ],
+                ['GET', 'POST'],
+            ],
+            'except-collection-put'    => [
+                'PUT',
+                [
+                    'controller' => 'controller-with-all-config-except-entity-id',
+                ],
+                ['GET', 'POST'],
+            ],
+            'except-collection-delete' => [
+                'DELETE',
+                [
+                    'controller' => 'controller-with-all-config-except-entity-id',
+                ],
+                ['GET', 'POST'],
+            ],
         ];
     }
 
     /**
      * @dataProvider validMethodsProvider
-     *
      * @param string $method
      * @param array $matchParams
      */
@@ -200,7 +288,6 @@ class OptionsListenerTest extends TestCase
 
     /**
      * @dataProvider invalidMethodsProvider
-     *
      * @param string $method
      * @param array $matchParams
      */
@@ -219,7 +306,6 @@ class OptionsListenerTest extends TestCase
 
     /**
      * @dataProvider invalidMethodsProvider
-     *
      * @param string $method
      */
     public function testListenerReturnsNullIfNoRouteMatches($method)
@@ -262,7 +348,6 @@ class OptionsListenerTest extends TestCase
 
     /**
      * @dataProvider invalidMethodsProvider
-     *
      * @param string $method
      * @param array $matchParams
      * @param array $expectedAllow

@@ -1,53 +1,58 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Rest;
 
 use Laminas\ApiTools\ApiProblem\ApiProblem;
+use Laminas\ApiTools\MvcAuth\Identity\IdentityInterface;
 use Laminas\EventManager\EventManagerInterface;
 use Laminas\EventManager\ListenerAggregateInterface;
 use Laminas\EventManager\ListenerAggregateTrait;
+use Laminas\InputFilter\InputFilterInterface;
+
+use function sprintf;
 
 abstract class AbstractResourceListener implements ListenerAggregateInterface
 {
     use ListenerAggregateTrait;
 
-    /**
-     * @var ResourceEvent
-     */
+    /** @var ResourceEvent */
     protected $event;
 
     /**
      * The entity_class config for the calling controller api-tools-rest config
+     *
+     * @var string
      */
     protected $entityClass;
 
     /**
      * The collection_class config for the calling controller api-tools-rest config
+     *
+     * @var string
      */
     protected $collectionClass;
 
     /**
      * Current identity, if discovered in the resource event.
      *
-     * @var \Laminas\ApiTools\MvcAuth\Identity\IdentityInterface
+     * @var IdentityInterface
      */
     protected $identity;
 
     /**
      * Input filter, if discovered in the resource event.
      *
-     * @var \Laminas\InputFilter\InputFilterInterface
+     * @var InputFilterInterface
      */
     protected $inputFilter;
 
     /**
      * Set the entity_class for the controller config calling this resource
+     *
+     * @param string $className
+     * @return $this
      */
     public function setEntityClass($className)
     {
@@ -55,17 +60,23 @@ abstract class AbstractResourceListener implements ListenerAggregateInterface
         return $this;
     }
 
+    /** @return string */
     public function getEntityClass()
     {
         return $this->entityClass;
     }
 
+    /**
+     * @param string $className
+     * @return $this
+     */
     public function setCollectionClass($className)
     {
         $this->collectionClass = $className;
         return $this;
     }
 
+    /** @return string */
     public function getCollectionClass()
     {
         return $this->collectionClass;
@@ -87,7 +98,7 @@ abstract class AbstractResourceListener implements ListenerAggregateInterface
      * Proxies to the resource event to find the identity, if not already
      * composed, and composes it.
      *
-     * @return null|\Laminas\ApiTools\MvcAuth\Identity\IdentityInterface
+     * @return null|IdentityInterface
      */
     public function getIdentity()
     {
@@ -110,7 +121,7 @@ abstract class AbstractResourceListener implements ListenerAggregateInterface
      * Proxies to the resource event to find the input filter, if not already
      * composed, and composes it.
      *
-     * @return null|\Laminas\InputFilter\InputFilterInterface
+     * @return null|InputFilterInterface
      */
     public function getInputFilter()
     {
@@ -130,7 +141,7 @@ abstract class AbstractResourceListener implements ListenerAggregateInterface
     /**
      * Attach listeners for all Resource events
      *
-     * @param  EventManagerInterface $events
+     * @param int $priority
      */
     public function attach(EventManagerInterface $events, $priority = 1)
     {
@@ -150,7 +161,6 @@ abstract class AbstractResourceListener implements ListenerAggregateInterface
      *
      * Marshals arguments from the event parameters.
      *
-     * @param  ResourceEvent $event
      * @return mixed
      */
     public function dispatch(ResourceEvent $event)
@@ -161,13 +171,13 @@ abstract class AbstractResourceListener implements ListenerAggregateInterface
                 $data = $event->getParam('data', []);
                 return $this->create($data);
             case 'delete':
-                $id   = $event->getParam('id', null);
+                $id = $event->getParam('id', null);
                 return $this->delete($id);
             case 'deleteList':
                 $data = $event->getParam('data', []);
                 return $this->deleteList($data);
             case 'fetch':
-                $id   = $event->getParam('id', null);
+                $id = $event->getParam('id', null);
                 return $this->fetch($id);
             case 'fetchAll':
                 $queryParams = $event->getQueryParams() ?: [];
