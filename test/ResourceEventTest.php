@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Rest;
 
@@ -36,7 +32,7 @@ class ResourceEventTest extends TestCase
             'foo' => 'bar',
             'baz' => 'inga',
         ]);
-        $this->query = new Parameters([
+        $this->query   = new Parameters([
             'foo' => 'bar',
             'baz' => 'inga',
         ]);
@@ -54,14 +50,14 @@ class ResourceEventTest extends TestCase
         $this->assertNull($this->event->getQueryParams());
     }
 
-    public function testRouteMatchIsMutable()
+    public function testRouteMatchIsMutable(): ResourceEvent
     {
         $this->event->setRouteMatch($this->matches);
         $this->assertSame($this->matches, $this->event->getRouteMatch());
         return $this->event;
     }
 
-    public function testQueryParamsAreMutable()
+    public function testQueryParamsAreMutable(): ResourceEvent
     {
         $this->event->setQueryParams($this->query);
         $this->assertSame($this->query, $this->event->getQueryParams());
@@ -73,7 +69,7 @@ class ResourceEventTest extends TestCase
         $this->assertNull($this->event->getRequest());
     }
 
-    public function testRequestIsMutable()
+    public function testRequestIsMutable(): ResourceEvent
     {
         $request = new HttpRequest();
         $this->event->setRequest($request);
@@ -83,8 +79,6 @@ class ResourceEventTest extends TestCase
 
     /**
      * @depends testRouteMatchIsMutable
-     *
-     * @param ResourceEvent $event
      */
     public function testRouteMatchIsNullable(ResourceEvent $event)
     {
@@ -94,8 +88,6 @@ class ResourceEventTest extends TestCase
 
     /**
      * @depends testQueryParamsAreMutable
-     *
-     * @param ResourceEvent $event
      */
     public function testQueryParamsAreNullable(ResourceEvent $event)
     {
@@ -105,8 +97,6 @@ class ResourceEventTest extends TestCase
 
     /**
      * @depends testRequestIsMutable
-     *
-     * @param ResourceEvent $event
      */
     public function testRequestIsNullable(ResourceEvent $event)
     {

@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Rest;
 
@@ -14,14 +10,26 @@ use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\ApiProblem\ApiProblemResponse;
 use Laminas\ApiTools\Hal\Collection as HalCollection;
 use Laminas\ApiTools\MvcAuth\Identity\IdentityInterface;
+use Laminas\ApiTools\Rest\ResourceInterface;
 use Laminas\EventManager\EventManager;
 use Laminas\EventManager\EventManagerInterface;
+use Laminas\EventManager\ResponseCollection;
 use Laminas\Http\Response;
 use Laminas\InputFilter\InputFilterInterface;
 use Laminas\Mvc\Router\RouteMatch as V2RouteMatch;
 use Laminas\Router\RouteMatch;
 use Laminas\Stdlib\Parameters;
 use Traversable;
+
+use function array_merge;
+use function array_walk;
+use function func_get_args;
+use function get_class;
+use function gettype;
+use function is_array;
+use function is_bool;
+use function is_object;
+use function sprintf;
 
 /**
  * Base resource class
@@ -31,34 +39,22 @@ use Traversable;
  */
 class Resource implements ResourceInterface
 {
-    /**
-     * @var EventManagerInterface
-     */
+    /** @var EventManagerInterface */
     protected $events;
 
-    /**
-     * @var null|IdentityInterface
-     */
+    /** @var null|IdentityInterface */
     protected $identity;
 
-    /**
-     * @var null|InputFilterInterface
-     */
+    /** @var null|InputFilterInterface */
     protected $inputFilter;
 
-    /**
-     * @var array
-     */
+    /** @var array */
     protected $params = [];
 
-    /**
-     * @var null|Parameters
-     */
+    /** @var null|Parameters */
     protected $queryParams;
 
-    /**
-     * @var null|RouteMatch|V2RouteMatch
-     */
+    /** @var null|RouteMatch|V2RouteMatch */
     protected $routeMatch;
 
     /**
@@ -80,10 +76,9 @@ class Resource implements ResourceInterface
     }
 
     /**
-     * @param null|IdentityInterface $identity
      * @return self
      */
-    public function setIdentity(IdentityInterface $identity = null)
+    public function setIdentity(?IdentityInterface $identity = null)
     {
         $this->identity = $identity;
         return $this;
@@ -98,10 +93,9 @@ class Resource implements ResourceInterface
     }
 
     /**
-     * @param null|InputFilterInterface $inputFilter
      * @return self
      */
-    public function setInputFilter(InputFilterInterface $inputFilter = null)
+    public function setInputFilter(?InputFilterInterface $inputFilter = null)
     {
         $this->inputFilter = $inputFilter;
         return $this;
@@ -116,7 +110,6 @@ class Resource implements ResourceInterface
     }
 
     /**
-     * @param Parameters $params
      * @return self
      */
     public function setQueryParams(Parameters $params)
@@ -145,7 +138,7 @@ class Resource implements ResourceInterface
                 __METHOD__,
                 RouteMatch::class,
                 V2RouteMatch::class,
-                (is_object($matches) ? get_class($matches) : gettype($matches))
+                is_object($matches) ? get_class($matches) : gettype($matches)
             ));
         }
         $this->routeMatch = $matches;
@@ -191,15 +184,14 @@ class Resource implements ResourceInterface
      * Sets the event manager identifiers to the current class, this class, and
      * the resource interface.
      *
-     * @param  EventManagerInterface $events
      * @return self
      */
     public function setEventManager(EventManagerInterface $events)
     {
         $events->addIdentifiers([
-            get_class($this),
-            __CLASS__,
-            'Laminas\ApiTools\Rest\ResourceInterface',
+            static::class,
+            self::class,
+            ResourceInterface::class,
         ]);
         $this->events = $events;
         return $this;
@@ -284,7 +276,10 @@ class Resource implements ResourceInterface
             ));
         }
 
-        $results = $this->triggerEvent(__FUNCTION__, compact('id', 'data'));
+        $results = $this->triggerEvent(__FUNCTION__, [
+            'id'   => $id,
+            'data' => $data,
+        ]);
         $last    = $results->last();
         if (! is_array($last) && ! is_object($last)) {
             return $data;
@@ -370,7 +365,10 @@ class Resource implements ResourceInterface
             ));
         }
 
-        $results = $this->triggerEvent(__FUNCTION__, compact('id', 'data'));
+        $results = $this->triggerEvent(__FUNCTION__, [
+            'id'   => $id,
+            'data' => $data,
+        ]);
         $last    = $results->last();
         if (! is_array($last) && ! is_object($last)) {
             return $data;
@@ -443,7 +441,8 @@ class Resource implements ResourceInterface
     {
         $results = $this->triggerEvent(__FUNCTION__, ['id' => $id]);
         $last    = $results->last();
-        if (! is_bool($last)
+        if (
+            ! is_bool($last)
             && ! $last instanceof ApiProblem
             && ! $last instanceof ApiProblemResponse
             && ! $last instanceof Response
@@ -461,7 +460,8 @@ class Resource implements ResourceInterface
      */
     public function deleteList($data = null)
     {
-        if ($data
+        if (
+            $data
             && (! is_array($data) && ! $data instanceof Traversable)
         ) {
             throw new Exception\InvalidArgumentException(sprintf(
@@ -473,7 +473,8 @@ class Resource implements ResourceInterface
 
         $results = $this->triggerEvent(__FUNCTION__, ['data' => $data]);
         $last    = $results->last();
-        if (! is_bool($last)
+        if (
+            ! is_bool($last)
             && ! $last instanceof ApiProblem
             && ! $last instanceof ApiProblemResponse
             && ! $last instanceof Response
@@ -522,7 +523,8 @@ class Resource implements ResourceInterface
         $params  = func_get_args();
         $results = $this->triggerEvent(__FUNCTION__, $params);
         $last    = $results->last();
-        if (! is_array($last)
+        if (
+            ! is_array($last)
             && ! $last instanceof HalCollection
             && ! $last instanceof ApiProblem
             && ! $last instanceof ApiProblemResponse
@@ -536,15 +538,14 @@ class Resource implements ResourceInterface
     /**
      * @param  string $name
      * @param  array $args
-     * @return \Laminas\EventManager\ResponseCollection
+     * @return ResponseCollection
      */
     protected function triggerEvent($name, array $args)
     {
         return $this->getEventManager()->triggerEventUntil(function ($result) {
-            return ($result instanceof ApiProblem
+            return $result instanceof ApiProblem
                 || $result instanceof ApiProblemResponse
-                || $result instanceof Response
-            );
+                || $result instanceof Response;
         }, $this->prepareEvent($name, $args));
     }
 

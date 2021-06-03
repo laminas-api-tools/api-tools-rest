@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Rest\Factory;
 
@@ -13,17 +9,19 @@ use Laminas\ApiTools\Rest\Listener\OptionsListener;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 
+use function array_key_exists;
+use function is_array;
+
 class OptionsListenerFactory implements FactoryInterface
 {
     /**
      * Create and return an OptionsListener instance.
      *
-     * @param ContainerInterface $container
      * @param string $requestedName
      * @param null|array $options
      * @return OptionsListener
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         return new OptionsListener($this->getConfig($container));
     }
@@ -33,7 +31,6 @@ class OptionsListenerFactory implements FactoryInterface
      *
      * Provided for backwards compatibility; proxies to __invoke().
      *
-     * @param ServiceLocatorInterface $container
      * @return OptionsListener
      */
     public function createService(ServiceLocatorInterface $container)
@@ -44,7 +41,6 @@ class OptionsListenerFactory implements FactoryInterface
     /**
      * Retrieve api-tools-rest config from the container, if available.
      *
-     * @param ContainerInterface $container
      * @return array
      */
     private function getConfig(ContainerInterface $container)
@@ -55,7 +51,8 @@ class OptionsListenerFactory implements FactoryInterface
 
         $config = $container->get('config');
 
-        if (! array_key_exists('api-tools-rest', $config)
+        if (
+            ! array_key_exists('api-tools-rest', $config)
             || ! is_array($config['api-tools-rest'])
         ) {
             return [];

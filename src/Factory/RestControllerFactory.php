@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace Laminas\ApiTools\Rest\Factory;
 
@@ -20,13 +16,25 @@ use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Stdlib\Parameters;
 
-/**
- * Class RestControllerFactory
- */
+use function array_key_exists;
+use function array_keys;
+use function array_merge;
+use function array_unique;
+use function class_exists;
+use function get_class;
+use function gettype;
+use function in_array;
+use function is_array;
+use function is_object;
+use function is_string;
+use function method_exists;
+use function sprintf;
+
 class RestControllerFactory implements AbstractFactoryInterface
 {
     /**
      * Cache of canCreateServiceWithName lookups
+     *
      * @var array
      */
     protected $lookupCache = [];
@@ -36,7 +44,6 @@ class RestControllerFactory implements AbstractFactoryInterface
      *
      * Provided for backwards compatibility; proxies to canCreate().
      *
-     * @param ContainerInterface $container
      * @param string $requestedName
      * @return bool
      */
@@ -52,7 +59,8 @@ class RestControllerFactory implements AbstractFactoryInterface
         }
 
         $config = $container->get('config');
-        if (! isset($config['api-tools-rest'])
+        if (
+            ! isset($config['api-tools-rest'])
             || ! is_array($config['api-tools-rest'])
         ) {
             $this->lookupCache[$requestedName] = false;
@@ -60,7 +68,8 @@ class RestControllerFactory implements AbstractFactoryInterface
         }
         $config = $config['api-tools-rest'];
 
-        if (! isset($config[$requestedName])
+        if (
+            ! isset($config[$requestedName])
             || ! isset($config[$requestedName]['listener'])
             || ! isset($config[$requestedName]['route_name'])
         ) {
@@ -70,7 +79,8 @@ class RestControllerFactory implements AbstractFactoryInterface
             return false;
         }
 
-        if (! $container->has($config[$requestedName]['listener'])
+        if (
+            ! $container->has($config[$requestedName]['listener'])
             && ! class_exists($config[$requestedName]['listener'])
         ) {
             // Service referenced by listener key is required
@@ -91,7 +101,6 @@ class RestControllerFactory implements AbstractFactoryInterface
      *
      * Provided for backwards compatibility; proxies to canCreate().
      *
-     * @param ServiceLocatorInterface $controllers
      * @param string $name
      * @param string $requestedName
      * @return bool
@@ -105,13 +114,12 @@ class RestControllerFactory implements AbstractFactoryInterface
     /**
      * Create named controller instance
      *
-     * @param ContainerInterface $container
      * @param string $requestedName
      * @param null|array $options
      * @return RestController
-     * @throws ServiceNotCreatedException if listener specified is not a ListenerAggregate
+     * @throws ServiceNotCreatedException If listener specified is not a ListenerAggregate.
      */
-    public function __invoke(ContainerInterface $container, $requestedName, array $options = null)
+    public function __invoke(ContainerInterface $container, $requestedName, ?array $options = null)
     {
         $config = $container->get('config');
         $config = $config['api-tools-rest'][$requestedName];
@@ -119,7 +127,7 @@ class RestControllerFactory implements AbstractFactoryInterface
         if ($container->has($config['listener'])) {
             $listener = $container->get($config['listener']);
         } else {
-            $listener = new $config['listener'];
+            $listener = new $config['listener']();
         }
 
         if (! $listener instanceof ListenerAggregateInterface) {
@@ -127,7 +135,7 @@ class RestControllerFactory implements AbstractFactoryInterface
                 '%s expects that the "listener" reference a service that implements '
                 . 'Laminas\EventManager\ListenerAggregateInterface; received %s',
                 __METHOD__,
-                (is_object($listener) ? get_class($listener) : gettype($listener))
+                is_object($listener) ? get_class($listener) : gettype($listener)
             ));
         }
 
@@ -151,7 +159,7 @@ class RestControllerFactory implements AbstractFactoryInterface
             $identifier = $config['identifier'];
         }
 
-        $controllerClass = isset($config['controller_class']) ? $config['controller_class'] : RestController::class;
+        $controllerClass = $config['controller_class'] ?? RestController::class;
         $controller      = new $controllerClass($identifier);
 
         if (! $controller instanceof RestController) {
@@ -181,11 +189,10 @@ class RestControllerFactory implements AbstractFactoryInterface
      *
      * Provided for backwards compatibility; proxies to __invoke().
      *
-     * @param ServiceLocatorInterface $controllers
      * @param string $name
      * @param string $requestedName
      * @return RestController
-     * @throws ServiceNotCreatedException if listener specified is not a ListenerAggregate
+     * @throws ServiceNotCreatedException If listener specified is not a ListenerAggregate.
      */
     public function createServiceWithName(ServiceLocatorInterface $controllers, $name, $requestedName)
     {
@@ -197,7 +204,6 @@ class RestControllerFactory implements AbstractFactoryInterface
      * Loop through configuration to discover and set controller options.
      *
      * @param array $config
-     * @param RestController $controller
      */
     protected function setControllerOptions(array $config, RestController $controller)
     {
@@ -256,7 +262,7 @@ class RestControllerFactory implements AbstractFactoryInterface
                         $resource->setQueryParams($params);
                     });
 
-                    $controller->getEventManager()->attach('getList.post', function (Event $e) use ($whitelist) {
+                    $controller->getEventManager()->attach('getList.post', function (Event $e) {
                         $controller = $e->getTarget();
                         $resource   = $controller->getResource();
                         if (! $resource instanceof Resource) {

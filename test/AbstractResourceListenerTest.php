@@ -1,23 +1,19 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Rest;
 
 use Laminas\ApiTools\Rest\Resource;
 use Laminas\ApiTools\Rest\ResourceEvent;
 use Laminas\EventManager\EventManager;
-use Laminas\InputFilter\InputFilter;
 use Laminas\Stdlib\Parameters;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @subpackage UnitTest
- */
+use function array_values;
+use function get_class;
+use function var_export;
+
 class AbstractResourceListenerTest extends TestCase
 {
     /** @var null|string */
@@ -48,7 +44,7 @@ class AbstractResourceListenerTest extends TestCase
         $this->listener->attach($events);
     }
 
-    public function events()
+    public function events(): array
     {
         // Casting arrays to objects when the associated Resource method will
         // cast to object.
@@ -67,7 +63,6 @@ class AbstractResourceListenerTest extends TestCase
 
     /**
      * @dataProvider events
-     *
      * @param string $method
      * @param array $eventArgs
      */
@@ -117,7 +112,7 @@ class AbstractResourceListenerTest extends TestCase
         $this->assertEquals(
             $expectedParams,
             $this->paramsPassedToListener,
-            var_export($this->paramsPassedToListener, 1)
+            var_export($this->paramsPassedToListener, true)
         );
     }
 
@@ -127,7 +122,7 @@ class AbstractResourceListenerTest extends TestCase
     public function testDispatchShouldPassWhitelistedQueryParamsToFetchAllMethod()
     {
         $queryParams = new Parameters(['foo' => 'bar']);
-        $event = new ResourceEvent();
+        $event       = new ResourceEvent();
         $event->setName('fetchAll');
         $event->setQueryParams($queryParams);
 

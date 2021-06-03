@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Rest\Listener;
 
@@ -21,9 +17,8 @@ use Laminas\Stdlib\Parameters;
 use LaminasTest\ApiTools\Rest\RouteMatchFactoryTrait;
 use PHPUnit\Framework\TestCase;
 
-/**
- * @subpackage UnitTest
- */
+use function method_exists;
+
 class RestParametersListenerTest extends TestCase
 {
     use RouteMatchFactoryTrait;
@@ -55,9 +50,9 @@ class RestParametersListenerTest extends TestCase
         $this->controller = $controller = new RestController();
         $controller->setResource($resource);
 
-        $this->matches    = $matches    = $this->createRouteMatch([]);
-        $this->query      = $query      = new Parameters();
-        $this->request    = $request    = new Request();
+        $this->matches = $matches    = $this->createRouteMatch([]);
+        $this->query   = $query      = new Parameters();
+        $this->request = $request    = new Request();
         $request->setQuery($query);
 
         $this->event = new MvcEvent();
@@ -98,7 +93,7 @@ class RestParametersListenerTest extends TestCase
         $identifiers = method_exists($sharedEventManager, 'getEvents')
             ? RestController::class
             : [RestController::class];
-        $listeners = $sharedEventManager->getListeners($identifiers, MvcEvent::EVENT_DISPATCH);
+        $listeners   = $sharedEventManager->getListeners($identifiers, MvcEvent::EVENT_DISPATCH);
 
         $this->assertCount(1, $listeners);
     }
@@ -114,7 +109,7 @@ class RestParametersListenerTest extends TestCase
         $identifiers = method_exists($sharedEventManager, 'getEvents')
             ? RestController::class
             : [RestController::class];
-        $listeners = $sharedEventManager->getListeners($identifiers, MvcEvent::EVENT_DISPATCH);
+        $listeners   = $sharedEventManager->getListeners($identifiers, MvcEvent::EVENT_DISPATCH);
 
         $this->assertCount(0, $listeners);
     }

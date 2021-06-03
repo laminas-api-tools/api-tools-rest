@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Rest\Factory;
 
@@ -28,19 +24,21 @@ class OptionsListenerFactoryTest extends TestCase
         $this->factory  = new OptionsListenerFactory();
     }
 
-    public function seedConfigService()
+    public function seedConfigService(): array
     {
-        return ['api-tools-rest' => [
-            'some-controller' => [
-                'listener'                => 'SomeListener',
-                'route_name'              => 'api.rest.some',
-                'route_identifer_name'    => 'some_id',
-                'entity_class'            => 'SomeEntity',
-                'entity_http_methods'     => ['GET', 'PATCH', 'DELETE'],
-                'collection_name'         => 'some',
-                'collection_http_methods' => ['GET', 'POST'],
+        return [
+            'api-tools-rest' => [
+                'some-controller' => [
+                    'listener'                => 'SomeListener',
+                    'route_name'              => 'api.rest.some',
+                    'route_identifer_name'    => 'some_id',
+                    'entity_class'            => 'SomeEntity',
+                    'entity_http_methods'     => ['GET', 'PATCH', 'DELETE'],
+                    'collection_name'         => 'some',
+                    'collection_http_methods' => ['GET', 'POST'],
+                ],
             ],
-        ]];
+        ];
     }
 
     public function testFactoryCreatesOptionsListenerFromRestConfiguration()

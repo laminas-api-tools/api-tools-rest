@@ -1,10 +1,6 @@
 <?php
 
-/**
- * @see       https://github.com/laminas-api-tools/api-tools-rest for the canonical source repository
- * @copyright https://github.com/laminas-api-tools/api-tools-rest/blob/master/COPYRIGHT.md
- * @license   https://github.com/laminas-api-tools/api-tools-rest/blob/master/LICENSE.md New BSD License
- */
+declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Rest\Factory;
 
@@ -19,6 +15,8 @@ use Laminas\Mvc\Service\ControllerPluginManagerFactory;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\ServiceManager\ServiceManager;
 use PHPUnit\Framework\TestCase;
+
+use function array_values;
 
 class RestControllerFactoryTest extends TestCase
 {
@@ -48,7 +46,7 @@ class RestControllerFactoryTest extends TestCase
         $services->setShared('EventManager', false);
     }
 
-    public function getConfig()
+    public function getConfig(): array
     {
         return [
             'api-tools-rest' => [
@@ -80,7 +78,7 @@ class RestControllerFactoryTest extends TestCase
     public function testDefaultControllerEventManagerIdentifiersAreAsExpected()
     {
         $controller = $this->controllers->get('ApiController');
-        $events = $controller->getEventManager();
+        $events     = $controller->getEventManager();
 
         $identifiers = $events->getIdentifiers();
 
@@ -90,13 +88,13 @@ class RestControllerFactoryTest extends TestCase
 
     public function testControllerEventManagerIdentifiersAreAsSpecified()
     {
-        $config = $this->services->get('config');
+        $config                                                  = $this->services->get('config');
         $config['api-tools-rest']['ApiController']['identifier'] = TestAsset\ExtraControllerListener::class;
         $this->services->setAllowOverride(true);
         $this->services->setService('config', $config);
 
         $controller = $this->controllers->get('ApiController');
-        $events = $controller->getEventManager();
+        $events     = $controller->getEventManager();
 
         $identifiers = $events->getIdentifiers();
 
@@ -107,10 +105,10 @@ class RestControllerFactoryTest extends TestCase
     public function testDefaultResourceEventManagerIdentifiersAreAsExpected()
     {
         $controller = $this->controllers->get('ApiController');
-        $resource = $controller->getResource();
-        $events = $resource->getEventManager();
+        $resource   = $controller->getResource();
+        $events     = $resource->getEventManager();
 
-        $expected = [
+        $expected    = [
             TestAsset\Listener::class,
             Resource::class,
             ResourceInterface::class,
@@ -128,10 +126,10 @@ class RestControllerFactoryTest extends TestCase
         $this->services->setService('config', $config);
 
         $controller = $this->controllers->get('ApiController');
-        $resource = $controller->getResource();
-        $events = $resource->getEventManager();
+        $resource   = $controller->getResource();
+        $events     = $resource->getEventManager();
 
-        $expected = [
+        $expected    = [
             TestAsset\Listener::class,
             TestAsset\ExtraResourceListener::class,
             Resource::class,
@@ -153,10 +151,10 @@ class RestControllerFactoryTest extends TestCase
         $this->services->setService('config', $config);
 
         $controller = $this->controllers->get('ApiController');
-        $resource = $controller->getResource();
-        $events = $resource->getEventManager();
+        $resource   = $controller->getResource();
+        $events     = $resource->getEventManager();
 
-        $expected = [
+        $expected    = [
             TestAsset\Listener::class,
             TestAsset\ExtraResourceListener1::class,
             TestAsset\ExtraResourceListener2::class,
