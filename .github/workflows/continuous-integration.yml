@@ -31,3 +31,5 @@ jobs:
         uses: laminas/laminas-continuous-integration-action@v1
         with:
           job: ${{ matrix.job }}
+        env:
+          COMPOSER_AUTH: "{\"github-oauth\":{\"github.com\":\"${{ secrets.GITHUB_TOKEN }}\"}}"
