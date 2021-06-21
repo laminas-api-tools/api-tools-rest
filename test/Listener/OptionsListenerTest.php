@@ -38,6 +38,7 @@ class OptionsListenerTest extends TestCase
         );
     }
 
+    /** @psalm-return array<string, mixed> */
     public function seedListenerConfig(): array
     {
         return [
@@ -82,6 +83,12 @@ class OptionsListenerTest extends TestCase
         ];
     }
 
+    /**
+     * @psalm-return array<string, array{
+     *     0: string,
+     *     1: array<string, string>
+     * }>
+     */
     public function validMethodsProvider(): array
     {
         return [
@@ -166,6 +173,13 @@ class OptionsListenerTest extends TestCase
         ];
     }
 
+    /**
+     * @psalm-return array<string, array{
+     *     0: string,
+     *     1: array<string, string>
+     *     2: string[]
+     * }>
+     */
     public function invalidMethodsProvider(): array
     {
         return [

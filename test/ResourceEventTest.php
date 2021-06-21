@@ -26,7 +26,7 @@ class ResourceEventTest extends TestCase
     /** @var ResourceEvent */
     private $event;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->matches = $this->createRouteMatch([
             'foo' => 'bar',

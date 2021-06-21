@@ -26,13 +26,31 @@
             "module": "Laminas\\ApiTools\\Rest"
         }
     },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/eimkua1/api-tools-api-problem.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/eimkua1/api-tools-content-negotiation.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/eimkua1/api-tools-mvc-auth.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/eimkua1/api-tools-oauth2.git"
+        }
+    ],
     "require": {
-        "php": "^7.3",
-        "laminas-api-tools/api-tools-api-problem": "^1.2.2",
-        "laminas-api-tools/api-tools-content-negotiation": "^1.2.1",
+        "php": "^7.3 || ~8.0.0",
+        "laminas-api-tools/api-tools-api-problem": "^1.4.0",
+        "laminas-api-tools/api-tools-content-negotiation": "^1.5.0",
         "laminas-api-tools/api-tools-hal": "^1.4",
-        "laminas-api-tools/api-tools-mvc-auth": "^1.4",
-        "laminas/laminas-eventmanager": "^3.3",
+        "laminas-api-tools/api-tools-mvc-auth": "^1.6",
+        "laminas/laminas-eventmanager": "^3.2",
         "laminas/laminas-mvc": "^2.7.14 || ^3.0.2",
         "laminas/laminas-paginator": "^2.7",
         "laminas/laminas-stdlib": "^2.7.8 || ^3.3",
@@ -47,7 +65,8 @@
         "laminas/laminas-uri": "^2.5.2",
         "laminas/laminas-validator": "^2.8.1",
         "laminas/laminas-view": "^2.11.3",
-        "phpunit/phpunit": "^7.5.15"
+        "phpspec/prophecy-phpunit": "^2.0",
+        "phpunit/phpunit": "^9.3"
     },
     "autoload": {
         "psr-4": {

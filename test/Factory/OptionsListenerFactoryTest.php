@@ -18,12 +18,13 @@ class OptionsListenerFactoryTest extends TestCase
     /** @var OptionsListenerFactory */
     private $factory;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->services = new ServiceManager();
         $this->factory  = new OptionsListenerFactory();
     }
 
+    /** @psalm-return array<string, array<string, array<string, string|string[]>>> */
     public function seedConfigService(): array
     {
         return [

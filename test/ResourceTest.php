@@ -30,7 +30,7 @@ class ResourceTest extends TestCase
     /** @var Resource */
     private $resource;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->events   = new EventManager();
         $this->resource = new Resource();

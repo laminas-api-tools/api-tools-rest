@@ -44,6 +44,7 @@ use Laminas\View\Helper\ServerUrl as ServerUrlHelper;
 use Laminas\View\Helper\Url as UrlHelper;
 use Laminas\View\Model\ModelInterface;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 use ReflectionMethod;
 use ReflectionObject;
 use stdClass;
@@ -59,6 +60,7 @@ use const PHP_VERSION;
 
 class RestControllerTest extends TestCase
 {
+    use ProphecyTrait;
     use RouteMatchFactoryTrait;
     use SegmentRouteFactoryTrait;
     use SimpleRouteStackFactoryTrait;
@@ -75,7 +77,7 @@ class RestControllerTest extends TestCase
     /** @var Resource */
     private $resource;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->controller = $controller = new RestController();
 
@@ -215,7 +217,7 @@ class RestControllerTest extends TestCase
         $this->assertInstanceOf(ApiProblem::class, $result);
         $problem = $result->toArray();
         $this->assertEquals($expectedStatus, $problem['status']);
-        $this->assertContains($expectedDetail, $problem['detail']);
+        $this->assertStringContainsString($expectedDetail, $problem['detail']);
     }
 
     public function testCreateReturnsProblemResultOnCreationException()
@@ -1863,8 +1865,8 @@ class RestControllerTest extends TestCase
         $this->assertTrue($headers->has('Location'));
 
         $location = $headers->get('Location')->getFieldValue();
-        $this->assertContains('http://localhost.localdomain/resource/foo', $location);
-        $this->assertNotContains('true', $location);
+        $this->assertStringContainsString('http://localhost.localdomain/resource/foo', $location);
+        $this->assertStringNotContainsString('true', $location);
 
         return $headers;
     }
@@ -1879,8 +1881,8 @@ class RestControllerTest extends TestCase
         $this->assertTrue($headers->has('Content-Location'));
         $location = $headers->get('Content-Location')->getFieldValue();
 
-        $this->assertContains('http://localhost.localdomain/resource/foo', $location);
-        $this->assertNotContains('true', $location);
+        $this->assertStringContainsString('http://localhost.localdomain/resource/foo', $location);
+        $this->assertStringNotContainsString('true', $location);
     }
 
     /**
