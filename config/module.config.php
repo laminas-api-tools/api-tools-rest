@@ -5,9 +5,6 @@ declare(strict_types=1);
 use Laminas\ApiTools\Rest\Factory\OptionsListenerFactory;
 use Laminas\ApiTools\Rest\Factory\RestControllerFactory;
 use Laminas\ApiTools\Rest\Listener\RestParametersListener;
-use Laminas\ApiTools\Rest\Factory\OptionsListenerFactory;
-use Laminas\ApiTools\Rest\Factory\RestControllerFactory;
-use Laminas\ApiTools\Rest\Listener\RestParametersListener;
 
 return [
     'api-tools-rest'  => [
