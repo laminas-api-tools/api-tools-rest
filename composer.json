@@ -50,7 +50,7 @@
         "laminas-api-tools/api-tools-content-negotiation": "^1.5.0",
         "laminas-api-tools/api-tools-hal": "^1.4",
         "laminas-api-tools/api-tools-mvc-auth": "^1.6",
-        "laminas/laminas-eventmanager": "^2.6.3 || ^3.0.1",
+        "laminas/laminas-eventmanager": "^3.2",
         "laminas/laminas-mvc": "^2.7.14 || ^3.0.2",
         "laminas/laminas-paginator": "^2.7",
         "laminas/laminas-stdlib": "^2.7.8 || ^3.3",
