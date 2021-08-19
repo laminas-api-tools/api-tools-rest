@@ -26,24 +26,6 @@
             "module": "Laminas\\ApiTools\\Rest"
         }
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/eimkua1/api-tools-api-problem.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/eimkua1/api-tools-content-negotiation.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/eimkua1/api-tools-mvc-auth.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/eimkua1/api-tools-oauth2.git"
-        }
-    ],
     "require": {
         "php": "^7.3 || ~8.0.0",
         "laminas-api-tools/api-tools-api-problem": "^1.4.0",
