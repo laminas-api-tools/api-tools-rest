@@ -1,0 +1,1628 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.7.0@d4377c0baf3ffbf0b1ec6998e8d1be2a40971005">
+  <file src="src/AbstractResourceListener.php">
+    <DocblockTypeContradiction occurrences="2">
+      <code>$event instanceof ResourceEvent</code>
+      <code>$event instanceof ResourceEvent</code>
+    </DocblockTypeContradiction>
+    <MixedAssignment occurrences="10">
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$id</code>
+      <code>$id</code>
+      <code>$id</code>
+      <code>$id</code>
+    </MixedAssignment>
+    <PossiblyInvalidArgument occurrences="1">
+      <code>$queryParams</code>
+    </PossiblyInvalidArgument>
+    <PossiblyNullPropertyAssignmentValue occurrences="2">
+      <code>$event-&gt;getIdentity()</code>
+      <code>$event-&gt;getInputFilter()</code>
+    </PossiblyNullPropertyAssignmentValue>
+    <RedundantConditionGivenDocblockType occurrences="2">
+      <code>$this-&gt;identity</code>
+      <code>$this-&gt;inputFilter</code>
+    </RedundantConditionGivenDocblockType>
+  </file>
+  <file src="src/Factory/OptionsListenerFactory.php">
+    <DeprecatedInterface occurrences="1">
+      <code>OptionsListenerFactory</code>
+    </DeprecatedInterface>
+    <MixedArgument occurrences="1">
+      <code>$config</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$config</code>
+    </MixedAssignment>
+  </file>
+  <file src="src/Factory/RestControllerFactory.php">
+    <DeprecatedInterface occurrences="1">
+      <code>RestControllerFactory</code>
+    </DeprecatedInterface>
+    <MissingReturnType occurrences="1">
+      <code>setControllerOptions</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="25">
+      <code>$config</code>
+      <code>$config[$requestedName]['listener']</code>
+      <code>$config[$requestedName]['listener']</code>
+      <code>$config['listener']</code>
+      <code>$config['listener']</code>
+      <code>$config['resource_identifiers']</code>
+      <code>$container</code>
+      <code>$container</code>
+      <code>$container-&gt;get('EventManager')</code>
+      <code>$controllerClass</code>
+      <code>$events</code>
+      <code>$key</code>
+      <code>$options</code>
+      <code>$request</code>
+      <code>$resource-&gt;getInputFilter()-&gt;getInputs()</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+      <code>$value</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="9">
+      <code>$config['api-tools-rest']</code>
+      <code>$config['controller_class']</code>
+      <code>$config['identifier']</code>
+      <code>$config['listener']</code>
+      <code>$config['listener']</code>
+      <code>$config['listener']</code>
+      <code>$config['resource_identifiers']</code>
+      <code>$config['resource_identifiers']</code>
+      <code>$config['resource_identifiers']</code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment occurrences="1">
+      <code>$config['resource_identifiers']</code>
+    </MixedArrayAssignment>
+    <MixedAssignment occurrences="16">
+      <code>$collection</code>
+      <code>$config</code>
+      <code>$config</code>
+      <code>$config</code>
+      <code>$container</code>
+      <code>$container</code>
+      <code>$controllerClass</code>
+      <code>$events</code>
+      <code>$identifier</code>
+      <code>$key</code>
+      <code>$options</code>
+      <code>$query</code>
+      <code>$request</code>
+      <code>$resource</code>
+      <code>$resource</code>
+      <code>$value</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>bool</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="6">
+      <code>getRequest</code>
+      <code>getResource</code>
+      <code>getResource</code>
+      <code>new $config['listener']()</code>
+      <code>new $controllerClass($identifier)</code>
+      <code>setIdentifiers</code>
+    </MixedMethodCall>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;lookupCache[$requestedName]</code>
+    </MixedReturnStatement>
+    <ParamNameMismatch occurrences="2">
+      <code>$controllers</code>
+      <code>$controllers</code>
+    </ParamNameMismatch>
+    <PossiblyInvalidMethodCall occurrences="6">
+      <code>getRequest</code>
+      <code>getResource</code>
+      <code>getResource</code>
+      <code>getRouteOptions</code>
+      <code>hasRoute</code>
+      <code>setRouteOptions</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyNullReference occurrences="5">
+      <code>getArrayCopy</code>
+      <code>getInputs</code>
+      <code>getRouteOptions</code>
+      <code>hasRoute</code>
+      <code>setRouteOptions</code>
+    </PossiblyNullReference>
+    <PossiblyUndefinedMethod occurrences="3">
+      <code>getRouteOptions</code>
+      <code>hasRoute</code>
+      <code>setRouteOptions</code>
+    </PossiblyUndefinedMethod>
+    <UndefinedInterfaceMethod occurrences="5">
+      <code>getInputs</code>
+      <code>getServiceLocator</code>
+      <code>getServiceLocator</code>
+      <code>setCollectionClass</code>
+      <code>setEntityClass</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="src/Listener/OptionsListener.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$response</code>
+    </ArgumentTypeCoercion>
+    <LessSpecificReturnStatement occurrences="1">
+      <code>$response</code>
+    </LessSpecificReturnStatement>
+    <MissingClosureParamType occurrences="1">
+      <code>$value</code>
+    </MissingClosureParamType>
+    <MissingReturnType occurrences="1">
+      <code>createAllowHeader</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="3">
+      <code>$controller</code>
+      <code>$this-&gt;config[$controller]</code>
+      <code>$value</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$controller</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1">
+      <code>array</code>
+    </MixedInferredReturnType>
+    <MoreSpecificReturnType occurrences="1">
+      <code>Response</code>
+    </MoreSpecificReturnType>
+    <TooManyArguments occurrences="1">
+      <code>setStatusCode</code>
+    </TooManyArguments>
+    <UndefinedDocblockClass occurrences="1">
+      <code>RouteMatch|V2RouteMatch</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="src/Listener/RestParametersListener.php">
+    <InvalidArgument occurrences="2">
+      <code>$listener</code>
+      <code>$listener</code>
+    </InvalidArgument>
+    <InvalidPropertyAssignmentValue occurrences="1">
+      <code>$this-&gt;sharedListeners</code>
+    </InvalidPropertyAssignmentValue>
+    <MissingReturnType occurrences="3">
+      <code>attachShared</code>
+      <code>detachShared</code>
+      <code>onDispatch</code>
+    </MissingReturnType>
+    <MixedAssignment occurrences="2">
+      <code>$listener</code>
+      <code>$query</code>
+    </MixedAssignment>
+    <UndefinedDocblockClass occurrences="2">
+      <code>CallbackHandler[]</code>
+      <code>protected $sharedListeners = [];</code>
+    </UndefinedDocblockClass>
+    <UndefinedInterfaceMethod occurrences="3">
+      <code>getQuery</code>
+      <code>setQueryParams</code>
+      <code>setRouteMatch</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="src/Module.php">
+    <MissingReturnType occurrences="1">
+      <code>onBootstrap</code>
+    </MissingReturnType>
+    <MixedAssignment occurrences="3">
+      <code>$events</code>
+      <code>$services</code>
+      <code>$sharedEvents</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="7">
+      <code>attach</code>
+      <code>attachShared</code>
+      <code>get</code>
+      <code>get</code>
+      <code>getEventManager</code>
+      <code>getServiceManager</code>
+      <code>getSharedManager</code>
+    </MixedMethodCall>
+    <PossiblyInvalidMethodCall occurrences="2">
+      <code>getEventManager</code>
+      <code>getServiceManager</code>
+    </PossiblyInvalidMethodCall>
+  </file>
+  <file src="src/Resource.php">
+    <DocblockTypeContradiction occurrences="7">
+      <code>! is_array($data)</code>
+      <code>$this-&gt;events</code>
+      <code>is_array($data)</code>
+      <code>is_array($data)</code>
+      <code>is_object($data)</code>
+      <code>is_object($data)</code>
+      <code>is_object($data)</code>
+    </DocblockTypeContradiction>
+    <ImplementedReturnTypeMismatch occurrences="2">
+      <code>array|Traversable</code>
+      <code>self</code>
+    </ImplementedReturnTypeMismatch>
+    <InvalidReturnStatement occurrences="3">
+      <code>$last</code>
+      <code>$last</code>
+      <code>$params</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="2">
+      <code>bool</code>
+      <code>bool</code>
+    </InvalidReturnType>
+    <LessSpecificReturnStatement occurrences="1">
+      <code>$last</code>
+    </LessSpecificReturnStatement>
+    <MissingClosureParamType occurrences="5">
+      <code>$key</code>
+      <code>$key</code>
+      <code>$result</code>
+      <code>$value</code>
+      <code>$value</code>
+    </MissingClosureParamType>
+    <MissingConstructor occurrences="1">
+      <code>$events</code>
+    </MissingConstructor>
+    <MixedArrayAssignment occurrences="2">
+      <code>$data[$key]</code>
+      <code>$data[$key]</code>
+    </MixedArrayAssignment>
+    <MixedArrayOffset occurrences="3">
+      <code>$data[$key]</code>
+      <code>$data[$key]</code>
+      <code>$this-&gt;params[$name]</code>
+    </MixedArrayOffset>
+    <MixedInferredReturnType occurrences="2">
+      <code>ArrayObject</code>
+      <code>self</code>
+    </MixedInferredReturnType>
+    <MixedReturnStatement occurrences="1">
+      <code>$this-&gt;getEventManager()-&gt;prepareArgs($params)</code>
+    </MixedReturnStatement>
+    <MoreSpecificReturnType occurrences="1">
+      <code>array|Traversable</code>
+    </MoreSpecificReturnType>
+    <UndefinedDocblockClass occurrences="3">
+      <code>RouteMatch|V2RouteMatch</code>
+      <code>null|RouteMatch|V2RouteMatch</code>
+      <code>null|RouteMatch|V2RouteMatch</code>
+    </UndefinedDocblockClass>
+    <UndefinedInterfaceMethod occurrences="1">
+      <code>prepareArgs</code>
+    </UndefinedInterfaceMethod>
+  </file>
+  <file src="src/ResourceEvent.php">
+    <DocblockTypeContradiction occurrences="1">
+      <code>! is_array($params) &amp;&amp; ! is_object($params)</code>
+    </DocblockTypeContradiction>
+    <ImplementedReturnTypeMismatch occurrences="1">
+      <code>self</code>
+    </ImplementedReturnTypeMismatch>
+    <MixedArgument occurrences="1">
+      <code>$params['request']</code>
+    </MixedArgument>
+    <MixedInferredReturnType occurrences="1">
+      <code>self</code>
+    </MixedInferredReturnType>
+    <PropertyNotSetInConstructor occurrences="2">
+      <code>ResourceEvent</code>
+      <code>ResourceEvent</code>
+    </PropertyNotSetInConstructor>
+    <UndefinedDocblockClass occurrences="3">
+      <code>$matches</code>
+      <code>RouteMatch|V2RouteMatch</code>
+      <code>null|RouteMatch|V2RouteMatch</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="src/RestController.php">
+    <ArgumentTypeCoercion occurrences="1">
+      <code>$e-&gt;getRequest()</code>
+    </ArgumentTypeCoercion>
+    <DocblockTypeContradiction occurrences="6">
+      <code>! is_array($params)</code>
+      <code>$event</code>
+      <code>$event</code>
+      <code>$request</code>
+      <code>$this-&gt;resource === null</code>
+    </DocblockTypeContradiction>
+    <ImplementedParamTypeMismatch occurrences="1">
+      <code>$routeMatch</code>
+    </ImplementedParamTypeMismatch>
+    <ImplementedReturnTypeMismatch occurrences="2">
+      <code>Response|ApiProblem|ApiProblemResponse|HalEntity</code>
+      <code>null|array|Traversable</code>
+    </ImplementedReturnTypeMismatch>
+    <InvalidArgument occurrences="1">
+      <code>$e-&gt;getRouteMatch()</code>
+    </InvalidArgument>
+    <InvalidReturnStatement occurrences="13">
+      <code>$collection</code>
+      <code>$entity</code>
+      <code>$entity</code>
+      <code>$entity</code>
+      <code>$halCollection</code>
+      <code>$halCollection</code>
+      <code>$halCollection</code>
+      <code>$halEntity</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$this-&gt;create($this-&gt;bodyParams())</code>
+      <code>$this-&gt;prepareHalCollection($collection)</code>
+      <code>$value</code>
+    </InvalidReturnStatement>
+    <InvalidReturnType occurrences="9">
+      <code>HalCollection</code>
+      <code>Response|ApiProblem|ApiProblemResponse</code>
+      <code>Response|ApiProblem|ApiProblemResponse</code>
+      <code>Response|ApiProblem|ApiProblemResponse|HalEntity</code>
+      <code>Response|ApiProblem|ApiProblemResponse|HalEntity</code>
+      <code>Response|ApiProblem|ApiProblemResponse|HalEntity</code>
+      <code>Response|ApiProblem|ApiProblemResponse|HalEntity</code>
+      <code>Response|HalCollection|ApiProblem</code>
+      <code>null|array|Traversable</code>
+    </InvalidReturnType>
+    <LessSpecificReturnStatement occurrences="4">
+      <code>$collection</code>
+      <code>$response</code>
+      <code>$response</code>
+      <code>$response</code>
+    </LessSpecificReturnStatement>
+    <MissingReturnType occurrences="12">
+      <code>injectEventIdentityIntoResource</code>
+      <code>injectEventInputFilterIntoResource</code>
+      <code>injectRequestIntoResourceEventParams</code>
+      <code>setCollectionHttpMethods</code>
+      <code>setCollectionName</code>
+      <code>setEntityHttpMethods</code>
+      <code>setMaxPageSize</code>
+      <code>setMinPageSize</code>
+      <code>setPageSize</code>
+      <code>setPageSizeParam</code>
+      <code>setResource</code>
+      <code>setRoute</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="7">
+      <code>$collection</code>
+      <code>$data</code>
+      <code>$e-&gt;getMessage()</code>
+      <code>$id</code>
+      <code>$pageSize</code>
+      <code>$this-&gt;bodyParams()</code>
+      <code>$this-&gt;getRequest()-&gt;getQuery('page', 1)</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="1">
+      <code>$self['href']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="14">
+      <code>$collection</code>
+      <code>$collection</code>
+      <code>$halPlugin</code>
+      <code>$headers</code>
+      <code>$id</code>
+      <code>$identity</code>
+      <code>$inputFilter</code>
+      <code>$pageSize</code>
+      <code>$plugin</code>
+      <code>$plugin</code>
+      <code>$plugin</code>
+      <code>$return</code>
+      <code>$self</code>
+      <code>$url</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="3">
+      <code>HalEntity</code>
+      <code>array|ApiProblem</code>
+      <code>null|array|Traversable</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="7">
+      <code>addHeader</code>
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>createCollection</code>
+      <code>createEntity</code>
+      <code>fromLink</code>
+      <code>injectSelfLink</code>
+    </MixedMethodCall>
+    <MixedReturnStatement occurrences="3">
+      <code>$collection</code>
+      <code>$this-&gt;bodyParams()</code>
+    </MixedReturnStatement>
+    <MoreSpecificImplementedParamType occurrences="9">
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$id</code>
+      <code>$id</code>
+      <code>$id</code>
+      <code>$request</code>
+      <code>$request</code>
+    </MoreSpecificImplementedParamType>
+    <MoreSpecificReturnType occurrences="2">
+      <code>Response</code>
+      <code>array|ApiProblem</code>
+    </MoreSpecificReturnType>
+    <PossiblyInvalidArgument occurrences="1">
+      <code>$params</code>
+    </PossiblyInvalidArgument>
+    <PropertyNotSetInConstructor occurrences="10">
+      <code>$maxPageSize</code>
+      <code>$minPageSize</code>
+      <code>$pageSizeParam</code>
+      <code>$resource</code>
+      <code>$route</code>
+      <code>RestController</code>
+      <code>RestController</code>
+      <code>RestController</code>
+      <code>RestController</code>
+      <code>RestController</code>
+    </PropertyNotSetInConstructor>
+    <RedundantCastGivenDocblockType occurrences="5">
+      <code>(int) $count</code>
+      <code>(int) $count</code>
+      <code>(int) $count</code>
+      <code>(string) $name</code>
+      <code>(string) $param</code>
+    </RedundantCastGivenDocblockType>
+    <RedundantConditionGivenDocblockType occurrences="3">
+      <code>! is_array($collection)</code>
+      <code>isset($this-&gt;maxPageSize) &amp;&amp; $pageSize &gt; $this-&gt;maxPageSize</code>
+      <code>isset($this-&gt;minPageSize) &amp;&amp; $pageSize &lt; $this-&gt;minPageSize</code>
+    </RedundantConditionGivenDocblockType>
+    <RedundantPropertyInitializationCheck occurrences="2">
+      <code>isset($this-&gt;maxPageSize)</code>
+      <code>isset($this-&gt;minPageSize)</code>
+    </RedundantPropertyInitializationCheck>
+    <UndefinedClass occurrences="2">
+      <code>$e</code>
+      <code>Exception\InvalidArgumentException</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="1">
+      <code>RouteMatch</code>
+    </UndefinedDocblockClass>
+    <UndefinedInterfaceMethod occurrences="14">
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getIdentity</code>
+      <code>getInputFilter</code>
+      <code>getQuery</code>
+      <code>getQuery</code>
+      <code>patchList</code>
+      <code>setIdentity</code>
+      <code>setInputFilter</code>
+      <code>setStatusCode</code>
+      <code>setStatusCode</code>
+      <code>setStatusCode</code>
+      <code>setStatusCode</code>
+    </UndefinedInterfaceMethod>
+    <UndefinedMagicMethod occurrences="2">
+      <code>bodyParams</code>
+      <code>bodyParams</code>
+    </UndefinedMagicMethod>
+  </file>
+  <file src="test/AbstractResourceListenerTest.php">
+    <MissingReturnType occurrences="2">
+      <code>testDispatchShouldPassWhitelistedQueryParamsToFetchAllMethod</code>
+      <code>testResourceMethodsAreInvokedWhenEventsAreTriggered</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="10">
+      <code>$eventArgs['data']</code>
+      <code>$eventArgs['data']</code>
+      <code>$eventArgs['data']</code>
+      <code>$eventArgs['data']</code>
+      <code>$eventArgs['data']</code>
+      <code>$eventArgs['data']</code>
+      <code>$eventArgs['id']</code>
+      <code>$eventArgs['id']</code>
+      <code>$eventArgs['id']</code>
+      <code>$eventArgs['id']</code>
+    </MixedArgument>
+    <UndefinedPropertyFetch occurrences="1">
+      <code>$this-&gt;listener-&gt;testCase-&gt;paramsPassedToListener</code>
+    </UndefinedPropertyFetch>
+  </file>
+  <file src="test/ChildResourcesIntegrationTest.php">
+    <ArgumentTypeCoercion occurrences="2">
+      <code>$this-&gt;getRouteMatchClass()</code>
+      <code>$this-&gt;getRouteMatchClass()</code>
+    </ArgumentTypeCoercion>
+    <DeprecatedMethod occurrences="3">
+      <code>add</code>
+      <code>add</code>
+      <code>add</code>
+    </DeprecatedMethod>
+    <DocblockTypeContradiction occurrences="2">
+      <code>$this-&gt;helpers</code>
+      <code>$this-&gt;router</code>
+    </DocblockTypeContradiction>
+    <MissingClosureParamType occurrences="2">
+      <code>$e</code>
+      <code>$e</code>
+    </MissingClosureParamType>
+    <MissingReturnType occurrences="4">
+      <code>setUpAlternateRouter</code>
+      <code>setupHelpers</code>
+      <code>testChildResourceObjectIdentifierMappingInCollectionsViaControllerReturn</code>
+      <code>testChildResourceObjectIdentifierMappingViaControllerReturn</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="10">
+      <code>$child</code>
+      <code>$child-&gt;_links</code>
+      <code>$child-&gt;_links-&gt;self</code>
+      <code>$child-&gt;_links-&gt;self-&gt;href</code>
+      <code>$params</code>
+      <code>$test</code>
+      <code>$test</code>
+      <code>$test-&gt;_embedded</code>
+      <code>$test-&gt;_links</code>
+      <code>$test-&gt;_links-&gt;self</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="1">
+      <code>$params['child_id']</code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment occurrences="1">
+      <code>$collection[]</code>
+    </MixedArrayAssignment>
+    <MixedAssignment occurrences="5">
+      <code>$child</code>
+      <code>$collection[]</code>
+      <code>$id</code>
+      <code>$params</code>
+      <code>$test</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="3">
+      <code>setRouteMatch</code>
+      <code>setRouteMatch</code>
+      <code>setRouter</code>
+    </MixedMethodCall>
+    <MixedPropertyFetch occurrences="8">
+      <code>$child-&gt;_links</code>
+      <code>$child-&gt;_links-&gt;self</code>
+      <code>$child-&gt;_links-&gt;self-&gt;href</code>
+      <code>$test-&gt;_embedded</code>
+      <code>$test-&gt;_embedded-&gt;children</code>
+      <code>$test-&gt;_links</code>
+      <code>$test-&gt;_links-&gt;self</code>
+      <code>$test-&gt;_links-&gt;self-&gt;href</code>
+    </MixedPropertyFetch>
+    <PossiblyInvalidArgument occurrences="1">
+      <code>$this-&gt;router</code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidMethodCall occurrences="1">
+      <code>getRouteParams</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyNullReference occurrences="3">
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getRouteParams</code>
+    </PossiblyNullReference>
+    <PossiblyUndefinedMethod occurrences="1">
+      <code>getRouteParams</code>
+    </PossiblyUndefinedMethod>
+    <PossiblyUndefinedVariable occurrences="1">
+      <code>$collection</code>
+    </PossiblyUndefinedVariable>
+    <UndefinedDocblockClass occurrences="5">
+      <code>$router</code>
+      <code>$router</code>
+      <code>$this-&gt;router</code>
+      <code>$this-&gt;router</code>
+      <code>TreeRouteStack|V2TreeRouteStack</code>
+    </UndefinedDocblockClass>
+    <UnusedClosureParam occurrences="2">
+      <code>$e</code>
+      <code>$e</code>
+    </UnusedClosureParam>
+  </file>
+  <file src="test/CollectionIntegrationTest.php">
+    <ImplicitToStringCast occurrences="1">
+      <code>$uri</code>
+    </ImplicitToStringCast>
+    <InvalidArgument occurrences="1">
+      <code>$viewModelSelector</code>
+    </InvalidArgument>
+    <MissingClosureParamType occurrences="5">
+      <code>$container</code>
+      <code>$container</code>
+      <code>$e</code>
+      <code>$first</code>
+      <code>$second</code>
+    </MissingClosureParamType>
+    <MissingReturnType occurrences="7">
+      <code>setUpHelpers</code>
+      <code>setUpRenderer</code>
+      <code>setUpRouter</code>
+      <code>testCollectionLinksIncludeFullQueryString</code>
+      <code>testFactoryEnabledListenerCreatesQueryStringWhitelist</code>
+      <code>testFactoryEnabledListenerInjectsWhitelistedQueryParams</code>
+      <code>testFactoryEnabledListenerMergeWhitelistedQueryParamsWithInputFilterKeys</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="15">
+      <code>$controller</code>
+      <code>$controller</code>
+      <code>$controller</code>
+      <code>$link</code>
+      <code>$link</code>
+      <code>$link['href']</code>
+      <code>$link['href']</code>
+      <code>$link['href']</code>
+      <code>$link['href']</code>
+      <code>$link['href']</code>
+      <code>$payload</code>
+      <code>$payload</code>
+      <code>$plugins</code>
+      <code>$shared</code>
+      <code>$shared</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="12">
+      <code>$link['href']</code>
+      <code>$link['href']</code>
+      <code>$link['href']</code>
+      <code>$link['href']</code>
+      <code>$link['href']</code>
+      <code>$link['href']</code>
+      <code>$link['href']</code>
+      <code>$link['href']</code>
+      <code>$link['href']</code>
+      <code>$link['href']</code>
+      <code>$payload['_links']</code>
+      <code>$payload['_links']</code>
+    </MixedArrayAccess>
+    <MixedAssignment occurrences="17">
+      <code>$collection</code>
+      <code>$controller</code>
+      <code>$controller</code>
+      <code>$controller</code>
+      <code>$instance</code>
+      <code>$link</code>
+      <code>$link</code>
+      <code>$links</code>
+      <code>$links</code>
+      <code>$name</code>
+      <code>$name</code>
+      <code>$payload</code>
+      <code>$payload</code>
+      <code>$plugins</code>
+      <code>$query</code>
+      <code>$request</code>
+      <code>$shared</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="16">
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+      <code>get</code>
+      <code>getParam</code>
+      <code>getQuery</code>
+      <code>getRequest</code>
+      <code>getResource</code>
+      <code>getTarget</code>
+      <code>setAlias</code>
+      <code>setCollectionRouteOptions</code>
+      <code>setEvent</code>
+      <code>setEvent</code>
+      <code>setEvent</code>
+      <code>setInputFilter</code>
+      <code>setService</code>
+    </MixedMethodCall>
+    <PossiblyInvalidArgument occurrences="3">
+      <code>$this-&gt;matches</code>
+      <code>$this-&gt;router</code>
+      <code>$this-&gt;router</code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidMethodCall occurrences="2">
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyNullReference occurrences="1">
+      <code>get</code>
+    </PossiblyNullReference>
+    <PossiblyUndefinedMethod occurrences="2">
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+    </PossiblyUndefinedMethod>
+    <RedundantConditionGivenDocblockType occurrences="5">
+      <code>$this-&gt;helpers</code>
+      <code>$this-&gt;listeners</code>
+      <code>$this-&gt;request</code>
+      <code>$this-&gt;response</code>
+      <code>$this-&gt;router</code>
+    </RedundantConditionGivenDocblockType>
+    <UndefinedClass occurrences="2">
+      <code>$router</code>
+      <code>V2RouteMatch</code>
+    </UndefinedClass>
+    <UndefinedDocblockClass occurrences="3">
+      <code>$router</code>
+      <code>RouteMatch|V2RouteMatch</code>
+      <code>TreeRouteStack|V2TreeRouteStack</code>
+    </UndefinedDocblockClass>
+    <UndefinedMagicMethod occurrences="2">
+      <code>getResource</code>
+      <code>getResource</code>
+    </UndefinedMagicMethod>
+    <UndefinedMethod occurrences="1">
+      <code>setSharedManager</code>
+    </UndefinedMethod>
+    <UnusedClosureParam occurrences="1">
+      <code>$container</code>
+    </UnusedClosureParam>
+  </file>
+  <file src="test/Factory/OptionsListenerFactoryTest.php">
+    <MissingReturnType occurrences="1">
+      <code>testFactoryCreatesOptionsListenerFromRestConfiguration</code>
+    </MissingReturnType>
+    <MixedAssignment occurrences="1">
+      <code>$instanceConfig</code>
+    </MixedAssignment>
+  </file>
+  <file src="test/Factory/RestControllerFactoryTest.php">
+    <MissingReturnType occurrences="7">
+      <code>testControllerEventManagerIdentifiersAreAsSpecified</code>
+      <code>testDefaultControllerEventManagerIdentifiersAreAsExpected</code>
+      <code>testDefaultResourceEventManagerIdentifiersAreAsExpected</code>
+      <code>testResourceEventManagerIdentifiersAreAsSpecifiedArray</code>
+      <code>testResourceEventManagerIdentifiersAreAsSpecifiedString</code>
+      <code>testWillInstantiateAlternateRestControllerWhenSpecified</code>
+      <code>testWillInstantiateListenerIfServiceNotFoundButClassExists</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="9">
+      <code>$config</code>
+      <code>$config</code>
+      <code>$config</code>
+      <code>$config</code>
+      <code>$identifiers</code>
+      <code>$identifiers</code>
+      <code>$identifiers</code>
+      <code>$identifiers</code>
+      <code>$identifiers</code>
+    </MixedArgument>
+    <MixedArrayAccess occurrences="4">
+      <code>$config['api-tools-rest']</code>
+      <code>$config['api-tools-rest']</code>
+      <code>$config['api-tools-rest']</code>
+      <code>$config['api-tools-rest']</code>
+    </MixedArrayAccess>
+    <MixedArrayAssignment occurrences="4">
+      <code>$config['api-tools-rest']</code>
+      <code>$config['api-tools-rest']</code>
+      <code>$config['api-tools-rest']</code>
+      <code>$config['api-tools-rest']</code>
+    </MixedArrayAssignment>
+    <MixedAssignment occurrences="24">
+      <code>$config</code>
+      <code>$config</code>
+      <code>$config</code>
+      <code>$config</code>
+      <code>$config['api-tools-rest']['ApiController']['identifier']</code>
+      <code>$config['api-tools-rest']['ApiController']['resource_identifiers']</code>
+      <code>$controller</code>
+      <code>$controller</code>
+      <code>$controller</code>
+      <code>$controller</code>
+      <code>$controller</code>
+      <code>$events</code>
+      <code>$events</code>
+      <code>$events</code>
+      <code>$events</code>
+      <code>$events</code>
+      <code>$identifiers</code>
+      <code>$identifiers</code>
+      <code>$identifiers</code>
+      <code>$identifiers</code>
+      <code>$identifiers</code>
+      <code>$resource</code>
+      <code>$resource</code>
+      <code>$resource</code>
+    </MixedAssignment>
+    <MixedMethodCall occurrences="13">
+      <code>getEventManager</code>
+      <code>getEventManager</code>
+      <code>getEventManager</code>
+      <code>getEventManager</code>
+      <code>getEventManager</code>
+      <code>getIdentifiers</code>
+      <code>getIdentifiers</code>
+      <code>getIdentifiers</code>
+      <code>getIdentifiers</code>
+      <code>getIdentifiers</code>
+      <code>getResource</code>
+      <code>getResource</code>
+      <code>getResource</code>
+    </MixedMethodCall>
+    <UndefinedClass occurrences="8">
+      <code>TestAsset\ExtraControllerListener</code>
+      <code>TestAsset\ExtraControllerListener</code>
+      <code>TestAsset\ExtraResourceListener</code>
+      <code>TestAsset\ExtraResourceListener</code>
+      <code>TestAsset\ExtraResourceListener1</code>
+      <code>TestAsset\ExtraResourceListener1</code>
+      <code>TestAsset\ExtraResourceListener2</code>
+      <code>TestAsset\ExtraResourceListener2</code>
+    </UndefinedClass>
+  </file>
+  <file src="test/Factory/TestAsset/CustomController.php">
+    <PropertyNotSetInConstructor occurrences="10">
+      <code>CustomController</code>
+      <code>CustomController</code>
+      <code>CustomController</code>
+      <code>CustomController</code>
+      <code>CustomController</code>
+      <code>CustomController</code>
+      <code>CustomController</code>
+      <code>CustomController</code>
+      <code>CustomController</code>
+      <code>CustomController</code>
+    </PropertyNotSetInConstructor>
+  </file>
+  <file src="test/Listener/OptionsListenerTest.php">
+    <InvalidDocblock occurrences="1">
+      <code>public function invalidMethodsProvider(): array</code>
+    </InvalidDocblock>
+    <MissingClosureParamType occurrences="1">
+      <code>$value</code>
+    </MissingClosureParamType>
+    <MissingReturnType occurrences="7">
+      <code>testListenerRegistersAtExpectedPriority</code>
+      <code>testListenerReturns405ResponseWithAllowHeaderForInvalidRequestMethod</code>
+      <code>testListenerReturnsNullIfMatchingControllerInRouteMatchesButNoConfigForController</code>
+      <code>testListenerReturnsNullIfNoMatchingControllerInRouteMatches</code>
+      <code>testListenerReturnsNullIfNoRouteMatches</code>
+      <code>testListenerReturnsNullIfNotAnHttpRequest</code>
+      <code>testListenerReturnsNullWhenMethodIsAllowedForCurrentRequest</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="2">
+      <code>$allow</code>
+      <code>$value</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$allow</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="1"/>
+    <PossiblyInvalidArgument occurrences="3">
+      <code>$matches</code>
+      <code>$matches</code>
+      <code>$matches</code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidMethodCall occurrences="1">
+      <code>getFieldValue</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyUndefinedMethod occurrences="1">
+      <code>getFieldValue</code>
+    </PossiblyUndefinedMethod>
+    <TooManyArguments occurrences="1">
+      <code>new Request('GET')</code>
+    </TooManyArguments>
+    <UnusedVariable occurrences="2">
+      <code>$matches</code>
+      <code>$matches</code>
+    </UnusedVariable>
+  </file>
+  <file src="test/Listener/RestParametersListenerTest.php">
+    <MissingReturnType occurrences="5">
+      <code>testAttachSharedAttachOneListenerOnEventDispatch</code>
+      <code>testDetachSharedDetachAttachedListener</code>
+      <code>testIgnoresNonRestControllers</code>
+      <code>testInjectsQueryParamsOnDispatchOfRestController</code>
+      <code>testInjectsRouteMatchOnDispatchOfRestController</code>
+    </MissingReturnType>
+    <PossiblyInvalidArgument occurrences="3">
+      <code>$identifiers</code>
+      <code>$identifiers</code>
+      <code>$matches</code>
+    </PossiblyInvalidArgument>
+    <UndefinedDocblockClass occurrences="1">
+      <code>RouteMatch|V2RouteMatch</code>
+    </UndefinedDocblockClass>
+    <UndefinedThisPropertyAssignment occurrences="1">
+      <code>$this-&gt;request</code>
+    </UndefinedThisPropertyAssignment>
+  </file>
+  <file src="test/ResourceEventTest.php">
+    <MissingReturnType occurrences="17">
+      <code>testCanComposeIdentity</code>
+      <code>testCanComposeInputFilter</code>
+      <code>testCanFetchIndividualQueryParameter</code>
+      <code>testCanFetchIndividualRouteParameter</code>
+      <code>testCanInjectRequestViaSetParams</code>
+      <code>testCanNullifyIdentity</code>
+      <code>testCanNullifyInputFilter</code>
+      <code>testIdentityIsUndefinedByDefault</code>
+      <code>testInputFilterIsUndefinedByDefault</code>
+      <code>testQueryParamsAreNullByDefault</code>
+      <code>testQueryParamsAreNullable</code>
+      <code>testRequestIsNullByDefault</code>
+      <code>testRequestIsNullable</code>
+      <code>testReturnsDefaultParameterWhenPullingUnknownQueryParameter</code>
+      <code>testReturnsDefaultParameterWhenPullingUnknownRouteParameter</code>
+      <code>testRouteMatchIsNullByDefault</code>
+      <code>testRouteMatchIsNullable</code>
+    </MissingReturnType>
+    <UndefinedDocblockClass occurrences="1">
+      <code>RouteMatch|V2RouteMatch</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="test/ResourceTest.php">
+    <MissingClosureParamType occurrences="38">
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+    </MissingClosureParamType>
+    <MissingClosureReturnType occurrences="2">
+      <code>function ($e) use ($return) {</code>
+      <code>function ($e) use ($return) {</code>
+    </MissingClosureReturnType>
+    <MissingReturnType occurrences="33">
+      <code>testAllowsReturningResponsesReturnedFromResources</code>
+      <code>testClearOldParamsOnSetEventParams</code>
+      <code>testComposedQueryParametersAndRouteMatchesAreInjectedIntoEvent</code>
+      <code>testCreateRaisesExceptionWithInvalidData</code>
+      <code>testCreateReturnsDataIfLastListenerDoesNotReturnResource</code>
+      <code>testCreateReturnsResultOfLastListener</code>
+      <code>testDeleteListRaisesInvalidArgumentExceptionForInvalidData</code>
+      <code>testDeleteListReturnsFalseIfLastListenerDoesNotReturnBoolean</code>
+      <code>testDeleteListReturnsResultOfLastListenerIfBoolean</code>
+      <code>testDeleteReturnsFalseIfLastListenerDoesNotReturnBoolean</code>
+      <code>testDeleteReturnsResultOfLastListenerIfBoolean</code>
+      <code>testEventManagerIdentifiersAreAsExpected</code>
+      <code>testEventParametersAreInjectedIntoEventWhenTriggered</code>
+      <code>testEventParamsReturnDefaultValueOnNonExistingParam</code>
+      <code>testEventTerminateIfApiProblemIsReturned</code>
+      <code>testFetchAllReturnsEmptyArrayIfLastListenerReturnsScalar</code>
+      <code>testFetchAllReturnsResultOfLastListener</code>
+      <code>testFetchAllShouldAllowReturningArbitraryObjects</code>
+      <code>testFetchReturnsFalseIfLastListenerDoesNotReturnArrayOrObject</code>
+      <code>testFetchReturnsResultOfLastListener</code>
+      <code>testPatchListListRaisesExceptionWithInvalidData</code>
+      <code>testPatchListReturnsDataIfLastListenerDoesNotReturnResource</code>
+      <code>testPatchListReturnsResultOfLastListener</code>
+      <code>testPatchRaisesExceptionWithInvalidData</code>
+      <code>testPatchReturnsDataIfLastListenerDoesNotReturnResource</code>
+      <code>testPatchReturnsResultOfLastListener</code>
+      <code>testReplaceListRaisesExceptionWithInvalidData</code>
+      <code>testReplaceListReturnsDataIfLastListenerDoesNotReturnResource</code>
+      <code>testReplaceListReturnsResultOfLastListener</code>
+      <code>testSameInstanceReturnedByEventParams</code>
+      <code>testUpdateRaisesExceptionWithInvalidData</code>
+      <code>testUpdateReturnsDataIfLastListenerDoesNotReturnResource</code>
+      <code>testUpdateReturnsResultOfLastListener</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="6">
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="1">
+      <code>$e</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="6">
+      <code>array</code>
+      <code>array</code>
+      <code>array</code>
+      <code>array</code>
+      <code>array</code>
+      <code>array</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="4">
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+    </MixedMethodCall>
+    <TooManyArguments occurrences="1">
+      <code>delete</code>
+    </TooManyArguments>
+    <UnusedClosureParam occurrences="36">
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+    </UnusedClosureParam>
+  </file>
+  <file src="test/RestControllerTest.php">
+    <DeprecatedMethod occurrences="2">
+      <code>add</code>
+      <code>add</code>
+    </DeprecatedMethod>
+    <DocblockTypeContradiction occurrences="6">
+      <code>assertInstanceOf</code>
+      <code>assertInstanceOf</code>
+      <code>assertInstanceOf</code>
+      <code>assertSame</code>
+      <code>assertSame</code>
+      <code>assertSame</code>
+    </DocblockTypeContradiction>
+    <InvalidArgument occurrences="1">
+      <code>new stdClass()</code>
+    </InvalidArgument>
+    <LessSpecificReturnStatement occurrences="1">
+      <code>$this-&gt;controller-&gt;getResponse()</code>
+    </LessSpecificReturnStatement>
+    <MissingClosureParamType occurrences="85">
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+    </MissingClosureParamType>
+    <MissingClosureReturnType occurrences="1">
+      <code>function ($e) use ($problem) {</code>
+    </MissingClosureReturnType>
+    <MissingReturnType occurrences="87">
+      <code>assertProblemApiResult</code>
+      <code>testAllowsReturningHalCollectionFromCreate</code>
+      <code>testAllowsReturningHalEntityFromCreate</code>
+      <code>testAllowsReturningResponsesReturnedFromResources</code>
+      <code>testCanSetIdentifierName</code>
+      <code>testContentLocationHeaderIsGeneratedOnlyFromLinkHref</code>
+      <code>testCreateAllowsReturningApiProblemFromResource</code>
+      <code>testCreateDoesNotSetLocationHeaderOnMissingSelfRelationalLink</code>
+      <code>testCreateHalCollectionInjectsExistingCollectionWithMetadataIfMissing</code>
+      <code>testCreateHalCollectionInjectsExistingCollectionWithSelfRelationalLinkIfNotPresent</code>
+      <code>testCreateHalEntityDoesNotInjectExistingEntityWithSelfRelationalLinkIfAlreadyPresent</code>
+      <code>testCreateHalEntityInjectsExistingEntityWithSelfRelationalLinkIfNotPresent</code>
+      <code>testCreateReturnsProblemResultOnCreationException</code>
+      <code>testCreateTriggersPreAndPostEvents</code>
+      <code>testCreateUsesHalEntityReturnedByResource</code>
+      <code>testDeleteAllowsReturningApiProblemFromResource</code>
+      <code>testDeleteCollectionBackwardsCompatibleWithNoData</code>
+      <code>testDeleteListAllowsReturningApiProblemFromResource</code>
+      <code>testDeleteListTriggersPreAndPostEvents</code>
+      <code>testDeleteTriggersPreAndPostEvents</code>
+      <code>testDispatchReturnsEarlyIfApiProblemReturnedFromListener</code>
+      <code>testErrorInMethodReturnsApiProblem</code>
+      <code>testExceptionDuringDeleteReturnsApiProblem</code>
+      <code>testExceptionInMethodReturnsApiProblem</code>
+      <code>testFalseFromDeleteCollectionReturnsProblemApiResult</code>
+      <code>testFalseFromDeleteEntityReturnsProblemApiResult</code>
+      <code>testGetAllowsReturningApiProblemFromResource</code>
+      <code>testGetListAllowsReturningApiProblemFromResource</code>
+      <code>testGetListAllowsReturningEntitiesInsteadOfCollections</code>
+      <code>testGetListTriggersPreAndPostEvents</code>
+      <code>testGetListUsesHalCollectionReturnedByResource</code>
+      <code>testGetResourceReturnsSameInstance</code>
+      <code>testGetResourceThrowsExceptionOnMissingResource</code>
+      <code>testGetTriggersPreAndPostEvents</code>
+      <code>testGetUsesHalEntityReturnedByResource</code>
+      <code>testHalCollectionReturnedIncludesRoutes</code>
+      <code>testHalCollectionUsesControllerCollectionName</code>
+      <code>testHeadReturnsEntityResponseWhenIdProvided</code>
+      <code>testHeadReturnsListResponseWhenNoIdProvided</code>
+      <code>testIdentifierNameHasSaneDefault</code>
+      <code>testInjectsContentValidationInputFilterFromMvcEventIntoResourceEvent</code>
+      <code>testInjectsIdentityFromMvcEventIntoResourceEvent</code>
+      <code>testInjectsRequestFromControllerIntoResourceEvent</code>
+      <code>testNonArrayToReplaceListReturnsApiProblem</code>
+      <code>testOnDispatchRaisesDomainExceptionOnMissingEntity</code>
+      <code>testOnDispatchRaisesDomainExceptionOnMissingRoute</code>
+      <code>testOptionsReturnsEmptyResponseWithAllowHeaderPopulatedForCollection</code>
+      <code>testOptionsReturnsEmptyResponseWithAllowHeaderPopulatedForEntity</code>
+      <code>testOptionsReturnsEmptyResponseWithAllowHeaderPopulatedForEntityWhenRouteIdentifierIsCustomized</code>
+      <code>testOptionsTriggersPreAndPostEventsForCollection</code>
+      <code>testOptionsTriggersPreAndPostEventsForEntity</code>
+      <code>testPassingIdentifierToConstructorAllowsListeningOnThatIdentifier</code>
+      <code>testPatchAllowsReturningApiProblemFromResource</code>
+      <code>testPatchListAllowsReturningApiProblemFromResource</code>
+      <code>testPatchListReturnsHalCollectionWithRoutesInjected</code>
+      <code>testPatchListReturnsProblemResultOnUpdateException</code>
+      <code>testPatchListTriggersPreAndPostEvents</code>
+      <code>testPatchListUsesHalCollectionReturnedByResource</code>
+      <code>testPatchReturnsHalEntityOnSuccess</code>
+      <code>testPatchReturnsProblemResultOnPatchException</code>
+      <code>testPatchTriggersPreAndPostEvents</code>
+      <code>testPatchUsesHalEntityReturnedByResource</code>
+      <code>testReplaceListAllowsReturningApiProblemFromResource</code>
+      <code>testReplaceListReturnsHalCollectionWithRoutesInjected</code>
+      <code>testReplaceListReturnsProblemResultOnUpdateException</code>
+      <code>testReplaceListTriggersPreAndPostEvents</code>
+      <code>testReplaceListUsesHalCollectionReturnedByResource</code>
+      <code>testReturningEmptyResultFromGetReturnsProblemApiResult</code>
+      <code>testReturningEntityFromGetReturnsExpectedHalEntity</code>
+      <code>testReturnsErrorResponseWhenPageNonInteger</code>
+      <code>testReturnsErrorResponseWhenPageSizeBelowMin</code>
+      <code>testReturnsErrorResponseWhenPageSizeExceedsMax</code>
+      <code>testReturnsErrorResponseWhenPageSizeInNotPositive</code>
+      <code>testReturnsHalCollectionForPaginatedList</code>
+      <code>testReturnsHalCollectionForPaginatedListUsingPassedPageSizeParameter</code>
+      <code>testSuccessfulCreationWithEntityIdentifierSetsResponseContentLocationHeader</code>
+      <code>testSuccessfulCreationWithEntityIdentifierSetsResponseLocationHeader</code>
+      <code>testTrueFromDeleteCollectionReturnsResponseWithNoContent</code>
+      <code>testTrueFromDeleteEntityReturnsResponseWithNoContent</code>
+      <code>testUpdateAllowsReturningApiProblemFromResource</code>
+      <code>testUpdateReturnsHalEntityOnSuccess</code>
+      <code>testUpdateReturnsProblemResultOnUpdateException</code>
+      <code>testUpdateTriggersPreAndPostEvents</code>
+      <code>testUpdateUsesHalEntityReturnedByResource</code>
+      <code>testUsesConfiguredIdentifierNameToGetIdentifier</code>
+      <code>testValidMethodReturningHalOrApiValueCastsReturnToContentNegotiationViewModel</code>
+      <code>testValidMethodReturningHalOrApiValueIsCastToViewModel</code>
+    </MissingReturnType>
+    <MixedArgument occurrences="10">
+      <code>$httpMethods</code>
+      <code>$httpMethods</code>
+      <code>$httpMethods</code>
+      <code>$location</code>
+      <code>$location</code>
+      <code>$problem['detail']</code>
+      <code>$test</code>
+      <code>$test</code>
+      <code>$test</code>
+      <code>$test-&gt;collection</code>
+    </MixedArgument>
+    <MixedAssignment occurrences="21">
+      <code>$event</code>
+      <code>$headers</code>
+      <code>$headers</code>
+      <code>$headers</code>
+      <code>$headers</code>
+      <code>$httpMethods</code>
+      <code>$httpMethods</code>
+      <code>$httpMethods</code>
+      <code>$location</code>
+      <code>$location</code>
+      <code>$resourceEvent</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$test</code>
+      <code>$test</code>
+      <code>$test</code>
+    </MixedAssignment>
+    <MixedInferredReturnType occurrences="5">
+      <code>Headers</code>
+      <code>array</code>
+      <code>array</code>
+      <code>array</code>
+      <code>array</code>
+    </MixedInferredReturnType>
+    <MixedMethodCall occurrences="48">
+      <code>addHeaderLine</code>
+      <code>addHeaderLine</code>
+      <code>get</code>
+      <code>get</code>
+      <code>getFieldValue</code>
+      <code>getLinks</code>
+      <code>getLinks</code>
+      <code>getLinks</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getParam</code>
+      <code>getRequest</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+      <code>has</code>
+      <code>set</code>
+      <code>set</code>
+      <code>set</code>
+      <code>setParam</code>
+    </MixedMethodCall>
+    <MixedReturnStatement occurrences="1">
+      <code>$headers</code>
+    </MixedReturnStatement>
+    <MoreSpecificReturnType occurrences="1">
+      <code>PhpEnvironmentResponse</code>
+    </MoreSpecificReturnType>
+    <PossiblyInvalidArgument occurrences="3">
+      <code>$router</code>
+      <code>$this-&gt;createRouteMatch([])</code>
+      <code>$this-&gt;router</code>
+    </PossiblyInvalidArgument>
+    <PossiblyInvalidMethodCall occurrences="4">
+      <code>getFieldValue</code>
+      <code>getFieldValue</code>
+      <code>getFieldValue</code>
+      <code>getFieldValue</code>
+    </PossiblyInvalidMethodCall>
+    <PossiblyNullReference occurrences="7">
+      <code>setParam</code>
+      <code>setParam</code>
+      <code>setParam</code>
+      <code>setParam</code>
+      <code>setParam</code>
+      <code>setParam</code>
+      <code>setParam</code>
+    </PossiblyNullReference>
+    <PossiblyUndefinedMethod occurrences="4">
+      <code>getFieldValue</code>
+      <code>getFieldValue</code>
+      <code>getFieldValue</code>
+      <code>getFieldValue</code>
+    </PossiblyUndefinedMethod>
+    <TooManyArguments occurrences="8">
+      <code>new HalEntity($data, 'foo', 'resource')</code>
+      <code>new HalEntity($data, 'foo', 'resource')</code>
+      <code>new HalEntity($data, 'foo', 'resource')</code>
+      <code>new HalEntity($data, 'foo', 'resource')</code>
+      <code>new HalEntity($data, 'foo', 'resource')</code>
+      <code>new HalEntity($data, 'foo', 'resource')</code>
+      <code>new HalEntity($data, 'foo', 'resource')</code>
+      <code>new HalEntity($data, 'foo', 'resource')</code>
+    </TooManyArguments>
+    <TypeDoesNotContainType occurrences="1">
+      <code>assertTrue</code>
+    </TypeDoesNotContainType>
+    <UndefinedDocblockClass occurrences="2">
+      <code>$router</code>
+      <code>SimpleRouteStack|V2SimpleRouteStack</code>
+    </UndefinedDocblockClass>
+    <UndefinedInterfaceMethod occurrences="20">
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getHeaders</code>
+      <code>getIdentity</code>
+      <code>getQuery</code>
+      <code>getQuery</code>
+      <code>getQuery</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setMethod</code>
+      <code>setQuery</code>
+      <code>setQuery</code>
+      <code>setQuery</code>
+      <code>setQuery</code>
+      <code>setQuery</code>
+      <code>setQuery</code>
+      <code>setQuery</code>
+    </UndefinedInterfaceMethod>
+    <UndefinedMethod occurrences="1">
+      <code>setSharedManager</code>
+    </UndefinedMethod>
+    <UnusedClosureParam occurrences="64">
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+      <code>$e</code>
+    </UnusedClosureParam>
+    <UnusedVariable occurrences="10">
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+      <code>$result</code>
+    </UnusedVariable>
+  </file>
+  <file src="test/RouteMatchFactoryTrait.php">
+    <InvalidStringClass occurrences="1">
+      <code>new $class($params)</code>
+    </InvalidStringClass>
+    <MoreSpecificReturnType occurrences="1">
+      <code>RouteMatch|V2RouteMatch</code>
+    </MoreSpecificReturnType>
+    <UndefinedDocblockClass occurrences="1">
+      <code>RouteMatch|V2RouteMatch</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="test/SegmentRouteFactoryTrait.php">
+    <UndefinedDocblockClass occurrences="1">
+      <code>SegmentRoute|V2SegmentRoute</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="test/SimpleRouteStackFactoryTrait.php">
+    <UndefinedDocblockClass occurrences="1">
+      <code>SimpleRouteStack|V2SimpleRouteStack</code>
+    </UndefinedDocblockClass>
+  </file>
+  <file src="test/TestAsset/CollectionIntegrationListener.php">
+    <MissingConstructor occurrences="1">
+      <code>$collection</code>
+    </MissingConstructor>
+  </file>
+  <file src="test/TestAsset/TestResourceListener.php">
+    <InvalidReturnType occurrences="9">
+      <code>create</code>
+      <code>delete</code>
+      <code>deleteList</code>
+      <code>fetch</code>
+      <code>fetchAll</code>
+      <code>patch</code>
+      <code>patchList</code>
+      <code>replaceList</code>
+      <code>update</code>
+    </InvalidReturnType>
+    <MoreSpecificImplementedParamType occurrences="10">
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$data</code>
+      <code>$id</code>
+      <code>$id</code>
+      <code>$id</code>
+      <code>$id</code>
+    </MoreSpecificImplementedParamType>
+    <PropertyNotSetInConstructor occurrences="5">
+      <code>TestResourceListener</code>
+      <code>TestResourceListener</code>
+      <code>TestResourceListener</code>
+      <code>TestResourceListener</code>
+      <code>TestResourceListener</code>
+    </PropertyNotSetInConstructor>
+    <UndefinedPropertyAssignment occurrences="18">
+      <code>$this-&gt;testCase-&gt;methodInvokedInListener</code>
+      <code>$this-&gt;testCase-&gt;methodInvokedInListener</code>
+      <code>$this-&gt;testCase-&gt;methodInvokedInListener</code>
+      <code>$this-&gt;testCase-&gt;methodInvokedInListener</code>
+      <code>$this-&gt;testCase-&gt;methodInvokedInListener</code>
+      <code>$this-&gt;testCase-&gt;methodInvokedInListener</code>
+      <code>$this-&gt;testCase-&gt;methodInvokedInListener</code>
+      <code>$this-&gt;testCase-&gt;methodInvokedInListener</code>
+      <code>$this-&gt;testCase-&gt;methodInvokedInListener</code>
+      <code>$this-&gt;testCase-&gt;paramsPassedToListener</code>
+      <code>$this-&gt;testCase-&gt;paramsPassedToListener</code>
+      <code>$this-&gt;testCase-&gt;paramsPassedToListener</code>
+      <code>$this-&gt;testCase-&gt;paramsPassedToListener</code>
+      <code>$this-&gt;testCase-&gt;paramsPassedToListener</code>
+      <code>$this-&gt;testCase-&gt;paramsPassedToListener</code>
+      <code>$this-&gt;testCase-&gt;paramsPassedToListener</code>
+      <code>$this-&gt;testCase-&gt;paramsPassedToListener</code>
+      <code>$this-&gt;testCase-&gt;paramsPassedToListener</code>
+    </UndefinedPropertyAssignment>
+  </file>
+  <file src="test/TreeRouteStackFactoryTrait.php">
+    <UndefinedDocblockClass occurrences="1">
+      <code>TreeRouteStack|V2TreeRouteStack</code>
+    </UndefinedDocblockClass>
+  </file>
+</files>
