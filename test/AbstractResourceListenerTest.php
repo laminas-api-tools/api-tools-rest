@@ -133,4 +133,17 @@ class AbstractResourceListenerTest extends TestCase
 
         $this->assertEquals($queryParams, $this->listener->testCase->paramsPassedToListener);
     }
+
+    /**
+     * @group 7
+     */
+    public function testDispatchShouldPassEmptyArrayToFetchAllMethodIfNoQueryParamsArePresent()
+    {
+        $event = new ResourceEvent();
+        $event->setName('fetchAll');
+
+        $this->listener->dispatch($event);
+
+        $this->assertEquals([], $this->listener->testCase->paramsPassedToListener);
+    }
 }
