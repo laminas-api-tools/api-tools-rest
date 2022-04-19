@@ -10,8 +10,8 @@ use Laminas\EventManager\EventManagerInterface;
 use Laminas\EventManager\ListenerAggregateInterface;
 use Laminas\EventManager\ListenerAggregateTrait;
 use Laminas\InputFilter\InputFilterInterface;
-
 use Laminas\Stdlib\Parameters;
+
 use function sprintf;
 
 abstract class AbstractResourceListener implements ListenerAggregateInterface
