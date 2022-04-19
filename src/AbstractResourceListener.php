@@ -10,6 +10,7 @@ use Laminas\EventManager\EventManagerInterface;
 use Laminas\EventManager\ListenerAggregateInterface;
 use Laminas\EventManager\ListenerAggregateTrait;
 use Laminas\InputFilter\InputFilterInterface;
+use Laminas\Stdlib\Parameters;
 
 use function sprintf;
 
@@ -252,7 +253,7 @@ abstract class AbstractResourceListener implements ListenerAggregateInterface
     /**
      * Fetch all or a subset of resources
      *
-     * @param  array $params
+     * @param  array|Parameters $params
      * @return ApiProblem|mixed
      */
     public function fetchAll($params = [])
