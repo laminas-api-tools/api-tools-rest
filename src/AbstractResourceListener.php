@@ -181,7 +181,7 @@ abstract class AbstractResourceListener implements ListenerAggregateInterface
                 $id = $event->getParam('id', null);
                 return $this->fetch($id);
             case 'fetchAll':
-                $queryParams = $event->getQueryParams() ?: new Parameters();
+                $queryParams = $event->getQueryParams() ?: [];
                 return $this->fetchAll($queryParams);
             case 'patch':
                 $id   = $event->getParam('id', null);
@@ -253,10 +253,10 @@ abstract class AbstractResourceListener implements ListenerAggregateInterface
     /**
      * Fetch all or a subset of resources
      *
-     * @param  Parameters $params
+     * @param  array|Parameters $params
      * @return ApiProblem|mixed
      */
-    public function fetchAll(Parameters $params)
+    public function fetchAll($params = [])
     {
         return new ApiProblem(405, 'The GET method has not been defined for collections');
     }
