@@ -981,7 +981,7 @@ class RestControllerTest extends TestCase
         $this->assertSame(
             $collection,
             $test->collection,
-            'Expected ' . get_class($collection) . ', received ' . get_class($test->collection)
+            'Expected ' . $collection::class . ', received ' . get_class($test->collection)
         );
     }
 

@@ -21,7 +21,6 @@ use function array_keys;
 use function array_merge;
 use function array_unique;
 use function class_exists;
-use function get_class;
 use function gettype;
 use function in_array;
 use function is_array;
@@ -135,11 +134,11 @@ class RestControllerFactory implements AbstractFactoryInterface
                 '%s expects that the "listener" reference a service that implements '
                 . 'Laminas\EventManager\ListenerAggregateInterface; received %s',
                 __METHOD__,
-                is_object($listener) ? get_class($listener) : gettype($listener)
+                is_object($listener) ? $listener::class : gettype($listener)
             ));
         }
 
-        $resourceIdentifiers = [get_class($listener)];
+        $resourceIdentifiers = [$listener::class];
         if (isset($config['resource_identifiers'])) {
             if (! is_array($config['resource_identifiers'])) {
                 $config['resource_identifiers'] = (array) $config['resource_identifiers'];
