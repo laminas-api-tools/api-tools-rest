@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace LaminasTest\ApiTools\Rest;
 
 use Error;
-use Interop\Container\ContainerInterface;
 use Laminas\ApiTools\ApiProblem\ApiProblem;
 use Laminas\ApiTools\ApiProblem\ApiProblemResponse;
 use Laminas\ApiTools\ApiProblem\Exception\DomainException;
@@ -45,6 +44,7 @@ use Laminas\View\Helper\Url as UrlHelper;
 use Laminas\View\Model\ModelInterface;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Container\ContainerInterface;
 use ReflectionMethod;
 use ReflectionObject;
 use stdClass;

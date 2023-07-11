@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Rest\Factory;
 
-use Interop\Container\ContainerInterface;
 use Laminas\ApiTools\Rest\Listener\OptionsListener;
 use Laminas\ServiceManager\FactoryInterface;
 use Laminas\ServiceManager\ServiceLocatorInterface;
+use Psr\Container\ContainerInterface;
 
 use function array_key_exists;
 use function is_array;

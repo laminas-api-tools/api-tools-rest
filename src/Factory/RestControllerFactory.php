@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Laminas\ApiTools\Rest\Factory;
 
-use Interop\Container\ContainerInterface;
 use Laminas\ApiTools\Hal\Collection;
 use Laminas\ApiTools\Rest\Resource;
 use Laminas\ApiTools\Rest\RestController;
@@ -15,6 +14,7 @@ use Laminas\ServiceManager\Exception\ServiceNotCreatedException;
 use Laminas\ServiceManager\Exception\ServiceNotFoundException;
 use Laminas\ServiceManager\ServiceLocatorInterface;
 use Laminas\Stdlib\Parameters;
+use Psr\Container\ContainerInterface;
 
 use function array_key_exists;
 use function array_keys;
