@@ -29,7 +29,6 @@ use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Psr\Container\ContainerInterface;
 use ReflectionObject;
-use stdClass;
 
 use function call_user_func_array;
 use function json_decode;
@@ -41,10 +40,10 @@ class ChildResourcesIntegrationTest extends TestCase
     use RouteMatchFactoryTrait;
     use TreeRouteStackFactoryTrait;
 
-    /** @var stdClass */
+    /** @var object */
     private $parent;
 
-    /** @var stdClass */
+    /** @var object */
     private $child;
 
     /** @var array */

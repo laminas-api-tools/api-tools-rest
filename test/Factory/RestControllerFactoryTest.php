@@ -114,7 +114,7 @@ class RestControllerFactoryTest extends TestCase
         ];
         $identifiers = $events->getIdentifiers();
 
-        $this->assertEquals(array_values($expected), array_values($identifiers));
+        $this->assertEquals($expected, array_values($identifiers));
     }
 
     public function testResourceEventManagerIdentifiersAreAsSpecifiedString()
@@ -136,7 +136,7 @@ class RestControllerFactoryTest extends TestCase
         ];
         $identifiers = $events->getIdentifiers();
 
-        $this->assertEquals(array_values($expected), array_values($identifiers));
+        $this->assertEquals($expected, array_values($identifiers));
     }
 
     public function testResourceEventManagerIdentifiersAreAsSpecifiedArray()
@@ -162,6 +162,6 @@ class RestControllerFactoryTest extends TestCase
         ];
         $identifiers = $events->getIdentifiers();
 
-        $this->assertEquals(array_values($expected), array_values($identifiers));
+        $this->assertEquals($expected, array_values($identifiers));
     }
 }
