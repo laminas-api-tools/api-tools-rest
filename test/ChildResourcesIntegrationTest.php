@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace LaminasTest\ApiTools\Rest;
 
-use Interop\Container\ContainerInterface;
 use Laminas\ApiTools\ApiProblem\View\ApiProblemRenderer;
 use Laminas\ApiTools\Hal\Collection;
 use Laminas\ApiTools\Hal\Collection as HalCollection;
@@ -28,6 +27,7 @@ use Laminas\View\Helper\Url as UrlHelper;
 use Laminas\View\HelperPluginManager;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
+use Psr\Container\ContainerInterface;
 use ReflectionObject;
 use stdClass;
 

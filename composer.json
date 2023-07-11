@@ -30,28 +30,27 @@
         }
     },
     "require": {
-        "php": "^7.3 || ~8.0.0 || ~8.1.0",
-        "laminas-api-tools/api-tools-api-problem": "^1.4.0",
-        "laminas-api-tools/api-tools-content-negotiation": "^1.5.0",
-        "laminas-api-tools/api-tools-hal": "^1.4",
-        "laminas-api-tools/api-tools-mvc-auth": "^1.6",
+        "php": "~8.0.0 || ~8.1.0 || ~8.2.0",
+        "laminas-api-tools/api-tools-api-problem": "^1.6.0",
+        "laminas-api-tools/api-tools-content-negotiation": "^1.8.0",
+        "laminas-api-tools/api-tools-hal": "^1.7",
+        "laminas-api-tools/api-tools-mvc-auth": "^1.8",
         "laminas/laminas-eventmanager": "^3.2",
         "laminas/laminas-mvc": "^2.7.14 || ^3.0.2",
         "laminas/laminas-paginator": "^2.7",
-        "laminas/laminas-stdlib": "^2.7.8 || ^3.3",
-        "laminas/laminas-zendframework-bridge": "^1.0"
+        "laminas/laminas-stdlib": "^2.7.8 || ^3.3"
     },
     "require-dev": {
         "laminas/laminas-coding-standard": "~2.3.0",
         "laminas/laminas-escaper": "^2.5.2",
         "laminas/laminas-http": "^2.5.4",
         "laminas/laminas-inputfilter": "^2.7.2",
-        "laminas/laminas-servicemanager": "^2.7.6 || ^3.1",
+        "laminas/laminas-servicemanager": "^3.11",
         "laminas/laminas-uri": "^2.5.2",
         "laminas/laminas-validator": "^2.8.1",
         "laminas/laminas-view": "^2.11.3",
         "phpspec/prophecy-phpunit": "^2.0",
-        "phpunit/phpunit": "^9.3"
+        "phpunit/phpunit": "^9.5.10"
     },
     "autoload": {
         "psr-4": {

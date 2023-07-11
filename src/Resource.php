@@ -24,7 +24,6 @@ use Traversable;
 use function array_merge;
 use function array_walk;
 use function func_get_args;
-use function get_class;
 use function gettype;
 use function is_array;
 use function is_bool;
@@ -138,7 +137,7 @@ class Resource implements ResourceInterface
                 __METHOD__,
                 RouteMatch::class,
                 V2RouteMatch::class,
-                is_object($matches) ? get_class($matches) : gettype($matches)
+                is_object($matches) ? $matches::class : gettype($matches)
             ));
         }
         $this->routeMatch = $matches;
