@@ -185,14 +185,14 @@ class Resource implements ResourceInterface
      *
      * @return self
      */
-    public function setEventManager(EventManagerInterface $events)
+    public function setEventManager(EventManagerInterface $eventManager)
     {
-        $events->addIdentifiers([
+        $eventManager->addIdentifiers([
             static::class,
             self::class,
             ResourceInterface::class,
         ]);
-        $this->events = $events;
+        $this->events = $eventManager;
         return $this;
     }
 

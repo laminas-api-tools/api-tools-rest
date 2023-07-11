@@ -54,26 +54,26 @@ class CollectionIntegrationTest extends TestCase
     /** @var HalHelper */
     private $linksHelper;
 
-    /** @var HelperPluginManager */
-    private $helpers;
+    /** @var null|HelperPluginManager */
+    private $helpers = null;
 
-    /** @var HalJsonRenderer */
-    private $renderer;
+    /** @var null|HalJsonRenderer */
+    private $renderer = null;
 
-    /** @var TreeRouteStack|V2TreeRouteStack */
-    private $router;
+    /** @var null|TreeRouteStack|V2TreeRouteStack */
+    private $router = null;
 
-    /** @var Request */
-    private $request;
+    /** @var null|Request */
+    private $request = null;
 
-    /** @var Response */
-    private $response;
+    /** @var null|Response */
+    private $response = null;
 
     /** @var RouteMatch|V2RouteMatch */
     private $matches;
 
-    /** @var TestAsset\CollectionIntegrationListener */
-    private $listeners;
+    /** @var null|TestAsset\CollectionIntegrationListener */
+    private $listeners = null;
 
     /** @var RestController */
     private $controller;
